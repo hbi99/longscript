@@ -1,4 +1,4 @@
-longscript
+Longscript
 ==========
 
 Longscript App
