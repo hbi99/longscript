@@ -1,0 +1,27 @@
+{
+    "name": "longscript",
+    "version": "0.0.1",
+    "description": "Longscript Application",
+    "author": "Hakan Bilgin",
+    "main": "index.htm",
+    "window": {
+        "toolbar": true,
+        "width": 660,
+        "height": 500
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/hbi99/longscript.git"
+    },
+    "bugs": {
+        "url": "https://github.com/hbi99/longscript/issues"
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/hbi99/longscript",
+    "devDependencies": {
+        "grunt": "~0.4.2",
+        "grunt-contrib-concat": "~0.3.0",
+        "grunt-contrib-jshint": "~0.8.0",
+        "grunt-contrib-nodeunit": "~0.2.2"
+    }
+}
