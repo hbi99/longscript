@@ -7,7 +7,7 @@
 @boxContent:	#636363;
 @boxFocusHl:	#ccc;
 
-@fontFamily:	Helvetica, Calibri;
+@fontFamily:	Helvetica;
 
 
 @font-face {
@@ -23,7 +23,7 @@
 
 [class^="icon-"], [class*=" icon-"] {
 	position: relative;
-	top: 2px;
+	top: 6px;
 	left: 0px;
 	font-family: 'icomoon';
 	speak: none;
@@ -31,19 +31,22 @@
 	font-weight: normal;
 	font-variant: normal;
 	text-transform: none;
-	line-height: 13px;
 	letter-spacing: 0px;
-	font-size: 13px;
+	font-size: 23px;
 
 	/* Better Font Rendering =========== */
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-image:before { content: "\e600"; }
-.icon-paragraph-left:before { content: "\e601"; }
-.icon-youtube:before { content: "\e602"; }
-.icon-search:before { content: "\e603"; }
+.icon-search:before  { content: "\e600"; }
+.icon-play:before    { content: "\e601"; }
+.icon-image:before   { content: "\e602"; }
+.icon-code:before    { content: "\e603"; }
+.icon-arrows:before  { content: "\e604"; }
+.icon-eye_on:before  { content: "\e605"; }
+.icon-eye_off:before { content: "\e606"; }
+
 
 
 body {
@@ -56,7 +59,6 @@ body {
 	overflow: hidden;
 	font: 11px/16px @fontFamily;
 	letter-spacing: 0.5px;
-	overflow: hidden;
 }
 
 ul {
@@ -100,6 +102,7 @@ figure {
 		.content {
 			left: 3px;
 			bottom: 25px;
+			background-image: @cvsBg;
 		}
 	}
 	&.nav {
@@ -164,7 +167,7 @@ figure {
 	.options {
 		position: absolute;
 		bottom: 2px;
-		left: 5px;
+		left: 7px;
 		right: 5px;
 		z-index: 1;
 
@@ -172,19 +175,39 @@ figure {
 			float: left;
 			color: #777;
 			text-shadow: 0px 1px 2px #333;
-			padding: 2px 7px 1px 19px;
-			margin: 0px 11px 0px 0px;
+			padding: 2px 7px 1px 3px;
+			margin: 0px 7px 0px 0px;
 			cursor: pointer;
 
+			figure {
+				margin-right: 3px;
+			}
+			&:hover:not(.search) {
+				color: #eee;
+			}
 			&.active {
 				color: #bbb;
+				cursor: default;
 				//background: #373737;
 			}
 			&.search {
 				position: absolute;
 				bottom: 0px;
-				right: 1px;
+				right: 5px;
+				padding-left: 17px;
+				margin-right: 0px;
 
+				figure {
+					position: absolute;
+					top: 3px;
+					font-size: 19px;
+
+					&.icon-arrows {
+						left: auto;
+						right: -11px;
+						font-size: 23px;
+					}
+				}
 				.zoom_level {
 					float: right;
 					background: #373737;
@@ -194,6 +217,8 @@ figure {
 					&:after {
 						content: '%';
 						color: #777;
+						position: relative;
+						left: 2px;
 					}
 				}
 			}

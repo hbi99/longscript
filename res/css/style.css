@@ -8,7 +8,7 @@
 [class^="icon-"],
 [class*=" icon-"] {
   position: relative;
-  top: 2px;
+  top: 6px;
   left: 0px;
   font-family: 'icomoon';
   speak: none;
@@ -16,25 +16,33 @@
   font-weight: normal;
   font-variant: normal;
   text-transform: none;
-  line-height: 13px;
   letter-spacing: 0px;
-  font-size: 13px;
+  font-size: 23px;
   /* Better Font Rendering =========== */
 
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-.icon-image:before {
+.icon-search:before {
   content: "\e600";
 }
-.icon-paragraph-left:before {
+.icon-play:before {
   content: "\e601";
 }
-.icon-youtube:before {
+.icon-image:before {
   content: "\e602";
 }
-.icon-search:before {
+.icon-code:before {
   content: "\e603";
+}
+.icon-arrows:before {
+  content: "\e604";
+}
+.icon-eye_on:before {
+  content: "\e605";
+}
+.icon-eye_off:before {
+  content: "\e606";
 }
 body {
   cursor: default;
@@ -43,9 +51,9 @@ body {
   padding: 10px;
   margin: 0px;
   height: 0px;
-  font: 11px/16px Helvetica, Calibri;
-  letter-spacing: 0.5px;
   overflow: hidden;
+  font: 11px/16px Helvetica;
+  letter-spacing: 0.5px;
 }
 ul {
   list-style: none;
@@ -84,6 +92,7 @@ figure {
 .area.canvas .content {
   left: 3px;
   bottom: 25px;
+  background-image: url(../img/bg_checkers.png);
 }
 .area.nav {
   top: 33px;
@@ -137,7 +146,7 @@ figure {
 .canvas .options {
   position: absolute;
   bottom: 2px;
-  left: 5px;
+  left: 7px;
   right: 5px;
   z-index: 1;
 }
@@ -145,17 +154,36 @@ figure {
   float: left;
   color: #777;
   text-shadow: 0px 1px 2px #333;
-  padding: 2px 7px 1px 19px;
-  margin: 0px 11px 0px 0px;
+  padding: 2px 7px 1px 3px;
+  margin: 0px 7px 0px 0px;
   cursor: pointer;
+}
+.canvas .options li figure {
+  margin-right: 3px;
+}
+.canvas .options li:hover:not(.search) {
+  color: #eee;
 }
 .canvas .options li.active {
   color: #bbb;
+  cursor: default;
 }
 .canvas .options li.search {
   position: absolute;
   bottom: 0px;
-  right: 1px;
+  right: 5px;
+  padding-left: 17px;
+  margin-right: 0px;
+}
+.canvas .options li.search figure {
+  position: absolute;
+  top: 3px;
+  font-size: 19px;
+}
+.canvas .options li.search figure.icon-arrows {
+  left: auto;
+  right: -11px;
+  font-size: 23px;
 }
 .canvas .options li.search .zoom_level {
   float: right;
@@ -166,4 +194,6 @@ figure {
 .canvas .options li.search .zoom_level:after {
   content: '%';
   color: #777;
+  position: relative;
+  left: 2px;
 }
