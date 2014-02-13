@@ -39,14 +39,23 @@
   content: "\e604";
 }
 .icon-eye_on:before {
-  content: "\e605";
+  content: "\e606";
 }
 .icon-eye_off:before {
-  content: "\e606";
+  content: "\e605";
+}
+.icon-invert:before {
+  content: "\e607";
+}
+.icon-new:before {
+  content: "\e608";
+}
+.icon-trashcan:before {
+  content: "\e609";
 }
 body {
   cursor: default;
-  background-color: #333333;
+  background-color: #2a2a2a;
   background-image: url(../img/bg_app2.png);
   padding: 10px;
   margin: 0px;
@@ -94,29 +103,71 @@ figure {
   bottom: 25px;
   background-image: url(../img/bg_checkers.png);
 }
+.area.canvas .options li {
+  float: left;
+  padding: 2px 7px 1px 3px;
+}
 .area.nav {
   top: 33px;
   left: auto;
   height: 200px;
   width: 280px;
 }
-.area.layers {
+.area.assets {
   top: 236px;
   bottom: 176px;
+  right: 19px;
   left: auto;
-  width: 280px;
+  width: 261px;
+  border-radius: 5px;
 }
-.area.layers .content {
-  right: 21px;
-}
-.area.bottom {
-  height: 173px;
-  bottom: 0px;
-}
-.area.bottom .content {
-  top: 4px;
-  right: 21px;
+.area.assets .content {
+  right: 3px;
   bottom: 21px;
+}
+.area.assets .options {
+  bottom: 0px;
+  left: 7px;
+}
+.area.assets .scroll_bg {
+  bottom: 19px;
+}
+.area.assets .scroll_bg.vertical {
+  top: 17px;
+}
+.area.timeline {
+  height: 154px;
+  bottom: 19px;
+  right: 19px;
+  border-radius: 5px 0px 0px 5px;
+}
+.area.timeline .content {
+  top: 4px;
+  bottom: 3px;
+  color: #aaa;
+  text-shadow: 0px 1px 2px #333;
+}
+.area.timeline .content.left {
+  width: 221px;
+  border-radius: 3px 0px 0px 3px;
+}
+.area.timeline .content.right {
+  left: 225px;
+  border-radius: 0px 3px 3px 0px;
+}
+.area.timeline .content .layers figure {
+  color: #333;
+  text-shadow: 0px 1px 2px #777;
+}
+.area.timeline .content .layers li {
+  height: 23px;
+  padding: 0px 3px;
+  line-height: 11px;
+  border-top: #727272 1px solid;
+  border-bottom: #555 1px solid;
+}
+.area.timeline .scroll_bg.horizontal {
+  left: 225px;
 }
 .panel {
   background: #454545;
@@ -129,71 +180,175 @@ figure {
   color: #aaa;
   text-shadow: 0px 1px 2px #333;
 }
+.concave {
+  position: absolute;
+  background: #454545;
+  width: 5px;
+  height: 5px;
+}
+.concave:before {
+  content: '';
+  background-color: #2a2a2a;
+  background-image: url(../img/bg_app2.png);
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 5px;
+}
+.concave.utr {
+  top: 0px;
+  right: -5px;
+}
+.concave.utr:before {
+  top: 0px;
+  right: -5px;
+}
+.concave.utl {
+  top: 0px;
+  left: -5px;
+}
+.concave.utl:before {
+  top: 0px;
+  left: -5px;
+}
+.concave.ltl {
+  top: -5px;
+  left: 0px;
+}
+.concave.ltl:before {
+  top: -5px;
+  left: 0px;
+}
+.concave.lbl {
+  bottom: -5px;
+  left: 0px;
+}
+.concave.lbl:before {
+  bottom: -5px;
+  left: 0px;
+}
 .content {
+  background: #636363;
   position: absolute;
   top: 21px;
   left: 4px;
   right: 4px;
   bottom: 4px;
   z-index: 2;
-  background: #636363;
   border-radius: 3px;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25), inset 1px 1px 1px #707070, inset -1px -1px 0px #5b5b5b;
 }
-/*
- * CANVAS
- */
-.canvas .options {
+.scroll_bg {
+  background: #454545;
+  position: absolute;
+  cursor: pointer;
+}
+.scroll_bg:after {
+  content: '';
+  background: #383838;
+  position: absolute;
+  border-radius: 7px;
+}
+.scroll_bg .scroll_bar {
+  background: #2a2a2a;
+  position: absolute;
+  border-radius: 5px;
+  z-index: 2;
+}
+.scroll_bg.vertical {
+  border-radius: 0px 5px 5px 0px;
+  top: 0px;
+  right: -19px;
+  bottom: 0px;
+  width: 19px;
+}
+.scroll_bg.vertical:after {
+  top: 5px;
+  bottom: 5px;
+  right: 5px;
+  width: 11px;
+}
+.scroll_bg.vertical .scroll_bar {
+  top: 55px;
+  left: 4px;
+  width: 9px;
+  height: 60px;
+  cursor: pointer;
+}
+.scroll_bg.horizontal {
+  border-radius: 0px 0px 5px 5px;
+  left: 0px;
+  right: 0px;
+  bottom: -19px;
+  height: 19px;
+}
+.scroll_bg.horizontal:after {
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  height: 11px;
+}
+.scroll_bg.horizontal .scroll_bar {
+  top: 5px;
+  left: 105px;
+  width: 200px;
+  height: 9px;
+}
+.options {
   position: absolute;
   bottom: 2px;
   left: 7px;
   right: 5px;
   z-index: 1;
 }
-.canvas .options li {
-  float: left;
+.options li {
+  float: right;
   color: #777;
   text-shadow: 0px 1px 2px #333;
-  padding: 2px 7px 1px 3px;
+  padding: 2px 1px 1px 1px;
   margin: 0px 7px 0px 0px;
   cursor: pointer;
 }
-.canvas .options li figure {
+.options li figure {
   margin-right: 3px;
 }
-.canvas .options li:hover:not(.search) {
+.options li:hover:not(.search) {
   color: #eee;
 }
-.canvas .options li.active {
+.options li.active {
   color: #bbb;
   cursor: default;
 }
-.canvas .options li.search {
+.options li.search {
   position: absolute;
   bottom: 0px;
-  right: 5px;
-  padding-left: 17px;
+  right: 11px;
+  padding: 2px 17px 1px 3px;
   margin-right: 0px;
 }
-.canvas .options li.search figure {
+.options li.search figure {
   position: absolute;
   top: 3px;
+  left: -13px;
   font-size: 19px;
 }
-.canvas .options li.search figure.icon-arrows {
+.options li.search figure.icon-arrows {
   left: auto;
-  right: -11px;
+  right: -13px;
   font-size: 23px;
 }
-.canvas .options li.search .zoom_level {
+.options li.search .zoom_level {
   float: right;
   background: #373737;
   color: #aaa;
   padding: 1px 7px 0px 7px;
 }
-.canvas .options li.search .zoom_level:after {
+.options li.search .zoom_level:after {
   content: '%';
   color: #777;
   position: relative;
   left: 2px;
 }
+/*
+ * CANVAS
+ */

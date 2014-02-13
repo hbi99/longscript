@@ -2,7 +2,7 @@
 
 @appBg:			url(../img/bg_app2.png);
 @cvsBg:			url(../img/bg_checkers.png);
-@boxBgColor:	#333;
+@boxBgColor:	#2a2a2a;
 @boxFace:		#454545;
 @boxContent:	#636363;
 @boxFocusHl:	#ccc;
@@ -39,14 +39,16 @@
 	-moz-osx-font-smoothing: grayscale;
 }
 
-.icon-search:before  { content: "\e600"; }
-.icon-play:before    { content: "\e601"; }
-.icon-image:before   { content: "\e602"; }
-.icon-code:before    { content: "\e603"; }
-.icon-arrows:before  { content: "\e604"; }
-.icon-eye_on:before  { content: "\e605"; }
-.icon-eye_off:before { content: "\e606"; }
-
+.icon-search:before   { content: "\e600"; }
+.icon-play:before     { content: "\e601"; }
+.icon-image:before    { content: "\e602"; }
+.icon-code:before     { content: "\e603"; }
+.icon-arrows:before   { content: "\e604"; }
+.icon-eye_on:before   { content: "\e606"; }
+.icon-eye_off:before  { content: "\e605"; }
+.icon-invert:before   { content: "\e607"; }
+.icon-new:before      { content: "\e608"; }
+.icon-trashcan:before { content: "\e609"; }
 
 
 body {
@@ -104,6 +106,12 @@ figure {
 			bottom: 25px;
 			background-image: @cvsBg;
 		}
+		.options {
+			li {
+				float: left;
+				padding: 2px 7px 1px 3px;
+			}
+		}
 	}
 	&.nav {
 		top: 33px;
@@ -111,24 +119,70 @@ figure {
 		height: 200px;
 		width: 280px;
 	}
-	&.layers {
+	&.assets {
 		top: 236px;
 		bottom: 176px;
+		right: 19px;
 		left: auto;
-		width: 280px;
+		width: 261px;
+		border-radius: 5px;
 
 		.content {
-			right: 21px;
+			right: 3px;
+			bottom: 21px;
+		}
+		.options {
+			bottom: 0px;
+			left: 7px;
+		}
+		.scroll_bg {
+			bottom: 19px;
+
+			&.vertical {
+				top: 17px;
+			}
 		}
 	}
-	&.bottom {
-		height: 173px;
-		bottom: 0px;
+	&.timeline {
+		height: 154px;
+		bottom: 19px;
+		right: 19px;
+		border-radius: 5px 0px 0px 5px;
 
 		.content {
 			top: 4px;
-			right: 21px;
-			bottom: 21px;
+			bottom: 3px;
+			color: #aaa;
+			text-shadow: 0px 1px 2px #333;
+			
+			&.left {
+				width: 221px;
+				border-radius: 3px 0px 0px 3px;
+			}
+			&.right {
+				left: 225px;
+				border-radius: 0px 3px 3px 0px;
+			}
+			.layers {
+
+				figure {
+					color: #333;
+					text-shadow: 0px 1px 2px #777;
+				}
+				li {
+					height: 23px;
+					padding: 0px 3px;
+					line-height: 11px;
+					border-top: #727272 1px solid;
+					border-bottom: #555 1px solid;
+				}
+			}
+		}
+		.scroll_bg {
+
+			&.horizontal {
+				left: 225px;
+			}
 		}
 	}
 }
@@ -146,82 +200,185 @@ figure {
 	}
 }
 
+.concave {
+	position: absolute;
+	background: @boxFace;
+	width: 5px;
+	height: 5px;
+
+	&:before {
+		content: '';
+		background-color: @boxBgColor;
+		background-image: @appBg;
+		position: absolute;
+		width: 10px;
+		height: 10px;
+		border-radius: 5px;
+	}
+
+	&.utr {
+		top: 0px; right: -5px;
+		&:before { top: 0px; right: -5px; }
+	}
+	&.utl {
+		top: 0px; left: -5px;
+		&:before { top: 0px; left: -5px; }
+	}
+
+	&.ltl {
+		top: -5px; left: 0px;
+		&:before { top: -5px; left: 0px; }
+	}
+	&.lbl {
+		bottom: -5px; left: 0px;
+		&:before { bottom: -5px; left: 0px; }
+	}
+}
+
 .content {
+	background: @boxContent;
 	position: absolute;
 	top: 21px;
 	left: 4px;
 	right: 4px;
 	bottom: 4px;
 	z-index: 2;
-	background: @boxContent;
 	border-radius: 3px;
 	box-shadow: 0px 1px 3px rgba(0,0,0,0.25),
 				inset 1px 1px 1px #707070,
 				inset -1px -1px 0px #5b5b5b;
 }
 
-/*
- * CANVAS
- */
-.canvas {
-	.options {
-		position: absolute;
-		bottom: 2px;
-		left: 7px;
-		right: 5px;
-		z-index: 1;
+.scroll_bg {
+	background: @boxFace;
+	//background: red;
+	position: absolute;
+	cursor: pointer;
 
-		li {
-			float: left;
-			color: #777;
-			text-shadow: 0px 1px 2px #333;
-			padding: 2px 7px 1px 3px;
-			margin: 0px 7px 0px 0px;
+	&:after {
+		content: '';
+		background: darken(@boxFace, 5%);
+		position: absolute;
+		border-radius: 7px;
+	}
+
+	.scroll_bar {
+		background: @boxBgColor;
+		position: absolute;
+		border-radius: 5px;
+		z-index: 2;
+	}
+
+	&.vertical {
+		border-radius: 0px 5px 5px 0px;
+		top: 0px;
+		right: -19px;
+		bottom: 0px;
+		width: 19px;
+
+		&:after {
+			top: 5px;
+			bottom: 5px;
+			right: 5px;
+			width: 11px;
+		}
+
+		.scroll_bar {
+			top: 55px;
+			left: 4px;
+			width: 9px;
+			height: 60px;
 			cursor: pointer;
+		}
+	}
+	&.horizontal {
+		border-radius: 0px 0px 5px 5px;
+		left: 0px;
+		right: 0px;
+		bottom: -19px;
+		height: 19px;
+
+		&:after {
+			left: 5px;
+			right: 5px;
+			bottom: 5px;
+			height: 11px;
+		}
+
+		.scroll_bar {
+			top: 5px;
+			left: 105px;
+			width: 200px;
+			height: 9px;
+		}
+	}
+}
+
+.options {
+	position: absolute;
+	bottom: 2px;
+	left: 7px;
+	right: 5px;
+	z-index: 1;
+
+	li {
+		float: right;
+		color: #777;
+		text-shadow: 0px 1px 2px #333;
+		padding: 2px 1px 1px 1px;
+		margin: 0px 7px 0px 0px;
+		cursor: pointer;
+
+		figure {
+			margin-right: 3px;
+		}
+		&:hover:not(.search) {
+			color: #eee;
+		}
+		&.active {
+			color: #bbb;
+			cursor: default;
+			//background: #373737;
+		}
+		&.search {
+			position: absolute;
+			bottom: 0px;
+			right: 11px;
+			padding: 2px 17px 1px 3px;
+			margin-right: 0px;
 
 			figure {
-				margin-right: 3px;
-			}
-			&:hover:not(.search) {
-				color: #eee;
-			}
-			&.active {
-				color: #bbb;
-				cursor: default;
-				//background: #373737;
-			}
-			&.search {
 				position: absolute;
-				bottom: 0px;
-				right: 5px;
-				padding-left: 17px;
-				margin-right: 0px;
+				top: 3px;
+				left: -13px;
+				font-size: 19px;
 
-				figure {
-					position: absolute;
-					top: 3px;
-					font-size: 19px;
-
-					&.icon-arrows {
-						left: auto;
-						right: -11px;
-						font-size: 23px;
-					}
+				&.icon-arrows {
+					left: auto;
+					right: -13px;
+					font-size: 23px;
 				}
-				.zoom_level {
-					float: right;
-					background: #373737;
-					color: #aaa;
-					padding: 1px 7px 0px 7px;
+			}
+			.zoom_level {
+				float: right;
+				background: #373737;
+				color: #aaa;
+				padding: 1px 7px 0px 7px;
 
-					&:after {
-						content: '%';
-						color: #777;
-						position: relative;
-						left: 2px;
-					}
+				&:after {
+					content: '%';
+					color: #777;
+					position: relative;
+					left: 2px;
 				}
 			}
 		}
 	}
+}
+
+/*
+ * CANVAS
+ */
+.canvas {
+
 }
