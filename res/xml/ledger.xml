@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<context>
+		<i for="ctx-connection">
+			<i name="Edit" description="Edit connection settings" action=""/>
+			<i type="divider"/>
+			<i name="Remove" description="Remove connection" action=""/>
+		</i>
+		<i for="tabRowDocs"></i>
+		<i for="autofill"></i>
+	</context>
+</data>

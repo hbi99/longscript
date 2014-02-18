@@ -3,9 +3,24 @@
 <head>
 <meta charset="utf-8" />
 <title>Longscript</title>
-<link rel="stylesheet" type="text/css" href="res/css/style.css" />
+
+<link href='http://fonts.googleapis.com/css?family=Over+the+Rainbow' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="res/css/sys.css" />
+<link rel="stylesheet" type="text/css" href="res/css/app.css" />
+
+<script type="text/javascript" src="res/js/utils/extras.js"></script>
+<script type="text/javascript" src="res/js/utils/junior.js"></script>
 <script type="text/javascript" src="res/js/sys.js"></script>
-<script type="text/javascript" src="res/js/app.js"></script>
+<script type="text/javascript" src="res/js/utils/shell.js"></script>
+<script type="text/javascript" src="res/js/utils/bank.js"></script>
+<script type="text/javascript" src="res/js/utils/context.js"></script>
+<script type="text/javascript" src="res/js/utils/events.js"></script>
+<!-- app specific -->
+<script type="text/javascript" src="res/js/app/app.js"></script>
+<script type="text/javascript" src="res/js/app/assets.js"></script>
+<script type="text/javascript" src="res/js/app/navigator.js"></script>
+<script type="text/javascript" src="res/js/app/canvas.js"></script>
+<script type="text/javascript" src="res/js/app/timeline.js"></script>
 </head>
 <body>
 
@@ -39,9 +54,7 @@
 	<section class="area panel assets">
 		<div class="title">Assets</div>
 		<div class="content">
-			<ul>
-				<li></li>
-			</ul>
+			<ul class="fonts"></ul>
 		</div>
 		<ul class="options">
 			<li><figure class="icon-trashcan"></figure></li>
@@ -89,6 +102,25 @@
 		</div>
 	</section>
 </section>
+
+
+
+<!-- CONTEXT MENU 
+hasSub
+checked
+disabled
+-->
+<div class="menus">
+
+<div class="context-menu">
+	<div class="cntnr">
+		<div class="menu-item" data-id="1">test </div>
+		<div class="divider">&#160;</div>
+		<div class="menu-item" data-id="2">test 2</div>
+	</div>
+</div>
+
+</div>
 
 </body>
 </html>
