@@ -1,7 +1,7 @@
 Longscript
 ==========
 
-Longscript App - native application for MacOS X, Windows and Linux for creating HTML5 animations out of still pictures.
+Longscript App - native application for MacOS X, Windows and Linux for creating HTML5 animations out of fonts and still pictures (such as jpg, png, etc).
 See examples here;
 http://longscript.com/gallery.php
 
