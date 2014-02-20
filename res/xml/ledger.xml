@@ -1,12 +1,23 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
+	<alias>
+		<i object="fs" long="sys.fs" type="[SYS]" description="Filesystem.">
+			<i switch="s" name="save" arg="NONE" description="Save file"/>
+		</i>
+		<i object="popup" long="sys.popup" type="[SYS]" description="Opens dialog windows.">
+			<i switch="o" name="open" arg="[name]" description="."/>
+			<i switch="c" name="close" arg="NONE" description="."/>
+			<i switch="b" name="btnClick" arg="[which]" description="."/>
+		</i>
+	</alias>
 	<context>
-		<i for="ctx-connection">
+		<i for="workarea-canvas">
+			<i name="Edit" description="Edit connection settings" action=""/>
+			<i name="Edit" description="Edit connection settings" action=""/>
+			<i name="Edit" description="Edit connection settings" action=""/>
 			<i name="Edit" description="Edit connection settings" action=""/>
 			<i type="divider"/>
 			<i name="Remove" description="Remove connection" action=""/>
 		</i>
-		<i for="tabRowDocs"></i>
-		<i for="autofill"></i>
 	</context>
 </data>

@@ -15,6 +15,7 @@
 <script type="text/javascript" src="res/js/utils/context.js"></script>
 <script type="text/javascript" src="res/js/utils/events.js"></script>
 <script type="text/javascript" src="res/js/utils/filesystem.js"></script>
+<script type="text/javascript" src="res/js/utils/popup.js"></script>
 <!-- app specific -->
 <script type="text/javascript" src="res/js/app/app.js"></script>
 <script type="text/javascript" src="res/js/app/assets.js"></script>
@@ -29,7 +30,7 @@
 		
 	</section>
 	
-	<section class="area panel canvas">
+	<section class="area panel canvas" data-context="workarea-canvas">
 		<div class="title">"hello_white.png"</div>
 		<div class="content">
 
@@ -104,23 +105,29 @@
 </section>
 
 
-
-<!-- CONTEXT MENU 
-hasSub
-checked
-disabled
--->
-<div class="menus">
-
-<div class="context-menu">
-	<div class="cntnr">
-		<div class="menu-item" data-id="1">test </div>
-		<div class="divider">&#160;</div>
-		<div class="menu-item" data-id="2">test 2</div>
+<!-- POPUP -->
+<div class="app-cover hideMe" data-el="app_cover" data-cmd="popup -c"></div>
+<div class="popup multi hideMe" data-el="multi">
+	<figure class="LIVE icon-remove" data-cmd="popup -c"></figure>
+	<div class="panel-title" data-el="multi_title">1212&#160;</div>
+	<div class="pop-content" data-el="multi_text">1212&#160;</div>
+	<div class="button-row">
+		<div class="button btn-cancel" data-cmd="popup -b cancel">Cancel</div>
+		<div class="button btn-ok" data-cmd="popup -b ok">Ok</div>
 	</div>
 </div>
 
-</div>
+
+<!-- CONTEXT MENU -->
+<div class="menus"><!--
+	<div class="context-menu">
+		<div class="cntnr">
+			<div class="menu-item" data-id="1">test </div>
+			<div class="divider">&#160;</div>
+			<div class="menu-item" data-id="2">test 2</div>
+		</div>
+	</div>
+--></div>
 
 </body>
 </html>

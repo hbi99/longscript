@@ -21,19 +21,10 @@ sys.shell = {
 			}
 			cmd = this.dataset['cmd']
 		}
-		if (vanguard.el.floatFld) vanguard.el.floatFld.blur();
+		if (sys.app.el.floatFld) sys.app.el.floatFld.blur();
 
 		sys.shell.exec(cmd);
 		return false;
-	},
-	regCmd: function(xStr) {
-		var parser = new DOMParser(),
-			xDoc = parser.parseFromString('<data>'+ xStr +'</data>', 'text/xml'),
-			xAlias = sys.fileSystem.xml.selectSingleNode('//alias');
-		var oCmd = xDoc.selectNodes('//data/*');
-		for (var i=0, il=oCmd.length; i<il; i++) {
-			xAlias.appendChild( oCmd[i] );
-		}
 	},
 	err: function(cmd, errnum) {
 		return {
@@ -56,14 +47,14 @@ sys.shell = {
 		}
 		args = args.slice(2,-1).split("' '");
 		if (args.length > 0 && args[0].slice(0,1) === '-') {
-			xCmd = sys.fileSystem.xml.selectNodes('//alias/*[@object="'+ oCmd[0] +'"]/*[@switch="'+ args[0].slice(1) +'"]');
+			xCmd = sys.fs.xml.selectNodes('//alias/*[@object="'+ oCmd[0] +'"]/*[@switch="'+ args[0].slice(1) +'"]');
 			if (xCmd.length === 0) return this.err(cmd, 101);
 			oCmd[0] = xCmd[0].getAttribute('name');
 			args = args.splice(1);
 		}
-		xCmd = xCmd || sys.fileSystem.xml.selectNodes('//alias//*[@name="'+ oCmd[0] +'"]');
+		xCmd = xCmd || sys.fs.xml.selectNodes('//alias//*[@name="'+ oCmd[0] +'"]');
 		if (!xCmd.length) {
-			xAlias = sys.fileSystem.xml.selectSingleNode('//alias//*[@alias="'+ oCmd[0] +'"]');
+			xAlias = sys.fs.xml.selectSingleNode('//alias//*[@alias="'+ oCmd[0] +'"]');
 			if (xAlias) {
 				xCmd = [xAlias];
 				oCmd[0] = xAlias.getAttribute('name');

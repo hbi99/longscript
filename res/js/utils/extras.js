@@ -1,5 +1,32 @@
 
 /***  COMMON  ***/
+var transform = function(options) {
+	var fragment,
+		ownerDocument,
+		treeTemplate = sys.fs.xsl.selectSingleNode('//xsl:template[@name="'+ options.template +'"]'),
+		xslPrc = new XSLTProcessor();
+
+	if (options.template === 'menu') {
+		var xMenu = sys.fs.xml.selectSingleNode( options.match );
+		if (xMenu.getAttribute('invoke')) {
+			options.match = '//context//*[@for=\''+ xMenu.getAttribute('invoke') +'\']';
+		}
+	}
+	treeTemplate.setAttribute('match', options.match);
+	xslPrc.importStylesheet(sys.fs.xsl);
+
+	ownerDocument = document.implementation.createDocument("", "", null);
+	fragment = xslPrc.transformToFragment(sys.fs.xml, ownerDocument);
+	treeTemplate.removeAttribute('match');
+	// trim fragment
+	if (fragment.firstChild && fragment.firstChild.nodeType === 3) fragment.removeChild(fragment.firstChild);
+	if (fragment.lastChild && fragment.lastChild.nodeType === 3) fragment.removeChild(fragment.lastChild);
+	
+	if (options.silent) return fragment;
+	else if (!options.target) return fragment.childNodes[0];
+	else DOM(options.target).html(fragment.xml);
+}
+
 var matchesSelector = function(elem, selector) {
 	var html = document.documentElement;
 	return (html.matchesSelector ||

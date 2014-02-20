@@ -12,8 +12,8 @@ sys.context = {
 		this.fastVars.rootEl.html('');
 	},
 	createMenu: function(oMenu) {
-		//var xTemplate = sys.fileSystem.xml.createElement('i');
-		var xDoc = sys.fileSystem.xml,
+		//var xTemplate = sys.fs.xml.createElement('i');
+		var xDoc = sys.fs.xml,
 			xTarget = xDoc.selectSingleNode('//*[@for="'+ oMenu._settings.target +'"]'),
 			xTemplate = xDoc.ownerDocument.createElement('i'),
 			xMenu, node, attr;
@@ -29,7 +29,7 @@ sys.context = {
 				}
 				xTarget.appendChild(xMenu);
 			}
-			sys.fileSystem.tagIds();
+			sys.fs.tagIds();
 		}
 		oMenu._settings.srcTarget.setAttribute('data-context', 'exception');
 		this.doEvent.call({
@@ -45,7 +45,7 @@ sys.context = {
 	},
 	doEvent: function(event) {
 		var _sys = sys,
-			xDoc = _sys.fileSystem.xml,
+			xDoc = _sys.fs.xml,
 			context = _sys.context;
 
 		if (event.ctrlKey) return;
@@ -65,7 +65,7 @@ sys.context = {
 					xCtx = xDoc.selectSingleNode('//context//*[@vid="'+ ctxId +'"]');
 
 				// if there is a description, display it in status
-				vanguard.stat(xCtx ? xCtx.getAttribute('description') : '');
+				//vanguard.stat(xCtx ? xCtx.getAttribute('description') : '');
 
 				jr('.menu-item', pMenu).removeClass('down');
 				if (pMenu.pMenuEl) {
@@ -77,10 +77,10 @@ sys.context = {
 				}
 				if (this.className.indexOf('hasSub') === -1) return;
 				
-				var subMenu = context.fastVars.rootEl.append(ajax.transform({
-						match: '//context//*[@vid=\''+ ctxId +'\']',
-						template: 'menu'
-					}).xml),
+				var subMenu = context.fastVars.rootEl.append(transform({
+							match: '//context//*[@vid=\''+ ctxId +'\']',
+							template: 'menu'
+						}).xml),
 					oHeight = subMenu.height(),
 					oWidth = subMenu.width(),
 					top = pMenu.offsetTop + this.offsetTop,
@@ -98,13 +98,13 @@ sys.context = {
 			case 'contextmenu':
 				if (!this.dataset || !this.dataset['context']) return;
 				var menuXPath = '//context//*[@for=\''+ this.dataset['context'] +'\']',
-					menuXNode = _sys.fileSystem.xml.selectSingleNode(menuXPath);
+					menuXNode = _sys.fs.xml.selectSingleNode(menuXPath);
 				if (!menuXNode) return;
 
-				var rootMenu = context.fastVars.rootEl.html(ajax.transform({
-						match: menuXPath,
-						template: 'menu'
-					}).xml).find('.context-menu'),
+				var rootMenu = context.fastVars.rootEl.html(transform({
+							match: menuXPath,
+							template: 'menu'
+						}).xml).find('.context-menu'),
 					oHeight = rootMenu.height(),
 					oWidth = rootMenu.width(),
 					top = event.clientY,

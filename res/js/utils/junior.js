@@ -104,6 +104,18 @@
             }
             return arr;
         },
+        top: function() {
+            return parseInt(this.css('top'), 10);
+        },
+        left: function() {
+            return parseInt(this.css('left'), 10);
+        },
+        height: function() {
+            return parseInt(this.css('height'), 10);
+        },
+        width: function() {
+            return parseInt(this.css('width'), 10);
+        },
         css: function (name, value) {
             for (var i=0, il=this.length, fixedName; i<il; i++) {
                 if (value) {
