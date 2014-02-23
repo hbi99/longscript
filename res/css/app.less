@@ -1,21 +1,22 @@
 
 
-@appBg:			url(../img/bg_app2.png);
-@cvsBg:			url(../img/bg_checkers.png);
-@boxBgColor:	#2a2a2a;
-@boxFace:		#454545;
-@boxContent:	#636363;
-@boxFocusHl:	#ccc;
+@appBg:				url(../img/bg_app2.png);
+@cvsBg:				url(../img/bg_checkers.png);
+@boxBgColor:		#2a2a2a;
+@boxFace:			#454545;
+@boxContent:		#636363;
+@boxFocusHl:		#ccc;
 
-@popCover:		#2a2a2a;
-@popTitleColor:	#d9dde2;
-@popBtnTextColor: #fff;
-
-@menuOver:		#FFF;
-@menuOverBg:	#F90;
-@menuText:		#374a63;
-
-@fontFamily:	Helvetica;
+@popCover:			#2a2a2a;
+@popTitleColor:		#ccc;
+@popContentColor:	#aaa;
+@popBtnTextColor:	#fff;
+@tabActiveText:		#fff;
+@menuOver:			#FFF;
+@menuOverBg:		#F90;
+@menuText:			#374a63;
+@fontFamily:		'regular';
+@fontBold:			'bold';
 
 
 @import 'sys.less';
@@ -24,10 +25,10 @@
 .area {
 	&.top {
 		top: 0px;
-		height: 30px;
+		height: 22px;
 	}
 	&.canvas {
-		top: 33px;
+		top: 25px;
 		bottom: 176px;
 		right: 283px;
 
@@ -44,13 +45,13 @@
 		}
 	}
 	&.nav {
-		top: 33px;
+		top: 25px;
 		left: auto;
 		height: 200px;
 		width: 280px;
 	}
 	&.assets {
-		top: 236px;
+		top: 228px;
 		bottom: 176px;
 		right: 19px;
 		left: auto;
@@ -79,6 +80,7 @@
 		right: 19px;
 		border-radius: 5px 0px 0px 5px;
 
+		.content_fixed,
 		.content {
 			top: 4px;
 			bottom: 3px;
@@ -141,11 +143,12 @@
 		padding: 2px 1px 1px 1px;
 		margin: 0px 7px 0px 0px;
 		cursor: pointer;
+		-webkit-transition: 100ms all ease-in-out;
 
 		figure {
 			margin-right: 3px;
 		}
-		&:hover:not(.search) {
+		&:hover:not(.search):not(.active) {
 			color: #eee;
 		}
 		&.active {
@@ -213,6 +216,7 @@
 		border-bottom: 1px solid;
 		border-color: #555;
 		cursor: pointer;
+		-webkit-transition: 100ms all ease-in-out;
 
 		&:hover {
 			background: rgba(0,0,0,0.1);

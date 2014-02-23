@@ -11,8 +11,7 @@ sys.popup = {
 	multi: function(obj) {
 		var els = sys.app.el,
 			dlgType = obj.type || 'alert';
-			console.log(els.multi_title);
-		jr(els.multi_title).html(obj.title || sys.language.getPhrase('vanguard_says'));
+		jr(els.multi_title).html(obj.title || sys.language.getPhrase('app_says'));
 		jr(els.multi_text).html(obj.text);
 
 		jr(els.layout).addClass('blur');

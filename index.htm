@@ -6,17 +6,20 @@
 
 <link href='http://fonts.googleapis.com/css?family=Over+the+Rainbow' rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="res/css/app.css" />
-
-<script type="text/javascript" src="res/js/utils/extras.js"></script>
-<script type="text/javascript" src="res/js/utils/junior.js"></script>
-<script type="text/javascript" src="res/js/sys.js"></script>
+<!-- framework -->
+<script type="text/javascript" src="res/js/utils/sys.js"></script>
 <script type="text/javascript" src="res/js/utils/shell.js"></script>
 <script type="text/javascript" src="res/js/utils/bank.js"></script>
 <script type="text/javascript" src="res/js/utils/context.js"></script>
 <script type="text/javascript" src="res/js/utils/events.js"></script>
 <script type="text/javascript" src="res/js/utils/filesystem.js"></script>
 <script type="text/javascript" src="res/js/utils/language.js"></script>
+<script type="text/javascript" src="res/js/utils/scrollbars.js"></script>
+<script type="text/javascript" src="res/js/utils/nobs.js"></script>
 <script type="text/javascript" src="res/js/utils/popup.js"></script>
+<!-- misc -->
+<script type="text/javascript" src="res/js/utils/extras.js"></script>
+<script type="text/javascript" src="res/js/utils/junior.js"></script>
 <!-- app specific -->
 <script type="text/javascript" src="res/js/app/app.js"></script>
 <script type="text/javascript" src="res/js/app/assets.js"></script>
@@ -28,7 +31,24 @@
 
 <section class="app-layout" data-el="layout">
 	<section class="area top">
+		<div class="buttonGroup tools btn-extra left">
+			<figure class="LIVE button box left icon-new_file add-chevron disabled" data-el="newFileTool" title="New file"></figure>
+			<figure class="LIVE button box left icon-open_file" data-cmd="proj -d" title="Open folder"></figure>
+			<figure class="LIVE button box left icon-save" data-cmd="fs -s" title="Save"></figure>
+			<figure class="LIVE button box left icon-save" data-cmd="fs -sa" title="Save all"></figure>
+		</div>
 		
+		<div class="buttonGroup btn-extra themeButtons left hideMe">
+			<div>Theme</div>
+			<span data-cmd="gui -x cmd_theme_1" class="LIVE button box left theme_1 active">1</span>
+			<span data-cmd="gui -x cmd_theme_2" class="LIVE button box left theme_2">2</span>
+			<span data-cmd="gui -x cmd_theme_3" class="LIVE button box left theme_3">3</span>
+			<figure data-cmd="cmix -o" class="LIVE button box left icon-open_file" title="Settings"></figure>
+		</div>
+		<span data-cmd="gui -x cmd_toggleHotzones" class="LIVE TOGGLE btn_toggle toggle_off right toggleHotzones"><span>Hotzones</span></span>
+		<!-- HOTKEYS TOGGLE 
+		<span class="LIVE TOGGLE btn_toggle toggle_off right"><span>Hotkeys</span></span>
+		-->
 	</section>
 	
 	<section class="area panel canvas" data-context="workarea-canvas">
@@ -71,8 +91,7 @@
 	</section>
 
 	<section class="area timeline panel">
-		<div class="title">Timeline</div>
-		<div class="content left">
+		<div class="content_fixed left">
 
 			<ul class="layers">
 				<li>
@@ -110,14 +129,29 @@
 <div class="app-cover hideMe" data-el="app_cover" data-cmd="popup -c"></div>
 <div class="popup multi hideMe" data-el="multi">
 	<figure class="LIVE icon-remove" data-cmd="popup -c"></figure>
-	<div class="panel-title" data-el="multi_title">1212&#160;</div>
-	<div class="pop-content" data-el="multi_text">1212&#160;</div>
+	<div class="panel-title" data-el="multi_title">&#160;</div>
+	<div class="pop-content" data-el="multi_text">&#160;</div>
 	<div class="button-row">
 		<div class="button btn-cancel" data-cmd="popup -b cancel">Cancel</div>
 		<div class="button btn-ok" data-cmd="popup -b ok">Ok</div>
 	</div>
 </div>
 
+<!-- INLINE DIALOGS -->
+<div class="inline-menu arrBR">
+	<div class="cntnr">
+		<div class="nob-ctrl">
+			<div class="nob-title">Opacity</div>
+			<canvas width="44" height="34" class="nob" data-el="nob_opacity" data-value="0" data-change="longscript.paint.opacity();" data-color="#18a5ff"></canvas>
+			<div class="nob-value"><span>0</span>%</div>
+		</div>
+		<div class="nob-ctrl">
+			<div class="nob-title">Scale</div>
+			<canvas width="44" height="34" class="nob" data-el="nob_scale" data-value="0" data-change="longscript.paint.zoom();"></canvas>
+			<div class="nob-value"><span>100</span>%</div>
+		</div>
+	</div>
+</div>
 
 <!-- CONTEXT MENU -->
 <div class="menus"><!--

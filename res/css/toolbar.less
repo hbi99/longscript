@@ -1,0 +1,194 @@
+
+/**	TOOLBAR	**/
+.left {float: left;}
+.right {float: right;}
+
+.buttonGroup {
+	position: relative;
+	display: inline-block;
+	background: @boxFace;
+	color: lighten(@boxContent, 10%);
+	height: 22px;
+	padding: 0px 1px 0px 5px;
+	white-space: nowrap;
+	-webkit-border-radius: 3px;
+	-webkit-user-select: none;
+	
+	.button.over {
+		color: @tabActiveText;
+	}
+	
+	&.left {margin-right: 3px;}
+	&.right {margin-left: 3px;}
+	&.tools {
+		padding: 0px 1px 0px 1px;
+
+		&.btn-extra	{
+			figure:last-child {
+				top: 0px;
+
+				&:before {
+				}
+			}
+		}
+	}
+	&.themeButtons {
+		width: 113px;
+		margin-left: 84px;
+		
+		.button:not(figure) {
+			font-size: 11px;
+			font-family: @fontBold;
+			padding-top: 1px;
+			padding-bottom: 1px;
+		}
+	}
+
+	&.btn-extra	{
+		margin-right: 25px;
+
+		figure:last-child {
+			background: transparent;
+			position: absolute;
+			left: auto;
+			right: -22px;
+			top: -1px;
+			z-index: 2;
+			opacity: .75;
+
+			&:before {
+			}
+		}
+	}
+	&.btn-extra:after {
+		content: ' ';
+		display: inline-block;
+		background: fadeout(@boxFace, 37%);
+		-webkit-border-radius: 0px 3px 3px 0px;
+		position: absolute;
+		top: 0px;
+		right: -22px;
+		width: 24px;
+		height: 22px;
+	}
+
+	figure.box {
+		top: 0px;
+		color: @boxContent;
+		font-size: 23px;
+		line-height: 17px;
+		height: 16px;
+		padding-top: 1px;
+		padding-bottom: 1px;
+
+		&.add-chevron {
+			width: 27px;
+
+			&:before {
+				width: 29px;
+			}
+			&:after {
+				content: '\e612';
+				position: relative;
+				top: -5px;
+				left: 1px;
+				margin-right: 3px;
+				font: 13px/1px 'icomoon';
+				-webkit-font-smoothing: antialiased;
+			}
+		}
+		&.disabled {
+			cursor: default;
+			color: darken(@boxFace, 7%);
+			text-shadow: 0px 1px 0px lighten(@boxFace, 13%);
+		}
+	}
+	span.box {
+		margin: 2px 1px 0px 1px;
+	}
+
+	div {
+		float: left;
+		display: inline-block;
+		margin: 4px 11px 0px 2px;
+		height: 19px;
+		font-family: @fontBold;
+	}
+}
+
+.btn_toggle {
+	position: relative;
+	background: @boxFace;
+	cursor: pointer;
+	padding: 2px;
+	line-height: 17px;
+	display: inline-block;
+	-webkit-border-radius: 3px;
+	-webkit-user-select: none;
+
+	&.toggle_on span {margin: 0px 17px 0px 0px;}
+	&.toggle_off span {margin: 0px 0px 0px 17px;}
+
+	&:before	{
+		content: "\e60b";
+		position: absolute;
+		left: 0px;
+		width: 19px;
+		text-align: center;
+		color: darken(@boxFace, 17%);
+		//text-shadow: 0px 1px 1px lighten(@boxFace, 11%);
+		font: 19px/20px 'icomoon';
+	}
+	&:after	{
+		content: "\e60c";
+		position: absolute;
+		right: 0px;
+		width: 19px;
+		text-shadow: 0px 0px 5px #6c6;
+		text-align: center;
+		color: #0c0;
+		font: 19px/20px 'icomoon';
+	}
+	&.left {margin-right: 3px;}
+	&.right {margin-left: 3px;}
+
+	span {
+		position: relative;
+		background: @boxContent;
+		color: @boxFocusHl;
+		font-family: @fontBold;
+		text-shadow: 0px 1px 1px @boxBgColor;
+		padding: 1px 7px 1px 7px;
+		height: 16px;
+		display: inline-block;
+		z-index: 2;
+		-webkit-user-select: none;
+		-webkit-transition: 220ms all cubic-bezier(0.250, 0.460, 0.450, 0.940);
+		-webkit-border-radius: 2px;
+	}
+}
+.button {
+	-webkit-border-radius: 2px;
+	background: @boxFace;
+	color: @boxContent;
+	text-shadow: 0px 1px 1px @boxBgColor;
+	margin: 2px 2px 0px 2px;
+	padding: 0px 7px 0px 7px;
+	cursor: pointer;
+	display: inline-block;
+	min-width: 83px;
+	height: 17px;
+	text-align: center;
+	line-height: 17px;
+	-webkit-user-select: none;
+	-webkit-transition: 100ms all ease-in-out;
+	
+	&.box		{min-width: 18px; padding: 0px;}
+	&.disabled	{}
+
+	/**	OUDO	**/
+	&.active	{background-color: @boxContent; color: @boxFocusHl;}
+	&.over		{color: @tabActiveText;}
+	&.down		{background-color: @boxBgColor; color: @boxFocusHl; text-shadow: 0px 0px 0px @boxBgColor;}
+	&.up		{background-color: @boxContent; color: @boxFocusHl;}
+}

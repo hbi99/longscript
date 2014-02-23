@@ -18,7 +18,7 @@
 						<xsl:attribute name="data-id"><xsl:value-of select="@_id"/></xsl:attribute>
 						<xsl:attribute name="class">LIVE menu-item
 							<xsl:if test="count(./*) &gt; 0 or @invoke">hasSub</xsl:if>
-							<xsl:if test="@isChecked = '1'">checked</xsl:if>
+							<xsl:if test="@checked = '1'">checked</xsl:if>
 							<xsl:if test="@disabled">disabled</xsl:if>
 						</xsl:attribute><xsl:value-of select="@name"/>
 						<xsl:if test="@hotkey"><span><xsl:value-of select="@hotkey"/></span></xsl:if>

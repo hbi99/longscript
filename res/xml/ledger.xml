@@ -18,14 +18,13 @@
 	</alias>
 	<context tag_children="1">
 		<i for="workarea-canvas">
-			<i name="Test" action="popup -a 'new_folder'" description="."/>
+			<i name="Design view" action="" description="." checked="1"/>
+			<i name="Code view" action="" description="."/>
+			<i name="Preview" action="" description="."/>
 			<i type="divider"/>
-			<i name="test">
-				<i name="Remove" action="" description="."/>
-				<i name="Remove" action="" description="." isChecked="1"/>
-				<i name="Remove" action="" description="."/>
-			</i>
 			<i name="Show Developer Tools" action="sys -dev" description="."/>
+			<i type="divider"/>
+			<i name="About&#8230;" action="popup -a 'app_about'" description="."/>
 		</i>
 	</context>
 	<hotkeys>
@@ -33,9 +32,7 @@
 		<i keys="meta+r" pc_keys="ctrl+r" action="sys -r" description="Reloads app"/>
 	</hotkeys>
 	<language>
-		<i id="folder" str="Folder"/>
-		<i id="file" str="File"/>
-		<i id="new_folder" str="New folder"/>
-		<i id="new_file" str="New file"/>
+		<i id="app_says" str="Longscript says&#8230;"/>
+		<i id="app_about" str="Longscript is developed by Hakan Bilgin."/>
 	</language>
 </data>
