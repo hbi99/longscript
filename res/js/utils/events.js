@@ -38,6 +38,19 @@ sys.events = {
 	dispose: function() {
 		this.flushHandlers(document);
 	},
+	registerHotkeys: function() {
+		var _sys = sys,
+			hotkeys = _sys.fs.xml.selectNodes('//hotkeys/*');
+		if (hotkeys.length > 0) {
+			var keys = {};
+			for (var i=0, il=hotkeys.length; i<il; i++) {
+				var hk = (!_sys.isMac && hotkeys[i].getAttribute('pc_keys'))? hotkeys[i].getAttribute('pc_keys') : hotkeys[i].getAttribute('keys') ;
+				keys[hk] = hotkeys[i].getAttribute('action');
+			}
+			_sys.shell.doCmd.keys = keys;
+			jr(document).bind('hotkey', _sys.shell.doCmd);
+		}
+	},
 	flushHandlers: function(e) {
 		var elem = (e.nodeType)? e : e.target;
 		if (!elem.getElementsByTagName) return;
@@ -160,11 +173,10 @@ sys.events = {
 		var type = event.type,
 			el = event.target,
 			dom = jr(),
-			fn_Css = dom.css,
 			fn_hasClass = dom.hasClass,
 			fn_addClass = dom.addClass,
 			fn_removeClass = dom.removeClass,
-			addCn, dragHandlers;
+			addCn;
 		if (fn_hasClass('disabled', this)) return;
 		switch (type) {
 			case 'mousemove': break;

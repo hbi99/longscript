@@ -34,8 +34,14 @@ sys.shell = {
 	},
 	exec: function(cmd) {
 		var oCmd = cmd.split(' '),
-			xAlias, xCmd, fCmd = [], fThis, fFinal, args = '', ret;
-		var isOpen;
+			xAlias,
+			xCmd,
+			fCmd = [],
+			fThis,
+			fFinal,
+			args = '',
+			ret,
+			isOpen;
 		for (var i=1, il=oCmd.length; i<il; i++) {
 			if (isOpen) args += oCmd[i];
 			if (oCmd[i].indexOf("'") > -1) {

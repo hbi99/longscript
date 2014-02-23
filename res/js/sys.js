@@ -6,10 +6,11 @@ require('module')._cache = {};
     'use strict';
 
 	var sys = {
+		isMac: /Mac/.test(navigator.userAgent),
 		init: function() {
 			var gui = require('nw.gui');
 			this.appwin = gui.Window.get();
-			this.appwin.on('close', this.shutdown);
+			//this.appwin.on('close', this.quit);
 			// initate it all
 			for (var name in this) {
 				if (name === 'app') continue;
@@ -27,8 +28,14 @@ require('module')._cache = {};
 			}
 			setTimeout(function() {sys = false;},0);
 		},
-		shutdown: function() {
-
+		quit: function() {
+			window.close();
+		},
+		reload: function() {
+			document.location.reload();
+		},
+		toggle_dev: function() {
+			this.appwin.showDevTools();
 		},
 		extend: function(safe, deposit) {
 			var content;

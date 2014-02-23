@@ -5,9 +5,11 @@
     "author": "Hakan Bilgin",
     "main": "index.htm",
     "window": {
-        "toolbar": true,
-        "width": 660,
-        "height": 500
+        "toolbar": false,
+        "width": 1000,
+        "height": 800,
+        "min_width": 800,
+        "min_height": 600
     },
     "repository": {
         "type": "git",

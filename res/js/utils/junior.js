@@ -5,21 +5,6 @@
 (function(root, document) {
     'use strict';
 
-    if (typeof Object.create !== 'function') {
-        Object.create = function(o, props) {
-            function F() {}
-            F.prototype = o;
-            if (typeof(props) === "object") {
-                for (var prop in props) {
-                    if (props.hasOwnProperty((prop))) {
-                        F[prop] = props[prop];
-                    }
-                }
-            }
-            return new F();
-        };
-    }
-
     var Junior = function() {
         var coll = Object.create(Array.prototype);
         for (var prop in Junior.prototype) {
@@ -32,42 +17,42 @@
     Junior.prototype = {
         find: function(selector, context) {
             var found = [],
-                sval,
-                type,
-                bdown,
-                i, il;
-            context = context || document;
-            if (selector.constructor === Array || (selector.item && selector.item.constructor === Function)) {
+                nthMatch = /\:nth\((\d{1,})\)/,
+                isNth;
+            if (Array.isArray(selector)) {
                 found = selector;
-            } else if (selector.nodeType || selector === window) {
-                found = [selector];
-            } else if (!arguments[1] && this.length > 0) {
-                for (i=0, il=this.length; i<il; i++) {
-                    found = found.concat(Array.prototype.slice.call(this.find(selector, this[i]), 0));
-                }
-            } else {
-                if (!!document.querySelectorAll) {
-                    found = context.querySelectorAll(selector);
+            } else if (selector) {
+                if (selector.nodeType || selector === window) {
+                    found = [selector];
                 } else {
-                    bdown = selector.match(/^./);
-                    if (bdown !== null) bdown = bdown[0];
-                    switch (bdown) {
-                        case '[':
-                            bdown = selector.match( (selector.indexOf('=') > -1) ? /\[([\w-:]+)=(.*?)\]/ : /\[([\w-:]+)\]/ );
-                            type = bdown[1];
-                            if (bdown.length > 2) sval = bdown[2].replace(/"/g, '');
-                            break;
-                        case '#': sval = selector.slice(1); type = 'id'; break;
-                        case '.': sval = selector.slice(1); type = 'className'; break;
-                        default:
-                            type = 'nodeName';
-                            sval = selector;
+                    if (this.length > 0) {
+                        context = this.toArray();
                     }
-                    found = get_children(context, type, sval);
+                    if (context) {
+                        if (typeof(context) === 'string') {
+                            context = document.querySelectorAll(context);
+                        }
+                    }
+                    context = context || document;
+                    if (!Array.isArray(context) && !context.find) {
+                        context = [context];
+                    }
+                    isNth = selector.match(nthMatch);
+                    if (isNth !== null) {
+                        selector = selector.replace(nthMatch, '');
+                    }
+                    for (var i=0, il=context.length; i<il; i++) {
+                        found = found.concat(Array.prototype.slice.call(context[i].querySelectorAll(selector), 0));
+                    }
                 }
             }
-            if (this.length > 0) return jr(found);
-            for (i=0, il=found.length; i<il; i++) {
+            if (isNth && isNth.length === 2) {
+                found = found.splice(isNth[1], 1);
+            }
+            if (this.length > 0) {
+                return jr(found);
+            }
+            for (var i=0, il=found.length; i<il; i++) {
                 Array.prototype.push.call(this, found[i]);
             }
             return this;
@@ -88,14 +73,22 @@
             }
             return i;
         },
-        hasClass: function(name) {
-            return this.length ? matchesSelector(this[0], '.'+ name) : false;
-        },
-        addClass: function(names) {
-            for (var i=0, il=this.length; i<il; i++) {
-                this[i].className = this[i].className.split(/\s+/).concat(names.split(/\s+/)).removeDuplicates().join(' ');
+        hasClass: function(names, el) {
+            var arr = (el)? [el] : this,
+                selector = '.'+ names.split(' ').join('.');
+            for (var i=0, il=arr.length; i<il; i++) {
+                if (matchesSelector(arr[i], selector)) {
+                    return true;
+                }
             }
-            return this;
+            return false;
+        },
+        addClass: function(names, el) {
+            var arr = (el)? [el] : this;
+            for (var i=0, il=arr.length; i<il; i++) {
+                arr[i].className = arr[i].className.split(/\s+/).concat(names.split(/\s+/)).removeDuplicates().join(' ');
+            }
+            return arr;
         },
         removeClass: function(names, el) {
             var arr = (el)? [el] : this;
@@ -116,14 +109,19 @@
         width: function() {
             return parseInt(this.css('width'), 10);
         },
-        css: function (name, value) {
-            for (var i=0, il=this.length, fixedName; i<il; i++) {
+        css: function (name, value, el) {
+            var arr = (el)? [el] : this,
+                fn_balance = sys.bank.balance,
+                el_balance,
+                fixedName;
+            for (var i=0, il=arr.length; i<il; i++) {
                 if (value) {
                     fixedName = fixStyleName(name);
-                } else {
-                    switch (typeof (name)) {
+                }
+                if (!value) {
+                    switch (typeof(name)) {
                         case 'string':
-                            return getStyle(this[i], name);
+                            return getStyle(arr[i], name);
                         case 'object':
                             for (var key in name) {
                                 fixedName = fixStyleName(key);
@@ -131,9 +129,16 @@
                             }
                             break;
                     }
+                } else if (name && value && arr[i].style[fixedName] !== value) {
+                    arr[i].style[fixedName] = value;
+
+                    el_balance = sys.bank.balance( arr[i] );
+                    if (el_balance && el_balance.events[ 'style.'+ fixedName ]) {
+                        this.trigger('style.'+ fixedName);
+                    }
                 }
             }
-            return this;
+            return arr;
         },
         attr: function (name, value, el) {
             var arr = (el) ? [el] : this,
@@ -431,6 +436,13 @@
                 sys.bank.empty(arr[i], name);
             }
             return arr;
+        },
+        wait: function(msec, callback) {
+            var that = this;
+            setTimeout(function() {
+                callback.call(that);
+            }, msec);
+            return this;
         }
     };
 

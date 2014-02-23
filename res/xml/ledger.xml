@@ -1,23 +1,41 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
 	<alias>
+		<i object="sys" long="sys" type="[SYS]" description="System.">
+			<i switch="r" name="reload" arg="NONE" description="Reloads application."/>
+			<i switch="q" name="quit" arg="NONE" description="Quits application."/>
+			<i switch="dev" name="toggle_dev" arg="NONE" description="Opens developer tools."/>
+		</i>
 		<i object="fs" long="sys.fs" type="[SYS]" description="Filesystem.">
 			<i switch="s" name="save" arg="NONE" description="Save file"/>
 		</i>
 		<i object="popup" long="sys.popup" type="[SYS]" description="Opens dialog windows.">
 			<i switch="o" name="open" arg="[name]" description="."/>
 			<i switch="c" name="close" arg="NONE" description="."/>
+			<i switch="a" name="alert" arg="[name]" description="."/>
 			<i switch="b" name="btnClick" arg="[which]" description="."/>
 		</i>
 	</alias>
-	<context>
+	<context tag_children="1">
 		<i for="workarea-canvas">
-			<i name="Edit" description="Edit connection settings" action=""/>
-			<i name="Edit" description="Edit connection settings" action=""/>
-			<i name="Edit" description="Edit connection settings" action=""/>
-			<i name="Edit" description="Edit connection settings" action=""/>
+			<i name="Test" action="popup -a 'new_folder'" description="."/>
 			<i type="divider"/>
-			<i name="Remove" description="Remove connection" action=""/>
+			<i name="test">
+				<i name="Remove" action="" description="."/>
+				<i name="Remove" action="" description="." isChecked="1"/>
+				<i name="Remove" action="" description="."/>
+			</i>
+			<i name="Show Developer Tools" action="sys -dev" description="."/>
 		</i>
 	</context>
+	<hotkeys>
+		<i keys="meta+q" pc_keys="ctrl+q" action="sys -q" description="Quits app"/>
+		<i keys="meta+r" pc_keys="ctrl+r" action="sys -r" description="Reloads app"/>
+	</hotkeys>
+	<language>
+		<i id="folder" str="Folder"/>
+		<i id="file" str="File"/>
+		<i id="new_folder" str="New folder"/>
+		<i id="new_file" str="New file"/>
+	</language>
 </data>

@@ -11,12 +11,13 @@ sys.popup = {
 	multi: function(obj) {
 		var els = sys.app.el,
 			dlgType = obj.type || 'alert';
+			console.log(els.multi_title);
 		jr(els.multi_title).html(obj.title || sys.language.getPhrase('vanguard_says'));
 		jr(els.multi_text).html(obj.text);
 
 		jr(els.layout).addClass('blur');
-		jr(els.app_cover).removeClass('hidden');
-		jr(els.multi).css({'display': 'block'}).removeClass('hidden').addClass(dlgType);
+		jr(els.app_cover).removeClass('hideMe');
+		jr(els.multi).css({'display': 'block'}).removeClass('hideMe').addClass(dlgType);
 
 		this.active = els.multi;
 		this.activeObject = obj;
@@ -27,9 +28,9 @@ sys.popup = {
 			active = els[name];
 
 		jr(els.layout).addClass('blur');
-		jr(els.app_cover).removeClass('hidden');
+		jr(els.app_cover).removeClass('hideMe');
 		jr(active).css({'display': 'block'}).wait(1, function() {
-			this.removeClass('hidden');
+			this.removeClass('hideMe');
 		});
 
 		this.active = active;
@@ -38,8 +39,8 @@ sys.popup = {
 		var els = sys.app.el;
 		
 		jr(els.layout).removeClass('blur');
-		jr(els.app_cover).addClass('hidden');
-		jr(this.active).addClass('hidden').wait(320, function() {
+		jr(els.app_cover).addClass('hideMe');
+		jr(this.active).addClass('hideMe').wait(320, function() {
 			this.css({'display': 'none'}).removeClass('about alert confirm');
 			if (typeof(callback) === 'function') {
 				callback();

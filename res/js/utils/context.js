@@ -54,7 +54,7 @@ sys.context = {
 
 		switch (event.type) {
 			case 'mousedown':
-				var xMenuItem = xDoc.selectSingleNode('//context//*[@vid="'+ this.dataset['id'] +'"]');
+				var xMenuItem = xDoc.selectSingleNode('//context//*[@_id="'+ this.dataset['id'] +'"]');
 				if (xMenuItem && !xMenuItem.getAttribute('disabled') && xMenuItem.getAttribute('action')) {
 					_sys.shell.exec( xMenuItem.getAttribute('action') );
 				}
@@ -62,7 +62,7 @@ sys.context = {
 			case 'mouseover':
 				var pMenu = this.parentNode.parentNode,
 					ctxId = this.dataset['id'],
-					xCtx = xDoc.selectSingleNode('//context//*[@vid="'+ ctxId +'"]');
+					xCtx = xDoc.selectSingleNode('//context//*[@_id="'+ ctxId +'"]');
 
 				// if there is a description, display it in status
 				//vanguard.stat(xCtx ? xCtx.getAttribute('description') : '');
@@ -78,7 +78,7 @@ sys.context = {
 				if (this.className.indexOf('hasSub') === -1) return;
 				
 				var subMenu = context.fastVars.rootEl.append(transform({
-							match: '//context//*[@vid=\''+ ctxId +'\']',
+							match: '//context//*[@_id=\''+ ctxId +'\']',
 							template: 'menu'
 						}).xml),
 					oHeight = subMenu.height(),

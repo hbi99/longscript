@@ -6,6 +6,8 @@ sys.fs = {
 
 		this.xml = this.load({path: 'res/xml/ledger.xml'}).dom;
 		this.xsl = this.load({path: 'res/xsl/common.xsl'}).dom;
+		
+		sys.events.registerHotkeys();
 	},
 	dispose: function() {
 		
@@ -14,8 +16,20 @@ sys.fs = {
 		
 	},
 	parseXml: function(str) {
-		var parser = new DOMParser();
-		return parser.parseFromString(str, 'text/xml');
+		var parser = new DOMParser(),
+			doc = parser.parseFromString(str, 'text/xml');
+		this.tagIds(doc);
+		return doc;
+	},
+	tagIds: function(doc) {
+		var leafes = doc.selectNodes('//*[@tag_children]//*[not(@_id)]'),
+			now = Date.now(),
+			i = 0,
+			il = leafes.length;
+		for (; i<il; i++) {
+			if (leafes[i].getAttribute('_id')) continue;
+			leafes[i].setAttribute('_id', 'c'+ now + i);
+		}
 	},
 	load: function(file, callback) {
 		var fsApi = this,

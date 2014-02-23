@@ -53,6 +53,12 @@
 .icon-trashcan:before {
   content: "\e609";
 }
+.icon-check:before {
+  content: "\e60a";
+}
+.icon-arrow_right:before {
+  content: "\e60b";
+}
 body {
   cursor: default;
   background-color: #2a2a2a;
@@ -229,7 +235,7 @@ figure {
   top: 100px;
   left: 100px;
   border-radius: 5px;
-  box-shadow: inset 0px -5px 11px #c4c4c4, 0px 0px 1px rgba(69, 69, 69, 0.9299999999999999), 0px 1px 7px rgba(69, 69, 69, 0.9299999999999999);
+  box-shadow: inset 0px -5px 11px #c4c4c4, 0px 0px 11px rgba(69, 69, 69, 0.9299999999999999), 0px 1px 17px rgba(69, 69, 69, 0.9299999999999999);
   z-index: 12;
   cursor: default;
   -webkit-user-select: none;
@@ -294,8 +300,9 @@ figure {
 }
 .context-menu .menu-item {
   position: relative;
-  line-height: 13px;
-  padding: 3px 37px 4px 23px;
+  font-size: 12px;
+  line-height: 16px;
+  padding: 3px 37px 3px 23px;
   color: #374a63;
   text-shadow: 0px 1px 0px #e8e8e8;
 }
@@ -308,9 +315,7 @@ figure {
 .context-menu .menu-item.over {
   color: #ffffff;
   text-shadow: 0px -1px 1px #f09000;
-  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAUCAYAAAC07qxWAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyBpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuMC1jMDYwIDYxLjEzNDc3NywgMjAxMC8wMi8xMi0xNzozMjowMCAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bWxuczp4bXBNTT0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL21tLyIgeG1sbnM6c3RSZWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9zVHlwZS9SZXNvdXJjZVJlZiMiIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENTNSBXaW5kb3dzIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOjBEQ0RBNTM0QzU0MjExRTFCMDc2RDlEMzM3RERCNDRGIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOjBEQ0RBNTM1QzU0MjExRTFCMDc2RDlEMzM3RERCNDRGIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6MERDREE1MzJDNTQyMTFFMUIwNzZEOUQzMzdEREI0NEYiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6MERDREE1MzNDNTQyMTFFMUIwNzZEOUQzMzdEREI0NEYiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz4iK2UDAAAAPUlEQVR42mL8//+/LwMRgAWI5YlV+JtYhb+orvDnwJlItMIfA2f1AIbjL6qnHqIV/iFGISMwKxCjjgEgwAAg8hdIh7XKHQAAAABJRU5ErkJggg==);
-  background-position: 0px 0px;
-  background-repeat: repeat-x;
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 5%, rgba(0, 0, 0, 0) 79%);
 }
 .context-menu .menu-item.over {
   background-color: #ff9900;
@@ -327,18 +332,19 @@ figure {
 }
 .context-menu .menu-item.checked:before {
   position: absolute;
-  top: 5px;
-  left: 6px;
-  font-family: 'vanguard-ide';
-  content: "\f00c";
+  top: 3px;
+  left: 5px;
+  font-family: 'icomoon';
+  font-size: 21px;
+  content: "\e60a";
 }
 .context-menu .menu-item.hasSub:after {
   position: absolute;
-  top: 5px;
-  right: 6px;
-  font-family: 'vanguard-ide';
-  font-size: 10px;
-  content: "\f04b";
+  top: 3px;
+  right: 5px;
+  font-family: 'icomoon';
+  font-size: 17px;
+  content: "\e60b";
 }
 .context-menu .divider {
   height: 2px;
