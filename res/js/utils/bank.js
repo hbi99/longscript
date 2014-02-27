@@ -31,8 +31,7 @@ sys.bank = {
 	},
 	deposit: function(el, name, value) {
 		var id = el[sys.id] = el[sys.id] || ++this.guid,
-			safe = this.vault[id] = this.vault[id] || {},
-			content, key;
+			safe = this.vault[id] = this.vault[id] || {};
 
 		if (typeof(name) === 'object') {
 			sys.extend(safe, name);

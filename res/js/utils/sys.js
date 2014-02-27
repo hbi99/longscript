@@ -6,11 +6,19 @@ require('module')._cache = {};
     'use strict';
 
 	var sys = {
+		el: {},
 		isMac: /Mac/.test(navigator.userAgent),
 		init: function() {
 			var gui = require('nw.gui');
 			this.appwin = gui.Window.get();
 			//this.appwin.on('close', this.quit);
+
+			// collection for fast access
+			var els = this.el,
+				appEls = jr('*[data-el]');
+			for (var i=0, il=appEls.length; i<il; i++) {
+				els[ appEls[i].getAttribute('data-el') ] = appEls[i];
+			}
 			// initate it all
 			for (var name in this) {
 				if (name === 'app') continue;

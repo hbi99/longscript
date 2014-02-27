@@ -16,20 +16,21 @@ sys.popup = {
 
 		jr(els.layout).addClass('blur');
 		jr(els.app_cover).removeClass('hideMe');
-		jr(els.multi).css({'display': 'block'}).removeClass('hideMe').addClass(dlgType);
+		jr(els.multi).css({'display': 'block'}).addClass(dlgType).wait(1, function() {
+			this.addClass('active');
+		});
 
 		this.active = els.multi;
 		this.activeObject = obj;
 	},
 	open: function(name) {
 		var els = sys.app.el,
-			file = sys.fs,
 			active = els[name];
 
 		jr(els.layout).addClass('blur');
 		jr(els.app_cover).removeClass('hideMe');
 		jr(active).css({'display': 'block'}).wait(1, function() {
-			this.removeClass('hideMe');
+			this.addClass('active');
 		});
 
 		this.active = active;
@@ -39,7 +40,7 @@ sys.popup = {
 		
 		jr(els.layout).removeClass('blur');
 		jr(els.app_cover).addClass('hideMe');
-		jr(this.active).addClass('hideMe').wait(320, function() {
+		jr(this.active).removeClass('active').wait(320, function() {
 			this.css({'display': 'none'}).removeClass('about alert confirm');
 			if (typeof(callback) === 'function') {
 				callback();

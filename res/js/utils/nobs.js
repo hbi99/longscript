@@ -4,8 +4,10 @@ sys.nobs = {
 	clickY: 0,
 	clickX: 0,
 	init: function() {
-		var nobs = jr('.nob');
-		for (var i=0, cvs; cvs=nobs[i]; i++) {
+		var nobs = jr('.nob'),
+			i = 0,
+			cvs;
+		for (; cvs=nobs[i]; i++) { // jshint ignore:line
 			cvs.height = cvs.width * 0.9;
 			cvs.valEl = jr('.nob-value span', cvs.parentNode)[0];
 			this.draw(cvs, true);
@@ -18,8 +20,8 @@ sys.nobs = {
 	},
 	dispose: function() {},
 	doEvent: function(event) {
-		var _nob = sys.nobs,
-			bodyStyle = document.body.style;
+		var _nob = sys.nobs;
+			//bodyStyle = document.body.style;
 		switch (event.type) {
 			case 'selectstart':
 				event.preventDefault();
@@ -30,7 +32,7 @@ sys.nobs = {
 				_nob.clickY = event.clientY;
 				_nob.clickX = event.clientX;
 				_nob.orgValue = _nob.el.getAttribute('data-value');
-				bodyStyle.cursor = 'none';
+				//bodyStyle.cursor = 'none';
 				event.preventDefault();
 				break;
 			case 'mousemove':
@@ -41,7 +43,7 @@ sys.nobs = {
 			case 'mouseup':
 				if (!_nob.el) return;
 				_nob.el = false;
-				bodyStyle.cursor = '';
+				//bodyStyle.cursor = '';
 				break;
 		}
 	},

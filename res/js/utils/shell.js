@@ -19,7 +19,7 @@ sys.shell = {
 			if (event.target.className.indexOf('button') > -1) {
 				event.preventDefault();
 			}
-			cmd = this.dataset['cmd']
+			cmd = this.dataset.cmd;
 		}
 		if (sys.app.el.floatFld) sys.app.el.floatFld.blur();
 
@@ -32,7 +32,7 @@ sys.shell = {
 			error: (typeof(errnum) === 'number')? this.errorStr[errnum] : errnum
 		};
 	},
-	exec: function(cmd) {
+	exec: function(cmd, getFunc) {
 		var oCmd = cmd.split(' '),
 			xAlias,
 			xCmd,
@@ -74,12 +74,13 @@ sys.shell = {
 			fCmd.push(oCmd[0]);
 		}
 		fFinal = window;
-		for (var i=0, il=fCmd.length; i<il; i++) {
+		for (i=0, il=fCmd.length; i<il; i++) {
 			fFinal = fFinal[fCmd[i]];
 			if (i === il-2) fThis = fFinal;
 			if (!fFinal) return this.err(cmd, 103);
 		}
 		if (typeof(fFinal) !== 'function') return this.err(cmd, 101);
+		if (getFunc) return fFinal.bind(fThis);
 		ret = fFinal.apply(fThis, args);
 		return typeof(ret) === 'object'? ret: { cmd: cmd, ret: ret };
 	}

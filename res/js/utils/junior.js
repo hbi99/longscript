@@ -18,7 +18,9 @@
         find: function(selector, context) {
             var found = [],
                 nthMatch = /\:nth\((\d{1,})\)/,
-                isNth;
+                isNth,
+                i,
+                il;
             if (Array.isArray(selector)) {
                 found = selector;
             } else if (selector) {
@@ -41,7 +43,7 @@
                     if (isNth !== null) {
                         selector = selector.replace(nthMatch, '');
                     }
-                    for (var i=0, il=context.length; i<il; i++) {
+                    for (i=0, il=context.length; i<il; i++) {
                         found = found.concat(Array.prototype.slice.call(context[i].querySelectorAll(selector), 0));
                     }
                 }
@@ -52,7 +54,7 @@
             if (this.length > 0) {
                 return jr(found);
             }
-            for (var i=0, il=found.length; i<il; i++) {
+            for (i=0, il=found.length; i<il; i++) {
                 Array.prototype.push.call(this, found[i]);
             }
             return this;
@@ -111,7 +113,6 @@
         },
         css: function (name, value, el) {
             var arr = (el)? [el] : this,
-                fn_balance = sys.bank.balance,
                 el_balance,
                 fixedName;
             for (var i=0, il=arr.length; i<il; i++) {
@@ -180,7 +181,7 @@
             }
             return jr(found);
         },
-        select: function (types, callback) {
+        select: function () {
             this[0].focus();
             this[0].select();
             return this;
@@ -211,13 +212,16 @@
                 type = types.split(/\s+/),
                 i=0, il=arr.length,
                 j=0, jl=type.length,
-                isNative, isStyle, event, el, listener;
+                isNative,
+                isStyle,
+                event,
+                listener;
 
             for (; j<jl; j++) {
                 isNative = sys.events.nativeEvents.indexOf(type[j]) > -1;
                 isStyle = type[j].indexOf('style.') > -1;
                 if (isNative) {
-                    event = document.createEvent('MouseEvents'),
+                    event = document.createEvent('MouseEvents');
                     event.initEvent(type[j], true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
                 } else {
                     event = document.createEvent('Event');
@@ -271,9 +275,10 @@
             var arr = (el)? [el] : this,
                 new_arr = [],
                 isStr = typeof(source) === 'string',
-                currEl, currParentEl, isNext, isPrev,
                 div = document.createElement('div'),
-                moveEl, movedEl, moveAccNr;
+                moveEl,
+                movedEl,
+                moveAccNr;
             if (isStr) div.innerHTML = source;
             else {
                 source = (source.nodeType)? source : source[0];
@@ -371,8 +376,9 @@
             return jr(found);
         },
         nextPrev: function(selector, direction) {
-            var selector = selector || '*',
-                found = [], match, el;
+            var found = [],
+                el;
+            selector = selector || '*';
             for (var i=0, il=this.length; i<il; i++) {
                 el = this[i];
                 while (el) {

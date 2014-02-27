@@ -1,3 +1,4 @@
+/* jshint unused:false*/
 
 /***  COMMON  ***/
 var transform = function(options) {
@@ -24,8 +25,8 @@ var transform = function(options) {
 	
 	if (options.silent) return fragment;
 	else if (!options.target) return fragment.childNodes[0];
-	else DOM(options.target).html(fragment.xml);
-}
+	else jr(options.target).html(fragment.xml);
+};
 
 var matchesSelector = function(elem, selector) {
 	var html = document.documentElement;
@@ -64,11 +65,11 @@ var getDim = function(el, a, v) {
 	a = a || 'nodeName';
 	v = v || 'BODY';
 	var p = {w:el.offsetWidth, h:el.offsetHeight, t:0, l:0, obj:el};
-	while (el && el[a] != v && (el.getAttribute && el.getAttribute(a) != v)) {
-		if (el == document.firstChild) return null;
+	while (el && el[a] !== v && (el.getAttribute && el.getAttribute(a) !== v)) {
+		if (el === document.firstChild) return null;
 		p.t += el.offsetTop - el.scrollTop;
 		p.l += el.offsetLeft - el.scrollLeft;
-		if (el.scrollWidth > el.offsetWidth && el.style.overflow == 'hidden') {
+		if (el.scrollWidth > el.offsetWidth && el.style.overflow === 'hidden') {
 			p.w = Math.min(p.w, p.w-(p.w + p.l - el.offsetWidth - el.scrollLeft));
 		}
 		el = el.offsetParent;
@@ -97,12 +98,14 @@ var isAdjacentSibling = function(el1, el2) {
 };
 
 /***  EASING FUNCTIONS  ***/
+/* jshint ignore:start */
 var Tween = {
 	linear: function(t,b,c,d) {return c*t/d+b;},
 	easeIn: function(t,b,c,d) {return c*(t/=d)*t*t+b;},
 	easeOut: function(t,b,c,d) {return c*((t=t/d-1)*t*t+1)+b;},
 	easeInOut: function(t,b,c,d) {return ((t/=d/2)<1)? c/2*t*t*t+b : c/2*((t-=2)*t*t+2)+b;}
 };
+/* jshint ignore:end */
 
 /***  REQUEST ANIMATION FRAME  ***/
 if (!window.requestAnimationFrame) {
@@ -175,7 +178,7 @@ if (!Array.prototype.hasOwnProperty('shuffle')) {
 			this.push(s.pop());
 		}
 		return this;
-	}
+	};
 }
 if (!Array.prototype.hasOwnProperty('removeDuplicates')) {
 	Array.prototype.removeDuplicates = function() {
@@ -186,16 +189,16 @@ if (!Array.prototype.hasOwnProperty('removeDuplicates')) {
 			}
 		});
 		return unique;
-	}
+	};
 }
 if (!Array.prototype.hasOwnProperty('difference')) {
 	Array.prototype.difference = function(a) {
-		return this.filter(function(i) {return !(a.indexOf(i) > -1);});
+		return this.filter(function(i) {return (a.indexOf(i) === -1);});
 	};
 }
 if(!Array.hasOwnProperty('isArray')) {
 	Array.isArray = function(arg) {
-		return Object.prototype.toString.call(arg) == '[object Array]';
+		return Object.prototype.toString.call(arg) === '[object Array]';
 	};
 }
 
@@ -218,26 +221,6 @@ String.prototype.pad = function(i, c) {
 	c = c || ' ';
 	for (; s.length<i; s=c+s);
 	return s;
-};
-String.prototype.formatXml = function(pad) {
-	var s = this.replace(/(>)(<)(\/*)/g, '$1\n$2$3')
-				.replace(/ *(.*) +\n/g, '$1\n')
-				.replace(/(<.+>)(.+\n)/g, '$1\n$2'),
-		indent = 0, lines = s.split('\n'), lastType = 'other', output = '',
-		transitions = {'single->single':0,'single->closing':-1,'single->opening':0,'single->other':0,'closing->single':0,'closing->closing':-1,'closing->opening':0,'closing->other':0,'opening->single':1,'opening->closing':0,'opening->opening':1,'opening->other':1,'other->single':0,'other->closing':-1,'other->opening':0,'other->other':0};
-	pad = pad || '\t';
-	for (var i=0, ln; ln=lines[i]; i++) {
-		var single = Boolean(ln.match(/<.+\/>/)),
-			closing = Boolean(ln.match(/<\/.+>/)),
-			opening = Boolean(ln.match(/<[^!].*>/)),
-			type = single? 'single' : (closing? 'closing' : (opening? 'opening' : 'other')),
-			fromTo = lastType +'->'+ type,
-			padding = '', lastType = type;
-		indent += transitions[fromTo];
-		for (var j=0; j<indent; j++) padding += pad;
-		output += padding + ln + '\n';
-	}
-	return output;
 };
 
 /***  EXTEND NUMBER  ***/

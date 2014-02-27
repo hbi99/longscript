@@ -7,8 +7,7 @@ sys.context = {
 
 		jr(document).on('contextmenu', 'body, *[data-context]', sys.context.doEvent);
 	},
-	clear: function(target) {
-		//console.log( target );
+	clear: function() {
 		this.fastVars.rootEl.html('');
 	},
 	createMenu: function(oMenu) {
@@ -46,7 +45,11 @@ sys.context = {
 	doEvent: function(event) {
 		var _sys = sys,
 			xDoc = _sys.fs.xml,
-			context = _sys.context;
+			context = _sys.context,
+			oHeight,
+			oWidth,
+			top,
+			left;
 
 		if (event.ctrlKey) return;
 		event.preventDefault();
@@ -54,16 +57,16 @@ sys.context = {
 
 		switch (event.type) {
 			case 'mousedown':
-				var xMenuItem = xDoc.selectSingleNode('//context//*[@_id="'+ this.dataset['id'] +'"]');
+				var xMenuItem = xDoc.selectSingleNode('//context//*[@_id="'+ this.dataset.id +'"]');
 				if (xMenuItem && !xMenuItem.getAttribute('disabled') && xMenuItem.getAttribute('action')) {
 					_sys.shell.exec( xMenuItem.getAttribute('action') );
 				}
 				break;
 			case 'mouseover':
 				var pMenu = this.parentNode.parentNode,
-					ctxId = this.dataset['id'],
-					xCtx = xDoc.selectSingleNode('//context//*[@_id="'+ ctxId +'"]');
+					ctxId = this.dataset.id;
 
+				// xCtx = xDoc.selectSingleNode('//context//*[@_id="'+ ctxId +'"]');
 				// if there is a description, display it in status
 				//vanguard.stat(xCtx ? xCtx.getAttribute('description') : '');
 
@@ -80,11 +83,11 @@ sys.context = {
 				var subMenu = context.fastVars.rootEl.append(transform({
 							match: '//context//*[@_id=\''+ ctxId +'\']',
 							template: 'menu'
-						}).xml),
-					oHeight = subMenu.height(),
-					oWidth = subMenu.width(),
-					top = pMenu.offsetTop + this.offsetTop,
-					left = pMenu.offsetLeft + pMenu.offsetWidth;
+						}).xml);
+				oHeight = subMenu.height();
+				oWidth = subMenu.width();
+				top = pMenu.offsetTop + this.offsetTop;
+				left = pMenu.offsetLeft + pMenu.offsetWidth;
 				
 				if (left + oWidth > window.innerWidth) left = pMenu.offsetLeft - oWidth;
 				if (top + oHeight + 11 > window.innerHeight) top -= oHeight - this.offsetHeight;
@@ -96,8 +99,8 @@ sys.context = {
 				});
 				break;
 			case 'contextmenu':
-				if (!this.dataset || !this.dataset['context']) return;
-				var menuXPath = '//context//*[@for=\''+ this.dataset['context'] +'\']',
+				if (!this.dataset || !this.dataset.context) return;
+				var menuXPath = '//context//*[@for=\''+ this.dataset.context +'\']',
 					menuXNode = _sys.fs.xml.selectSingleNode(menuXPath);
 				if (!menuXNode) return;
 
@@ -105,13 +108,13 @@ sys.context = {
 							match: menuXPath,
 							template: 'menu'
 						}).xml).find('.context-menu'),
-					oHeight = rootMenu.height(),
-					oWidth = rootMenu.width(),
-					top = event.clientY,
-					left = event.clientX,
 					dim = getDim(this),
 					pV = 'T',
 					pH = 'L';
+				oHeight = rootMenu.height();
+				oWidth = rootMenu.width();
+				top = event.clientY;
+				left = event.clientX;
 				
 				if (top + oHeight + 11 > window.innerHeight) {
 					top -= oHeight;

@@ -13,7 +13,7 @@ sys.fs = {
 		
 	},
 	handleError: function(err) {
-		
+		sys.alert(err);
 	},
 	parseXml: function(str) {
 		var parser = new DOMParser(),

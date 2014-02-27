@@ -8,12 +8,13 @@
 @boxFocusHl:		#ccc;
 
 @popCover:			#2a2a2a;
-@popTitleColor:		#ccc;
+@popTitleColor:		#888;
 @popContentColor:	#aaa;
 @popBtnTextColor:	#fff;
 @tabActiveText:		#fff;
-@menuOver:			#FFF;
-@menuOverBg:		#F90;
+@optionHover:		#fff;
+@menuOver:			#fff;
+@menuOverBg:		#f90;
 @menuText:			#374a63;
 @fontFamily:		'regular';
 @fontBold:			'bold';
@@ -37,6 +38,15 @@
 			bottom: 25px;
 			background-image: @cvsBg;
 		}
+		.canvas-bg {
+			background: @boxContent;
+			top: 0px;
+			left: 0px;
+			right: 0px;
+			bottom: 0px;
+			opacity: 1;
+			z-index: 2;
+		}
 		.options {
 			li {
 				float: left;
@@ -58,6 +68,15 @@
 		width: 261px;
 		border-radius: 5px;
 
+		&.active,
+		&:hover {
+			.options {
+				li.left {
+					opacity: 1;
+				}
+			}
+		}
+
 		.content {
 			right: 3px;
 			bottom: 21px;
@@ -65,6 +84,45 @@
 		.options {
 			bottom: 0px;
 			left: 7px;
+
+			li.left {
+				float: left;
+				position: relative;
+				opacity: 0;
+				-webkit-transition: 100ms opacity ease-in-out;
+
+				.slider {
+					position: absolute;
+					top: 15px;
+					left: 20px;
+					background: @boxBgColor;
+					width: 67px;
+					height: 2px;
+					box-shadow: 0px 1px 1px darken(@boxContent, 3%);
+
+					figure {
+						position: absolute;
+						top: -7px;
+						left: 25px;
+					}
+				}
+
+				figure {
+					//cursor: default;
+
+					&.active,
+					&:hover {
+						color: darken(@optionHover, 15%);
+					}
+
+					&.big {
+						position: absolute;
+						top: 7px;
+						left: 90px;
+						font-size: 34px;
+					}
+				}
+			}
 		}
 		.scroll_bg {
 			bottom: 19px;
@@ -148,11 +206,11 @@
 		figure {
 			margin-right: 3px;
 		}
-		&:hover:not(.search):not(.active) {
-			color: #eee;
+		&:hover:not(.search):not(.active):not(.left) {
+			color: @optionHover;
 		}
 		&.active {
-			color: #bbb;
+			color: darken(@optionHover, 29%);
 			cursor: default;
 			//background: #373737;
 		}
@@ -177,7 +235,7 @@
 			}
 			.zoom_level {
 				float: right;
-				background: #373737;
+				background: lighten(@boxBgColor, 3%);
 				color: #aaa;
 				padding: 1px 7px 0px 7px;
 
@@ -210,8 +268,8 @@
 	li {
 		float: left;
 		width: 40px;
-		height: 55px;
-		overflow: hidden;
+		//height: 55px;
+		//overflow: hidden;
 		border-right: 1px solid;
 		border-bottom: 1px solid;
 		border-color: #555;

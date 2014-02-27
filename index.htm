@@ -35,7 +35,6 @@
 			<figure class="LIVE button box left icon-new_file add-chevron disabled" data-el="newFileTool" title="New file"></figure>
 			<figure class="LIVE button box left icon-open_file" data-cmd="proj -d" title="Open folder"></figure>
 			<figure class="LIVE button box left icon-save" data-cmd="fs -s" title="Save"></figure>
-			<figure class="LIVE button box left icon-save" data-cmd="fs -sa" title="Save all"></figure>
 		</div>
 		
 		<div class="buttonGroup btn-extra themeButtons left hideMe">
@@ -54,7 +53,8 @@
 	<section class="area panel canvas" data-context="workarea-canvas">
 		<div class="title">"hello_white.png"</div>
 		<div class="content">
-
+			<div class="area canvas-bg" data-el="canvas_bg"></div>
+			<canvas data-el="cvs"></canvas>
 		</div>
 		<ul class="options">
 			<li class="active"><figure class="icon-image"></figure>Design view</li>
@@ -62,7 +62,7 @@
 			<li><figure class="icon-play"></figure>Preview</li>
 			<li class="search">
 				<figure class="icon-search"></figure>
-				<span class="zoom_level">100</span>
+				<span class="zoom_level" data-el="zoom_level" data-event_fb="cvs -zfb">100</span>
 				<figure class="icon-arrows"></figure>
 			</li>
 		</ul>
@@ -74,14 +74,21 @@
 		</div>
 	</section>
 	<section class="area panel assets">
-		<div class="title">Assets</div>
+		<div class="title">Glyphs</div>
 		<div class="content">
-			<ul class="fonts"></ul>
+			<ul class="fonts" data-el="assets_list"></ul>
 		</div>
 		<ul class="options">
 			<li><figure class="icon-trashcan"></figure></li>
 			<li><figure class="icon-invert"></figure></li>
 			<li><figure class="icon-new"></figure></li>
+			<li class="left">
+				<figure class="icon-mountain" data-cmd="assets -s less"></figure>
+				<span class="slider">
+					<figure class="icon-slider_nob" data-el="assets_size_nob" data-onchange="assets -s"></figure>
+				</span>
+				<figure class="icon-mountain big" data-cmd="assets -s more"></figure>
+			</li>
 		</ul>
 		<div class="scroll_bg vertical">
 			<div class="concave ltl"></div>
@@ -138,16 +145,16 @@
 </div>
 
 <!-- INLINE DIALOGS -->
-<div class="inline-menu arrBR">
+<div class="inline-menu arrBR" data-el="cvs_zoom" data-focus_none="1">
 	<div class="cntnr">
 		<div class="nob-ctrl">
 			<div class="nob-title">Opacity</div>
-			<canvas width="44" height="34" class="nob" data-el="nob_opacity" data-value="0" data-change="longscript.paint.opacity();" data-color="#18a5ff"></canvas>
+			<canvas width="44" height="34" class="nob" data-el="nob_opacity" data-value="0" data-change="sys.app.canvas.opacity();" data-color="#18a5ff"></canvas>
 			<div class="nob-value"><span>0</span>%</div>
 		</div>
 		<div class="nob-ctrl">
 			<div class="nob-title">Scale</div>
-			<canvas width="44" height="34" class="nob" data-el="nob_scale" data-value="0" data-change="longscript.paint.zoom();"></canvas>
+			<canvas width="44" height="34" class="nob" data-el="nob_scale" data-value="0" data-change="sys.app.canvas.zoom();"></canvas>
 			<div class="nob-value"><span>100</span>%</div>
 		</div>
 	</div>

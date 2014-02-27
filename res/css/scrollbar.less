@@ -1,5 +1,10 @@
 
 // SCROLL BARS
+
+.area:hover .scroll_bg:after {
+	background: darken(@boxFace, 5%);
+}
+
 .scroll_bg {
 	background: @boxFace;
 	position: absolute;
@@ -7,9 +12,9 @@
 
 	&:after {
 		content: '';
-		background: darken(@boxFace, 5%);
 		position: absolute;
 		border-radius: 7px;
+		-webkit-transition: 150ms background ease-in-out;
 	}
 
 	.scroll_bar {

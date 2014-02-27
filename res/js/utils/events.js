@@ -134,13 +134,27 @@ sys.events = {
 			type = event.type,
 			target = event.target,
 			handlers = sys.bank.balance(this, 'events'),
-			_handlers, _name, _eventHandler, _handleSelector;
-		if (type === 'mousedown' && event.button === 0 && target.getAttribute('data-context') !== 'exception') {
-			sys.context.clear( target );
+			_handlers,
+			_name,
+			_eventHandler,
+			_handleSelector,
+			_fbHandler;
+		if (type === 'mousedown' && event.button === 0) {
+			if (target.getAttribute('data-context') !== 'exception') sys.context.clear( target );
+			_fbHandler = target.getAttribute('data-event_fb');
+			if (_fbHandler) {
+				sys.events.focusEl = target;
+				return sys.shell.exec(_fbHandler +' focus');
+			}
+			if (sys.events.focusEl) {
+				if (jr(target).parents('*[data-focus_none]').length > 0) return;
+				_fbHandler = sys.events.focusEl.getAttribute('data-event_fb');
+				sys.events.focusEl = false;
+				return sys.shell.exec(_fbHandler +' blur');
+			}
 		}
 		if (!handlers) return returnValue;
 		_handlers = handlers[type];
-		
 		event.stopPropagation = function() {
 			this.isBubblingCanceled = true;
 		};
@@ -208,7 +222,11 @@ sys.events = {
 		var type = event.type, el = event.target, handlers, hotKey,
 			special = event.type !== "keypress" && hotkeys.specialKeys[ event.which ],
 			character = String.fromCharCode(event.which).toLowerCase(),
-			etype, fn, key, elAttr, modif = "", possible = {};
+			etype,
+			fn,
+			elAttr,
+			modif = '',
+			possible = {};
 		while (el) {
 			elAttr = el.getAttribute;
 			if (el.nodeType) {
@@ -237,7 +255,7 @@ sys.events = {
 					}
 					for (etype in handlers) {
 						if (etype !== type) continue;
-						var h = handlers['hotkey'];
+						var h = handlers.hotkey;
 						for (fn in h) {
 							if (!h[fn].handler.keys) continue;
 							for (hotKey in h[fn].handler.keys) {

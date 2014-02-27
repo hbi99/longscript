@@ -6,5 +6,8 @@ sys.scrollbar = {
 	},
 	dispose: function() {
 
+	},
+	doEvent: function(event) {
+		
 	}
 };

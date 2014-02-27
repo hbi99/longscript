@@ -10,8 +10,8 @@
 	position: absolute;
 	border-radius: 5px;
 	box-shadow: inset 0px -5px 11px darken(@boxFocusHl, 3%),
-				0px 0px 11px fadeout(@boxFace, 7%),
-				0px 1px 17px fadeout(@boxFace, 7%);
+				0px 0px 11px fadeout(@boxFace, 13%),
+				0px 11px 21px fadeout(@boxFace, 17%);
 	z-index: 12;
 	cursor: default;
 	-webkit-user-select: none;
@@ -33,8 +33,7 @@
 		height: 11px;
 		width: 11px;
 		z-index: 2;
-		box-shadow: 0px 0px 1px fadeout(@boxFace, 7%),
-					0px 1px 3px fadeout(@boxFace, 7%);
+		box-shadow: 1px 2px 1px darken(@boxFace, 3%);
 		-webkit-transform: rotate(45deg);
 	}
 	&.arrL:after {display: block; top: 13px; left: -5px;}
@@ -116,43 +115,25 @@
 	}
 }
 
-.inline-menu {
-	bottom: 209px;
-	right: 297px;
-	width: 80px;
-	border-radius: 6px;
-
-	.cntnr {
-		background-image: -webkit-linear-gradient(bottom, darken(@boxContent, 7%) 0%, @boxContent 100%);
-		border: @boxFace 1px solid;
-		text-align: center;
-		color: darken(@boxFocusHl, 17%);
-		text-shadow: 0px 1px 1px darken(@boxContent, 23%);
-	}
-	&.arrBL:after {left: 19px; background: darken(@boxContent, 7%);}
-	&.arrBR:after {right: 29px; background: darken(@boxContent, 7%);}
-}
-
+// NOBS
 .nob-ctrl {
-	width: 59px;
+	width: 65px;
 	font-size: 10px;
 	line-height: 12px;
 	text-align: center;
-	margin: 2px auto 11px auto;
-
-	&:last-child {
-		margin-bottom: 0px;
-	}
-
+	margin: 3px auto 0px;
+	float: left;
+	
 	.nob {
 		margin: 0px;
 	}
 	.nob-title {
 		font-size: 11px;
-		font-weight: bold;
-		margin-bottom: 2px;
+		font-family: @fontBold;
+		margin-bottom: 1px;
 	}
 	.nob-value {
 		margin: -3px 0px 0px 0px;
+		display: none;
 	}
 }

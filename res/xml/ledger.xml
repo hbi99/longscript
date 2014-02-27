@@ -6,6 +6,12 @@
 			<i switch="q" name="quit" arg="NONE" description="Quits application."/>
 			<i switch="dev" name="toggle_dev" arg="NONE" description="Opens developer tools."/>
 		</i>
+		<i object="cvs" long="sys.app.canvas" type="[APP]" description="Cavas.">
+			<i switch="zfb" name="zoom_events" arg="[focus|blur]" description="."/>
+		</i>
+		<i object="assets" long="sys.app.assets.sizes" type="[APP]" description="Assets.">
+			<i switch="s" name="changeSize" arg="[-1|1]" description="."/>
+		</i>
 		<i object="fs" long="sys.fs" type="[SYS]" description="Filesystem.">
 			<i switch="s" name="save" arg="NONE" description="Save file"/>
 		</i>
