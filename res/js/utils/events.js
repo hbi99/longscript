@@ -19,9 +19,9 @@ var hotkeys = {
 sys.events = {
 	init: function() {
 		this.guid = 1;
-		this.nativeEvents = 'blur focus focusin focusout load resize scroll unload click dblclick '+
-							'mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave '+
-							'change select submit keydown keypress keyup error contextmenu'.split(' ');
+		// this.nativeEvents = 'blur focus focusin focusout load resize scroll unload click dblclick '+
+							// 'mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave '+
+							// 'change select submit keydown keypress keyup error contextmenu'.split(' ');
 
 		this.addEvent(window, 'unload', sys.dispose.bind(sys));
 		this.addEvent(window, 'DOMNodeRemoved', this.flushHandlers.bind(this));
@@ -56,7 +56,8 @@ sys.events = {
 		if (!elem.getElementsByTagName) return;
 		var children = elem.getElementsByTagName('*'),
 			sysId = sys.id,
-			i=0, il=children.length;
+			i = 0,
+			il = children.length;
 		for (; i<il; i++) {
 			this.removeEvent(children[i]);
 			sys.bank.flushAll(children[i]);
@@ -68,37 +69,34 @@ sys.events = {
 	},
 	addEvent: function(elem, types, handler, selector) {
 		var type = types.split(/\s+/),
-			i = 0, il = type.length,
-			obj, guid;
-		if ((types.indexOf('DOM') > -1 || types.toLowerCase().indexOf('animation') > -1) && elem.addEventListener) {
-			for (i=0; i<il; i++) {
-				if (type[i] === 'DOMMouseScroll') type[i] = 'mousewheel';
-				elem.addEventListener(type[i], handler, false);
-			}
-		} else {
-			handler._guid = handler._guid || ++this.guid;
-			obj = {};
+			i = 0,
+			il = type.length,
+			obj,
+			guid;
+		handler._guid = handler._guid || ++this.guid;
+		obj = {};
 
-			for (; i<il; i++) {
-				guid = ++this.guid;
-				obj[type[i]] = {};
-				obj[type[i]][guid] = {
-					guid: guid,
-					handler: handler,
-					selector: selector
+		for (; i<il; i++) {
+			guid = ++this.guid;
+			obj[type[i]] = {};
+			obj[type[i]][guid] = {
+				guid: guid,
+				handler: handler,
+				selector: selector
+			};
+		}
+		sys.bank.deposit(elem, {events : obj});
+
+		for (i=0; i<il; i++) {
+			if (elem['on'+ type[i]] && elem['on'+ type[i]] !== this.handleEvent) {
+				obj[type[i]][0] = {
+					handler: elem['on'+ type[i]]
 				};
+				sys.bank.deposit(elem, {events : obj});
 			}
-			sys.bank.deposit(elem, {events : obj});
-
-			for (i=0; i<il; i++) {
-				if (elem['on'+ type[i]] && elem['on'+ type[i]] !== this.handleEvent) {
-					obj[type[i]][0] = {
-						handler: elem['on'+ type[i]]
-					};
-					sys.bank.deposit(elem, {events : obj});
-				}
-				elem['on'+ type[i]] = this.handleEvent;
-			}
+			if (type[i] === 'mousewheel') {
+				elem.addEventListener(type[i], this.handleEvent, false);
+			} else elem['on'+ type[i]] = this.handleEvent;
 		}
 	},
 	removeEvent: function(elem, types, handler, selector) {
@@ -108,9 +106,13 @@ sys.events = {
 		}
 
 		var type = types.split(/\s+/),
-			i = 0, il = type.length,
+			i = 0,
+			il = type.length,
 			vault = sys.bank.vault,
-			shelf, safe, key, content;
+			shelf,
+			safe,
+			key,
+			content;
 
 		if (types.indexOf('DOM') > -1 && elem.removeEventListener) {
 			elem.removeEventListener(types, handler, false);

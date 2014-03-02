@@ -301,6 +301,7 @@
   background-color: #636363;
   color: #cccccc;
 }
+.scroll_bg.active:after,
 .area:hover .scroll_bg:after {
   background: #383838;
 }
@@ -351,7 +352,7 @@
 .scroll_bg.horizontal:after {
   left: 5px;
   right: 5px;
-  bottom: 5px;
+  bottom: 4px;
   height: 11px;
 }
 .scroll_bg.horizontal .scroll_bar {
@@ -786,8 +787,25 @@ figure {
   display: inline-block;
   margin: 0px;
 }
+.animate200 {
+  -webkit-transition: 200ms all ease-in-out;
+}
+.animate300 {
+  -webkit-transition: 300ms all ease-in-out;
+}
 .hideMe {
   display: none;
+}
+.clearfix {
+  display: inline-block;
+}
+.clearfix:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
 }
 .app-layout {
   position: absolute;
@@ -832,6 +850,20 @@ figure {
   overflow: hidden;
   border-radius: 3px;
   box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.25), inset 1px 1px 1px #707070, inset -1px -1px 0px #5b5b5b;
+}
+.content_fixed .body,
+.content .body {
+  position: relative;
+  display: block;
+}
+.content_fixed .body:after,
+.content .body:after {
+  content: ".";
+  display: block;
+  clear: both;
+  visibility: hidden;
+  line-height: 0;
+  height: 0;
 }
 .area.top {
   top: 0px;
@@ -894,17 +926,29 @@ figure {
 }
 .area.assets .options li.left .slider {
   position: absolute;
-  top: 15px;
+  top: 11px;
   left: 20px;
-  background: #2a2a2a;
   width: 67px;
+  height: 11px;
+}
+.area.assets .options li.left .slider:after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 0px;
+  right: 0px;
   height: 2px;
+  background: #2a2a2a;
   box-shadow: 0px 1px 1px #5b5b5b;
+}
+.area.assets .options li.left .slider:hover {
+  color: #d9d9d9;
 }
 .area.assets .options li.left .slider figure {
   position: absolute;
-  top: -7px;
+  top: -3px;
   left: 25px;
+  z-index: 2;
 }
 .area.assets .options li.left figure.active,
 .area.assets .options li.left figure:hover {

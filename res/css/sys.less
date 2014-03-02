@@ -35,8 +35,24 @@ figure {
 	margin: 0px;
 }
 
+.animate200 { -webkit-transition: 200ms all ease-in-out; }
+.animate300 { -webkit-transition: 300ms all ease-in-out; }
+
 .hideMe {
 	display: none;
+}
+
+.clearfix {
+	display: inline-block;
+
+	&:after {
+		content: ".";
+		display: block;
+		clear: both;
+		visibility: hidden;
+		line-height: 0;
+		height: 0;
+	}
 }
 
 .app-layout {
@@ -90,6 +106,20 @@ figure {
 	box-shadow: 0px 1px 3px rgba(0,0,0,0.25),
 				inset 1px 1px 1px #707070,
 				inset -1px -1px 0px #5b5b5b;
+
+	.body {
+		position: relative;
+		display: block;
+
+		&:after {
+			content: ".";
+			display: block;
+			clear: both;
+			visibility: hidden;
+			line-height: 0;
+			height: 0;
+		}
+	}
 }
 
 

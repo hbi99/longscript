@@ -22,7 +22,6 @@
 
 @import 'sys.less';
 
-
 .area {
 	&.top {
 		top: 0px;
@@ -80,6 +79,10 @@
 		.content {
 			right: 3px;
 			bottom: 21px;
+
+			.body {
+				
+			}
 		}
 		.options {
 			bottom: 0px;
@@ -93,17 +96,30 @@
 
 				.slider {
 					position: absolute;
-					top: 15px;
+					top: 11px;
 					left: 20px;
-					background: @boxBgColor;
 					width: 67px;
-					height: 2px;
-					box-shadow: 0px 1px 1px darken(@boxContent, 3%);
+					height: 11px;
+
+					&:after {
+						content: '';
+						position: absolute;
+						top: 5px;
+						left: 0px;
+						right: 0px;
+						height: 2px;
+						background: @boxBgColor;
+						box-shadow: 0px 1px 1px darken(@boxContent, 3%);
+					}
+					&:hover {
+						color: darken(@optionHover, 15%);
+					}
 
 					figure {
 						position: absolute;
-						top: -7px;
+						top: -3px;
 						left: 25px;
+						z-index: 2;
 					}
 				}
 

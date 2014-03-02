@@ -21,9 +21,9 @@ sys.shell = {
 			}
 			cmd = this.dataset.cmd;
 		}
-		if (sys.app.el.floatFld) sys.app.el.floatFld.blur();
+		//if (sys.app.el.floatFld) sys.app.el.floatFld.blur();
 
-		sys.shell.exec(cmd);
+		if (cmd) sys.shell.exec(cmd);
 		return false;
 	},
 	err: function(cmd, errnum) {
