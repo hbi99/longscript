@@ -19,9 +19,9 @@ var hotkeys = {
 sys.events = {
 	init: function() {
 		this.guid = 1;
-		// this.nativeEvents = 'blur focus focusin focusout load resize scroll unload click dblclick '+
-							// 'mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave '+
-							// 'change select submit keydown keypress keyup error contextmenu'.split(' ');
+		this.nativeEvents = 'blur focus focusin focusout load resize scroll unload click dblclick '+
+							'mousedown mouseup mousemove mouseover mouseout mouseenter mouseleave '+
+							'change select submit keydown keypress keyup error contextmenu'.split(' ');
 
 		this.addEvent(window, 'unload', sys.dispose.bind(sys));
 		this.addEvent(window, 'DOMNodeRemoved', this.flushHandlers.bind(this));
@@ -96,7 +96,9 @@ sys.events = {
 			}
 			if (type[i] === 'mousewheel') {
 				elem.addEventListener(type[i], this.handleEvent, false);
-			} else elem['on'+ type[i]] = this.handleEvent;
+			} else {
+				elem['on'+ type[i]] = this.handleEvent;
+			}
 		}
 	},
 	removeEvent: function(elem, types, handler, selector) {
@@ -104,7 +106,6 @@ sys.events = {
 			sys.bank.flushAll(elem);
 			return;
 		}
-
 		var type = types.split(/\s+/),
 			i = 0,
 			il = type.length,

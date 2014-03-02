@@ -4,7 +4,7 @@
 <meta charset="utf-8" />
 <title>Longscript</title>
 
-<link href='http://fonts.googleapis.com/css?family=Over+the+Rainbow' rel='stylesheet' type='text/css'>
+<link data-el="fontLoader" rel='stylesheet' type='text/css'>
 <link rel="stylesheet" type="text/css" href="res/css/app.css" />
 <!-- framework -->
 <script type="text/javascript" src="res/js/utils/sys.js"></script>
@@ -51,7 +51,7 @@
 	</section>
 	
 	<section class="area panel canvas" data-context="workarea-canvas">
-		<div class="title">"hello_white.png"</div>
+		<div class="title" data-el="canvasTitle">"hello_white.png"</div>
 		<div class="content">
 			<div class="area canvas-bg" data-el="canvas_bg"></div>
 			<canvas data-el="cvs"></canvas>
@@ -70,13 +70,13 @@
 	<section class="area panel nav">
 		<div class="title">Navigator</div>
 		<div class="content">
-
+			<canvas data-el="zoomcvs"></canvas>
 		</div>
 	</section>
 	<section class="area panel assets">
 		<div class="title">Glyphs</div>
 		<div class="content">
-			<ul class="body fonts" data-el="assets_list"></ul>
+			<ul class="body fonts" data-el="assetsList"></ul>
 		</div>
 		<ul class="options">
 			<li><figure class="icon-trashcan"></figure></li>

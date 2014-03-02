@@ -82,7 +82,7 @@ sys.app.assets = {
 				max = 37,
 				fs  = min + ((max - min) * (step / 100)),
 				lh = fs * 2.3;
-			jr(sys.el.assets_list)
+			jr(sys.el.assetsList)
 				.css({
 					'fontSize': fs +'px',
 					'linHeight': lh +'px'

@@ -210,16 +210,15 @@
         trigger: function(types, el) {
             var arr = (el)? [el] : this,
                 type = types.split(/\s+/),
-                i=0, il=arr.length,
-                j=0, jl=type.length,
+                i  = 0, 
+                il = arr.length,
+                j  = 0, 
+                jl = type.length,
                 isNative,
-                isStyle,
                 event,
                 listener;
-
             for (; j<jl; j++) {
                 isNative = sys.events.nativeEvents.indexOf(type[j]) > -1;
-                isStyle = type[j].indexOf('style.') > -1;
                 if (isNative) {
                     event = document.createEvent('MouseEvents');
                     event.initEvent(type[j], true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
@@ -232,16 +231,18 @@
                     if (isNative) {
                         el.dispatchEvent(event);
                     } else {
-                        while (el.nodeType === 1) {
+                        while (el.nodeType) {
                             listener = el['on'+ type[j]];
                             if (typeof(listener) === 'function') {
-                                if (isStyle) event.run73 = {target: el};
+                                if (!isNative) {
+                                    event.run73 = {target: el};
+                                }
                                 listener.call(el, event);
                                 if (event.isBubblingCanceled) {
                                     break;
                                 }
                             }
-                            if (isStyle) return this;
+                            if (el.parentNode === null && !isNative) return this;
                             el = el.parentNode;
                         }
                     }
@@ -260,6 +261,7 @@
                 arr[i].innerHTML = str;
                 arr[i][sysId] = tmpId;
             }
+            this.trigger('calculate');
             return this;
         },
         offset: function() {
@@ -308,6 +310,7 @@
                     new_arr.push(movedEl);
                 }
             }
+            this.trigger('calculate');
             return this.find(new_arr);
         },
         before: function(str, el) {
@@ -327,6 +330,7 @@
             for (var i=0, il=arr.length; i<il; i++) {
                 arr[i].parentNode.removeChild(arr[i]);
             }
+            this.trigger('calculate');
             return this;
         },
         firstChild: function() {

@@ -22,6 +22,17 @@
 			<i switch="b" name="btnClick" arg="[which]" description="."/>
 		</i>
 	</alias>
+	<fonts>
+		<i name="Over the Rainbow" font-family="Over the Rainbow" url="http://fonts.googleapis.com/css?family=Over+the+Rainbow"/>
+		<i name="Condiment" font-family="Condiment" url="http://fonts.googleapis.com/css?family=Condiment"/>
+		<i name="Allura" font-family="Allura" url="http://fonts.googleapis.com/css?family=Allura"/>
+		<i name="Engagement" font-family="Engagement" url="http://fonts.googleapis.com/css?family=Engagement"/>
+		<i name="Gochi Hand" font-family="Gochi Hand" url="http://fonts.googleapis.com/css?family=Gochi+Hand"/>
+		<i name="Parisienne" font-family="Parisienne" url="http://fonts.googleapis.com/css?family=Parisienne"/>
+		<i name="Bad Script" font-family="Bad Script" url="http://fonts.googleapis.com/css?family=Bad+Script"/>
+		<i name="The Girl Next Door" font-family="The Girl Next Door" url="http://fonts.googleapis.com/css?family=The+Girl+Next+Door"/>
+		<i name="Arizonia" font-family="Arizonia" url="http://fonts.googleapis.com/css?family=Arizonia"/>
+	</fonts>
 	<context tag_children="1">
 		<i for="workarea-canvas">
 			<i name="Design view" action="" description="." checked="1"/>
