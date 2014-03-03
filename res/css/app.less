@@ -22,6 +22,15 @@
 
 @import 'sys.less';
 
+.measuringSpan {
+	position: absolute;
+	top: 100px;
+	left: 100px;
+	color: #fff;
+	z-index: -1;
+	opacity: 0;
+}
+
 .area {
 	&.top {
 		top: 0px;
@@ -31,6 +40,13 @@
 		top: 25px;
 		bottom: 176px;
 		right: 283px;
+
+		canvas {
+			position: relative;
+			width: 100%;
+			height: 100%;
+			z-index: 2;
+		}
 
 		.content {
 			left: 3px;
@@ -297,6 +313,7 @@
 		cursor: pointer;
 		-webkit-transition: 100ms all ease-in-out;
 
+		&.active,
 		&:hover {
 			background: rgba(0,0,0,0.1);
 			color: #fff;

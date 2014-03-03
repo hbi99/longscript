@@ -1,6 +1,40 @@
 /* jshint unused:false*/
 
 /***  COMMON  ***/
+var observer = function() {
+	var stack = {};
+	return {
+		on: function(type, fn) {
+			if (!stack[type]) {
+				stack[type] = [];
+			}
+			stack[type].push(fn);
+		},
+		off: function(type, fn) {
+			if (!stack[type]) return;
+			var i = stack[type].indexOf(fn);
+			stack[type].splice(i,1);
+		},
+		trigger: function(type, src) {
+			if (!stack[type]) return;
+			var event = {
+					type : type,
+					source : src,
+					isCanceled : false,
+					cancelBubble : function() {
+						this.isCanceled = true;
+					}
+				},
+				i = 0,
+				il = stack[type].length;
+			for (; i<il; i++) {
+				if (event.isCanceled) return;
+				stack[type][i](event);
+			}
+		}
+	};
+};
+
 var transform = function(options) {
 	var fragment,
 		ownerDocument,

@@ -13,6 +13,9 @@ require('module')._cache = {};
 			this.appwin = gui.Window.get();
 			//this.appwin.on('close', this.quit);
 
+			// initiate observer
+			this.observer = observer();
+
 			// collection for fast access
 			var els = this.el,
 				appEls = jr('*[data-el]');

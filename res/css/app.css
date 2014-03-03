@@ -860,6 +860,14 @@ figure {
   line-height: 0;
   height: 0;
 }
+.measuringSpan {
+  position: absolute;
+  top: 100px;
+  left: 100px;
+  color: #fff;
+  z-index: -1;
+  opacity: 0;
+}
 .area.top {
   top: 0px;
   height: 22px;
@@ -868,6 +876,12 @@ figure {
   top: 25px;
   bottom: 176px;
   right: 283px;
+}
+.area.canvas canvas {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
 }
 .area.canvas .content {
   left: 3px;
@@ -1088,6 +1102,7 @@ figure {
   cursor: pointer;
   -webkit-transition: 100ms all ease-in-out;
 }
+.fonts li.active,
 .fonts li:hover {
   background: rgba(0, 0, 0, 0.1);
   color: #fff;

@@ -1,16 +1,18 @@
 
 sys.app.assets = {
+	active: 'A',
 	init: function() {
+		sys.observer.on('font_loaded', this.doEvent);
+
 		this.fill_chars();
 		this.sizes.init();
 	},
 	chars:  'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'+
-			'!"#$%&\'()*+,-./:;<=>?@[\\]^_`'+
+			'!"#$%&\'()*+,-./:;<=>?@[\\]^_`ˆˇ˘˙˚˛˜˝–—‘’‚“”„•‹›€'+
 			'{|}~¡¢£¤¥§¨©ª«¬®¯°±´µ¶·¸º»¿ÀÁÂÃÄÅÆÇÈÉÊ'+
 			'ËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊ'+
 			'ċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊ'+
-			'ŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſƒǼǽǾǿȘșȚțˆˇ'+
-			'˘˙˚˛˜˝–—‘’‚“”„•‹›€',
+			'ŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſƒǼǽǾǿȘșȚț',
 	fill_chars: function() {
 		var chars = this.chars,
 			i     = 0,
@@ -19,10 +21,25 @@ sys.app.assets = {
 		for (; i<il; i++) {
 			str += '<li>'+ chars[i] +'</li>';
 		}
-		jr('.fonts').html(str);
+		jr('.fonts')
+			.html(str)
+			.on('click', 'li', this.doEvent);
 	},
 	doEvent: function(event) {
-		
+		var _app = sys.app,
+			_el  = sys.el,
+			self = _app.assets;
+		switch(event.type) {
+			case 'click':
+				jr(this.parentNode).find('.active').removeClass('active');
+				jr(this).addClass('active');
+				self.active = this.textContent;
+				sys.observer.trigger('active_letter', self);
+				break;
+			case 'font_loaded':
+				_el.assetsList.style.fontFamily = _app.font.info.family;
+				break;
+		}
 	},
 	sizes: {
 		init: function() {
@@ -30,7 +47,10 @@ sys.app.assets = {
 			//jr(document).on('contextmenu', 'body, *[data-context]', sys.context.doEvent);
 		},
 		doEvent: function(event) {
-			var _size = sys.app.assets.sizes,
+			var _app = sys.app,
+				_el  = sys.el,
+				self = _app.assets,
+				_size = self.sizes,
 				srcEl = event.target,
 				dim,
 				left;
