@@ -5,7 +5,8 @@ Longscript App - native application for MacOS X, Windows and Linux for creating 
 See examples here;
 http://longscript.com/gallery.php
 
-This is the latest screenshot of the project in progress
-
 ![alt tag](public/res/img/icon-256.png)
+
+
+This is the latest screenshot of the project in progress
 ![alt tag](public/res/img/preview.jpg)
