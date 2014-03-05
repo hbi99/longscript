@@ -1,16 +1,8 @@
 {
-    "name": "longscript",
+    "name": "Longscript Build Script",
     "version": "0.0.1",
-    "description": "Longscript Application",
+    "description": "Longscript build script",
     "author": "Hakan Bilgin",
-    "main": "index.htm",
-    "window": {
-        "toolbar": false,
-        "width": 1000,
-        "height": 800,
-        "min_width": 800,
-        "min_height": 600
-    },
     "repository": {
         "type": "git",
         "url": "https://github.com/hbi99/longscript.git"
@@ -25,6 +17,8 @@
         "grunt": "~0.4.2",
         "grunt-contrib-concat": "~0.3.0",
         "grunt-contrib-jshint": "~0.8.0",
-        "grunt-contrib-uglify": "~0.2.2"
+        "grunt-contrib-uglify": "~0.2.2",
+        "grunt-node-webkit-builder": "~0.1.17",
+        "grunt-release": "~0.6.1"
     }
 }

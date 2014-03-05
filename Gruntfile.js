@@ -4,9 +4,10 @@ module.exports = function(grunt) {
 
 	// Project configuration.
 	grunt.initConfig({
+        pkg: grunt.file.readJSON('./public/package.json'),
 		interval: 200,
 		jshint: {
-			files: ['res/js/*'],
+			files: './public/res/js/*',
 			options: {
 				browser: true,
 				curly: false,
@@ -23,18 +24,29 @@ module.exports = function(grunt) {
 				options: {
 					separator: ';'
 				},
-				src: [
-					'../js/main.js'
-				],
-				dest: '../dist/scripts.js'
+				src:  './public/js/res/*',
+				dest: './public/js/main.js'
 			}
 		},
 		uglify: {
 			dist: {
 				files: {
-					'../dist/scripts.min.js': ['<%= concat.js.dest %>']
+					'./public/js/main.min.js': ['<%= concat.js.dest %>']
 				}
 			}
+		},
+		nodewebkit: {
+			options: {
+				version:   '0.8.4',      // this is the version of node-webkit
+				credits:   './public/credits.htm',
+				mac_icns:  './icon.icns',
+				build_dir: './build',  // Where the build version of my node-webkit app is saved
+				mac: true,             // We want to build it for mac
+				win: true,            // We want to build it for win
+				linux32: false,        // We don't need linux32
+				linux64: false         // We don't need linux64
+			},
+			src: './public/**/*'       // Your node-webkit app
 		}
 	});
 
@@ -42,8 +54,10 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 	grunt.loadNpmTasks('grunt-contrib-concat');
 	grunt.loadNpmTasks('grunt-contrib-jshint');
+	grunt.loadNpmTasks('grunt-node-webkit-builder');
 
 	// Default task.
 	grunt.registerTask('default', ['jshint']);
-	grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
+	//grunt.registerTask('build', ['jshint', 'concat', 'uglify']);
+	grunt.registerTask('build', ['nodewebkit']);
 };

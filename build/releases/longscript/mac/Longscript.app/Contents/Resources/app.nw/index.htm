@@ -1,0 +1,176 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Longscript</title>
+
+<link data-el="fontLoader" rel='stylesheet' type='text/css'>
+<link rel="stylesheet" type="text/css" href="res/css/app.css" />
+<script src="http://ajax.googleapis.com/ajax/libs/webfont/1/webfont.js"></script>
+<!-- framework -->
+<script type="text/javascript" src="res/js/utils/sys.js"></script>
+<script type="text/javascript" src="res/js/utils/shell.js"></script>
+<script type="text/javascript" src="res/js/utils/bank.js"></script>
+<script type="text/javascript" src="res/js/utils/context.js"></script>
+<script type="text/javascript" src="res/js/utils/events.js"></script>
+<script type="text/javascript" src="res/js/utils/filesystem.js"></script>
+<script type="text/javascript" src="res/js/utils/language.js"></script>
+<script type="text/javascript" src="res/js/utils/scrollbars.js"></script>
+<script type="text/javascript" src="res/js/utils/nobs.js"></script>
+<script type="text/javascript" src="res/js/utils/popup.js"></script>
+<!-- misc -->
+<script type="text/javascript" src="res/js/utils/extras.js"></script>
+<script type="text/javascript" src="res/js/utils/junior.js"></script>
+<!-- app specific -->
+<script type="text/javascript" src="res/js/app/app.js"></script>
+<script type="text/javascript" src="res/js/app/canvas.js"></script>
+<script type="text/javascript" src="res/js/app/navigator.js"></script>
+<script type="text/javascript" src="res/js/app/assets.js"></script>
+<script type="text/javascript" src="res/js/app/timeline.js"></script>
+</head>
+<body>
+
+<section class="app-layout" data-el="layout">
+	<section class="area top">
+		<div class="buttonGroup tools btn-extra left">
+			<figure class="LIVE button box left icon-new_file add-chevron disabled" data-el="newFileTool" title="New file"></figure>
+			<figure class="LIVE button box left icon-open_file" data-cmd="proj -d" title="Open folder"></figure>
+			<figure class="LIVE button box left icon-save" data-cmd="fs -s" title="Save"></figure>
+		</div>
+		
+		<div class="buttonGroup btn-extra themeButtons left hideMe">
+			<div>Theme</div>
+			<span data-cmd="gui -x cmd_theme_1" class="LIVE button box left theme_1 active">1</span>
+			<span data-cmd="gui -x cmd_theme_2" class="LIVE button box left theme_2">2</span>
+			<span data-cmd="gui -x cmd_theme_3" class="LIVE button box left theme_3">3</span>
+			<figure data-cmd="cmix -o" class="LIVE button box left icon-open_file" title="Settings"></figure>
+		</div>
+		<span data-cmd="gui -x cmd_toggleHotzones" class="LIVE TOGGLE btn_toggle toggle_off right toggleHotzones"><span>Hotzones</span></span>
+		<!-- HOTKEYS TOGGLE 
+		<span class="LIVE TOGGLE btn_toggle toggle_off right"><span>Hotkeys</span></span>
+		-->
+	</section>
+	
+	<section class="area panel canvas" data-context="workarea-canvas">
+		<div class="title" data-el="canvasTitle">"hello_white.png"</div>
+		<div class="content">
+			<div class="area canvas-bg" data-el="canvas_bg"></div>
+			<canvas data-el="cvs"></canvas>
+		</div>
+		<ul class="options">
+			<li class="active"><figure class="icon-image"></figure>Design view</li>
+			<li><figure class="icon-code"></figure>Code view</li>
+			<li><figure class="icon-play"></figure>Preview</li>
+			<li class="search">
+				<figure class="icon-search"></figure>
+				<span class="zoom_level" data-el="zoom_level" data-event_fb="cvs -zfb">100</span>
+				<figure class="icon-arrows"></figure>
+			</li>
+		</ul>
+	</section>
+	<section class="area panel nav">
+		<div class="title">Navigator</div>
+		<div class="content">
+			<canvas data-el="zoomcvs"></canvas>
+		</div>
+	</section>
+	<section class="area panel assets">
+		<div class="title">Glyphs</div>
+		<div class="content">
+			<ul class="body fonts" data-el="assetsList"></ul>
+		</div>
+		<ul class="options">
+			<li><figure class="icon-trashcan"></figure></li>
+			<li><figure class="icon-invert"></figure></li>
+			<li><figure class="icon-new"></figure></li>
+			<li class="left">
+				<figure class="icon-mountain" data-cmd="assets -s less"></figure>
+				<span class="slider" data-el="assets_slider">
+					<figure class="icon-slider_nob" data-onchange="assets -s"></figure>
+				</span>
+				<figure class="icon-mountain big" data-cmd="assets -s more"></figure>
+			</li>
+		</ul>
+		<div class="scroll_bg vertical">
+			<div class="concave ltl"></div>
+			<div class="concave lbl"></div>
+			<div class="scroll_bar"></div>
+		</div>
+	</section>
+
+	<section class="area timeline panel">
+		<div class="content_fixed left">
+
+			<ul class="layers">
+				<li>
+					<figure class="icon-eye_off"></figure>
+					hello_white.png
+				</li>
+				<li>
+					<figure class="icon-eye_on"></figure>
+					layer_2.png
+				</li>
+			</ul>
+
+		</div>
+		<div class="content right">
+
+			<ul class="body layers">
+				<li></li>
+				<li></li>
+			</ul>
+
+		</div>
+		<div class="scroll_bg vertical">
+			<div class="scroll_bar"></div>
+		</div>
+		<div class="scroll_bg horizontal">
+			<div class="concave utl"></div>
+			<div class="concave utr"></div>
+			<div class="scroll_bar"></div>
+		</div>
+	</section>
+</section>
+
+
+<!-- POPUP -->
+<div class="app-cover hideMe" data-el="app_cover" data-cmd="popup -c"></div>
+<div class="popup multi hideMe" data-el="multi">
+	<figure class="LIVE icon-remove" data-cmd="popup -c"></figure>
+	<div class="panel-title" data-el="multi_title">&#160;</div>
+	<div class="pop-content" data-el="multi_text">&#160;</div>
+	<div class="button-row">
+		<div class="button btn-cancel" data-cmd="popup -b cancel">Cancel</div>
+		<div class="button btn-ok" data-cmd="popup -b ok">Ok</div>
+	</div>
+</div>
+
+<!-- INLINE DIALOGS -->
+<div class="inline-menu arrBR" data-el="cvs_zoom" data-focus_none="1">
+	<div class="cntnr">
+		<div class="nob-ctrl">
+			<div class="nob-title">Opacity</div>
+			<canvas width="44" height="34" class="nob" data-el="nob_opacity" data-value="0" data-change="sys.app.canvas.opacity();" data-color="#18a5ff"></canvas>
+			<div class="nob-value"><span>0</span>%</div>
+		</div>
+		<div class="nob-ctrl">
+			<div class="nob-title">Scale</div>
+			<canvas width="44" height="34" class="nob" data-el="nob_scale" data-value="0" data-change="sys.app.canvas.zoom();"></canvas>
+			<div class="nob-value"><span>100</span>%</div>
+		</div>
+	</div>
+</div>
+
+<!-- CONTEXT MENU -->
+<div class="menus"><!--
+	<div class="context-menu">
+		<div class="cntnr">
+			<div class="menu-item" data-id="1">test </div>
+			<div class="divider">&#160;</div>
+			<div class="menu-item" data-id="2">test 2</div>
+		</div>
+	</div>
+--></div>
+
+</body>
+</html>
