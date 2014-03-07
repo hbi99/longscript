@@ -6,6 +6,7 @@
 @boxFace:			#454545;
 @boxContent:		#636363;
 @boxFocusHl:		#ccc;
+@boxText:			#333;
 
 @popCover:			#2a2a2a;
 @popTitleColor:		#888;
@@ -25,7 +26,7 @@
 .measuringSpan {
 	position: absolute;
 	top: 100px;
-	left: 100px;
+	left: -9999px;
 	color: #fff;
 	z-index: -1;
 	opacity: 0;
@@ -55,7 +56,8 @@
 			background-color: lighten(@boxContent, 7%);
 		}
 		.canvas-bg {
-			background: lighten(@boxContent, 7%);
+			//background: lighten(@boxContent, 7%);
+			background: @boxContent;
 			top: 0px;
 			left: 0px;
 			right: 0px;
@@ -104,6 +106,82 @@
 
 			.body {
 				
+				&.assets {
+
+					li {
+						display: block;
+						cursor: pointer;
+						position: relative;
+						color: darken(@boxContent, 49%);
+						text-shadow: 0px 1px 1px lighten(@boxContent, 17%);
+						font-weight: bold;
+						border-top: lighten(@boxContent, 7%) 1px solid;
+						border-bottom: darken(@boxContent, 7%) 1px solid;
+						padding: 3px 5px;
+
+						&:after {
+							content: ".";
+							display: block;
+							clear: both;
+							visibility: hidden;
+							line-height: 0;
+							height: 0;
+						}
+						&.active,
+						&:hover {
+							color: darken(@optionHover, 7%);
+							text-shadow: 0px 1px 2px @boxBgColor;
+
+							figure {
+								opacity: 1;
+								box-shadow: 0px 1px 3px darken(@boxContent, 7%);
+							}
+						}
+
+						figure {
+							background: lighten(@boxContent, 7%);
+							float: left;
+							width: 25px;
+							height: 25px;
+							border: @boxFace 1px solid;
+							background-position: 50% 50%;
+							background-size: 95%;
+							background-repeat: no-repeat;
+							top: 0px;
+							margin-right: 5px;
+							opacity: .75;
+						}
+						span {
+							float: left;
+							padding: 7px 0px;
+						}
+					}
+				}
+				&.glyphs {
+					font-size: 23px;
+					line-height: 53px;
+					color: #bbb;
+					text-shadow: 0px 1px 2px #333;
+					text-align: center;
+
+					li {
+						float: left;
+						width: 40px;
+						//height: 55px;
+						//overflow: hidden;
+						border-right: 1px solid;
+						border-bottom: 1px solid;
+						border-color: #555;
+						cursor: pointer;
+						-webkit-transition: 100ms all ease-in-out;
+
+						&.active,
+						&:hover {
+							background: rgba(0,0,0,0.1);
+							color: #fff;
+						}
+					}
+				}
 			}
 		}
 		.options {
@@ -293,33 +371,6 @@
  */
 .canvas {
 
-}
-
-.fonts {
-	//font-family: 'Over the Rainbow';
-	font-size: 23px;
-	line-height: 53px;
-	color: #bbb;
-	text-shadow: 0px 1px 2px #333;
-	text-align: center;
-
-	li {
-		float: left;
-		width: 40px;
-		//height: 55px;
-		//overflow: hidden;
-		border-right: 1px solid;
-		border-bottom: 1px solid;
-		border-color: #555;
-		cursor: pointer;
-		-webkit-transition: 100ms all ease-in-out;
-
-		&.active,
-		&:hover {
-			background: rgba(0,0,0,0.1);
-			color: #fff;
-		}
-	}
 }
 
 

@@ -23,6 +23,8 @@
 <script type="text/javascript" src="res/js/utils/junior.js"></script>
 <!-- app specific -->
 <script type="text/javascript" src="res/js/app/app.js"></script>
+<script type="text/javascript" src="res/js/app/app.image.js"></script>
+<script type="text/javascript" src="res/js/app/app.font.js"></script>
 <script type="text/javascript" src="res/js/app/canvas.js"></script>
 <script type="text/javascript" src="res/js/app/navigator.js"></script>
 <script type="text/javascript" src="res/js/app/assets.js"></script>
@@ -51,7 +53,7 @@
 		-->
 	</section>
 	
-	<section class="area panel canvas" data-context="workarea-canvas">
+	<section class="area panel canvas" data-el="box_work" data-context="workarea-canvas">
 		<div class="title" data-el="canvasTitle">"hello_white.png"</div>
 		<div class="content">
 			<div class="area canvas-bg" data-el="canvas_bg"></div>
@@ -68,16 +70,25 @@
 			</li>
 		</ul>
 	</section>
-	<section class="area panel nav">
+	<section class="area panel nav" data-el="box_nav">
 		<div class="title">Navigator</div>
 		<div class="content">
 			<canvas data-el="zoomcvs"></canvas>
 		</div>
 	</section>
-	<section class="area panel assets">
-		<div class="title">Glyphs</div>
+	<section class="area panel assets" data-el="box_assets">
+		<div class="title">&#160;</div>
 		<div class="content">
-			<ul class="body fonts" data-el="assetsList"></ul>
+			<ul class="body assets" data-el="assetsList">
+				<li>
+					<figure style="background-image: url(res/img/hello_white.png);"></figure>
+					<span>hello_white.png</span>
+				</li>
+				<li>
+					<figure style="background-image: url(res/img/hello.png);"></figure>
+					<span>hello.png</span>
+				</li>
+			</ul>
 		</div>
 		<ul class="options">
 			<li><figure class="icon-trashcan"></figure></li>
@@ -98,7 +109,7 @@
 		</div>
 	</section>
 
-	<section class="area timeline panel">
+	<section class="area timeline panel" data-el="box_timeline">
 		<div class="content_fixed left">
 
 			<ul class="layers">

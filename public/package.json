@@ -1,13 +1,13 @@
 {
     "name": "Longscript",
-    "version": "0.0.1",
+    "version": "0.6.1",
     "description": "Longscript Application",
     "author": "Hakan Bilgin",
     "main": "index.htm",
     "window": {
         "toolbar": false,
         "width": 1000,
-        "height": 800,
+        "height": 700,
         "min_width": 800,
         "min_height": 600
     },

@@ -65,5 +65,7 @@
 	<language>
 		<i id="app_says" str="Longscript says&#8230;"/>
 		<i id="app_about" str="Longscript is developed by Hakan Bilgin."/>
+		<i id="assets" str="Assets"/>
+		<i id="glyphs" str="Glyphs"/>
 	</language>
 </data>
