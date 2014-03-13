@@ -114,13 +114,15 @@
 
 			<ul class="layers">
 				<li>
-					<figure class="icon-eye_off"></figure>
+					<figure class="icon-eye_on"></figure>
 					hello_white.png
 				</li>
+				<!--
 				<li>
-					<figure class="icon-eye_on"></figure>
+					<figure class="icon-eye_off"></figure>
 					layer_2.png
 				</li>
+				-->
 			</ul>
 
 		</div>
@@ -128,7 +130,9 @@
 
 			<ul class="body layers">
 				<li></li>
+				<!--
 				<li></li>
+				-->
 			</ul>
 
 		</div>
@@ -161,13 +165,13 @@
 	<div class="cntnr">
 		<div class="nob-ctrl">
 			<div class="nob-title">Opacity</div>
-			<canvas width="44" height="34" class="nob" data-el="nob_opacity" data-value="0" data-change="sys.app.canvas.opacity();" data-color="#18a5ff"></canvas>
+			<canvas width="44" height="34" class="nob" data-el="nob_opacity" data-onchange="nob_opacity" data-color="#18a5ff"></canvas>
 			<div class="nob-value"><span>0</span>%</div>
 		</div>
 		<div class="nob-ctrl">
 			<div class="nob-title">Scale</div>
-			<canvas width="44" height="34" class="nob" data-el="nob_scale" data-value="0" data-change="sys.app.canvas.zoom();"></canvas>
-			<div class="nob-value"><span>100</span>%</div>
+			<canvas width="44" height="34" class="nob" data-el="nob_scale" data-onchange="nob_zoom"></canvas>
+			<div class="nob-value"><span>0</span>%</div>
 		</div>
 	</div>
 </div>

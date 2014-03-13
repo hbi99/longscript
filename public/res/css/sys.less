@@ -84,8 +84,8 @@ figure {
 		position: relative;
 		top: 3px;
 		left: 5px;
-		color: #aaa;
-		text-shadow: 0px 1px 2px #333;
+		color: @popContentColor;
+		text-shadow: 0px 1px 2px darken(@boxFace, 17%);
 	}
 	.title + .content {
 		top: 21px;
@@ -104,8 +104,8 @@ figure {
 	overflow: hidden;
 	border-radius: 3px;
 	box-shadow: 0px 1px 3px rgba(0,0,0,0.25),
-				inset 1px 1px 1px #707070,
-				inset -1px -1px 0px #5b5b5b;
+				inset 1px 1px 1px lighten(@boxContent, 7%),
+				inset -1px -1px 0px darken(@boxContent, 7%);
 
 	.body {
 		position: relative;
@@ -122,6 +122,32 @@ figure {
 	}
 }
 
+
+// NOBS
+.nob-ctrl {
+	width: 65px;
+	font-size: 10px;
+	line-height: 12px;
+	text-align: center;
+	margin: 3px auto 0px;
+	float: left;
+	
+	.nob {
+		margin: 0px;
+	}
+	.nob-title {
+		font-size: 11px;
+		font-family: @fontBold;
+		margin-bottom: 1px;
+	}
+	.nob-value {
+		margin: -3px 0px 0px 0px;
+		display: none;
+	}
+	canvas {
+		cursor: pointer;
+	}
+}
 
 
 

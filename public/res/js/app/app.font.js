@@ -7,8 +7,31 @@ sys.app.font = {
 			span.className = 'measuringSpan';
 			this.measuringSpan = span;
 
+		//this.fillChars();
+		//this.sizes.init();
+		
 		//this.load('Over the Rainbow');
 		//this.load('Allura');
+	},
+	chars:  'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'+
+			'!"#$%&\'()*+,-./:;<=>?@[\\]^_`ˆˇ˘˙˚˛˜˝–—‘’‚“”„•‹›€'+
+			'{|}~¡¢£¤¥§¨©ª«¬®¯°±´µ¶·¸º»¿ÀÁÂÃÄÅÆÇÈÉÊ'+
+			'ËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊ'+
+			'ċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊ'+
+			'ŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſƒǼǽǾǿȘșȚț',
+	fillChars: function() {
+		var chars = this.chars,
+			i     = 0,
+			il    = chars.length,
+			str   = '';
+		for (; i<il; i++) {
+			str += '<li>'+ chars[i] +'</li>';
+		}
+		jr('.fonts')
+			.html(str)
+			.on('click', 'li', this.doEvent)
+			.find('li:nth(0)')
+			.trigger('click');
 	},
 	measure: function() {
 		// Measure character width

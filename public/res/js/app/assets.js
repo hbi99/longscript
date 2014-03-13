@@ -4,9 +4,7 @@ sys.app.assets = {
 	init: function() {
 		sys.observer.on('mode_change', this.doEvent);
 		sys.observer.on('font_loaded', this.doEvent);
-
-		//this.fillChars();
-		//this.sizes.init();
+		sys.observer.on('image_loaded', this.doEvent);
 	},
 	doEvent: function(event) {
 		var _sys = sys,
@@ -36,27 +34,9 @@ sys.app.assets = {
 				_el.assetsList.style.fontFamily = _app.font.info.family;
 				self.active.trigger('click');
 				break;
+			case 'font_loaded':
+				break;
 		}
-	},
-	chars:  'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'+
-			'!"#$%&\'()*+,-./:;<=>?@[\\]^_`ˆˇ˘˙˚˛˜˝–—‘’‚“”„•‹›€'+
-			'{|}~¡¢£¤¥§¨©ª«¬®¯°±´µ¶·¸º»¿ÀÁÂÃÄÅÆÇÈÉÊ'+
-			'ËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞßàáâãäåæçèéêëìíîïðñòóôõö÷øùúûüýþÿĀāĂăĄąĆćĈĉĊ'+
-			'ċČčĎďĐđĒēĔĕĖėĘęĚěĜĝĞğĠġĢģĤĥĦħĨĩĪīĬĭĮįİıĲĳĴĵĶķĸĹĺĻļĽľĿŀŁłŃńŅņŇňŉŊ'+
-			'ŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſƒǼǽǾǿȘșȚț',
-	fillChars: function() {
-		var chars = this.chars,
-			i     = 0,
-			il    = chars.length,
-			str   = '';
-		for (; i<il; i++) {
-			str += '<li>'+ chars[i] +'</li>';
-		}
-		jr('.fonts')
-			.html(str)
-			.on('click', 'li', this.doEvent)
-			.find('li:nth(0)')
-			.trigger('click');
 	},
 	sizes: {
 		init: function() {

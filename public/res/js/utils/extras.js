@@ -15,11 +15,11 @@ var observer = function() {
 			var i = stack[type].indexOf(fn);
 			stack[type].splice(i,1);
 		},
-		trigger: function(type, src) {
+		trigger: function(type, detail) {
 			if (!stack[type]) return;
 			var event = {
 					type : type,
-					source : src,
+					details : detail,
 					isCanceled : false,
 					cancelBubble : function() {
 						this.isCanceled = true;

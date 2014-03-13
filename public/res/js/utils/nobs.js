@@ -59,7 +59,8 @@ sys.nobs = {
 			pi = Math.PI,
 			startAngle = 0.745 * pi,
 			midAngle = deg * pi,
-			endAngle = 0.251 * pi;
+			endAngle = 0.251 * pi,
+			onchange;
             
 		// Clear canvas and defaults
 		ctx.clearRect(0, 0, d, d);
@@ -88,22 +89,11 @@ sys.nobs = {
 
 		// Call func
 		if (isInit) return;
-		var onchange = cvs.getAttribute('data-change'),
-			parts, fn;
-		if (onchange) {
-			if (cvs.fnStr !== onchange) {
-				parts = onchange.slice(0, onchange.indexOf('(')).split('.');
-				fn = window;
-				for (var i=0, il=parts.length-1; i<il; i++) {
-					if (!fn[parts[i]]) return;
-					if (parts[i].indexOf('(') > -1) break;
-					fn = fn[parts[i]];
-				}
-				cvs.fnStr = onchange;
-				cvs.fnObj = fn;
-				cvs.fn = fn[parts[i]];
-			}
-			cvs.fn.call(cvs.fnObj, val);
-		}
+		onchange = cvs.getAttribute('data-onchange');
+		if (!onchange) return;
+		sys.observer.trigger(onchange, {
+			value: val,
+			target: cvs
+		});
 	}
 };
