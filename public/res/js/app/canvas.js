@@ -7,7 +7,7 @@ sys.app.canvas = {
 		observer.on('font_loaded', this.doEvent);
 		observer.on('image_loaded', this.doEvent);
 		observer.on('active_letter', this.doEvent);
-		observer.on('nob_zoom', this.draw);
+		observer.on('nob_zoom', this.doEvent);
 
 		this.cvs = _sys.el.cvs;
 		this.ctx = this.cvs.getContext('2d');
@@ -20,6 +20,8 @@ sys.app.canvas = {
 		this.origoY = 0;
 
 		jr(this.cvs).bind('mousedown selectstart', this.doEvent);
+
+		this.zoom_events('focus');
 	},
 	doEvent: function(event) {
 		var _sys   = sys,

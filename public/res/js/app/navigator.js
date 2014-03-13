@@ -66,11 +66,9 @@ sys.app.navigator = {
 			// disable image interpolation
 			//ctx.webkitImageSmoothingEnabled = false;
 
-			ctx.translate(.5,.5);
-			ctx.strokeStyle = '#555';
-			ctx.lineWidth = .5;
-			ctx.strokeRect(asset.left-2, asset.top-2, asset.width+4, asset.height+4);
-			ctx.translate(-.5,-.5);
+			ctx.fillStyle = '#636363';
+			ctx.fillRect(0, 0, cvs.width, cvs.height);
+			ctx.clearRect(asset.left-2, asset.top-2, asset.width+4, asset.height+4);
 			
 			// image
 			ctx.drawImage(asset.image, asset.left, asset.top, asset.width, asset.height);
