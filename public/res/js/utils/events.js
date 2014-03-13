@@ -149,7 +149,7 @@ sys.events = {
 				sys.events.focusEl = target;
 				return sys.shell.exec(_fbHandler +' focus');
 			}
-			if (sys.events.focusEl) {
+			if (sys.events.focusEl && !target.getAttribute('data-onchange')) {
 				if (jr(target).parents('*[data-focus_none]').length > 0) return;
 				_fbHandler = sys.events.focusEl.getAttribute('data-event_fb');
 				sys.events.focusEl = false;

@@ -19,14 +19,12 @@ sys.nobs = {
 			observer_el = self.el,
 			observer_type,
 			onchange;
-			//bodyStyle = document.body.style;
+		//bodyStyle = document.body.style;
 		event.preventDefault();
+		event.stopPropagation();
 		
 		switch (event.type) {
-			case 'selectstart':
-				event.preventDefault();
-				event.stopPropagation();
-				return false;
+			case 'selectstart': return false;
 			case 'mousedown':
 				observer_el =
 				self.el = this;
@@ -36,7 +34,6 @@ sys.nobs = {
 				//bodyStyle.cursor = 'none';
 
 				observer_type = 'start';
-
 				jr(document).bind('mousemove mouseup', self.doEvent);
 				break;
 			case 'mousemove':

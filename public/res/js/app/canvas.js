@@ -21,7 +21,7 @@ sys.app.canvas = {
 
 		jr(this.cvs).bind('mousedown selectstart', this.doEvent);
 
-		this.zoom_events('focus');
+		//this.zoom_events('focus');
 	},
 	doEvent: function(event) {
 		var _sys   = sys,
@@ -31,7 +31,8 @@ sys.app.canvas = {
 			dim    = self.dim,
 			mouseX = event.pageX - dim.l,
 			mouseY = event.pageY - dim.t,
-			mouseState = self.mouseState;
+			mouseState = self.mouseState,
+			scale;
 
 		if (event.preventDefault) event.preventDefault();
 
@@ -47,15 +48,31 @@ sys.app.canvas = {
 				self.draw();
 				break;
 			case 'nob_zoom':
-				self.zoom( event.details.value );
+				var details = event.details;
+
+				if (details.type === 'start') {
+					scale = +_el.nob_scale.getAttribute('data-value');
+					self.zoomDetails = {
+						origoX: self.origoX,
+						origoY: self.origoY
+					};
+					if (scale > 0) {
+						self.zoomDetails.percX = self.origoX / (self.cvs.width - (self.cvs.width * self.scale));
+						self.zoomDetails.percY = self.origoY / (self.cvs.height - (self.cvs.height * self.scale));
+						self.zoomDetails.origoX = 0;
+						self.zoomDetails.origoY = 0;
+					}
+				}
+				self.zoom( details.value );
 				break;
 			// native events
 			case 'selectstart': return false;
 			case 'mousedown':
 				if (event.metaKey || event.ctrlKey) {
-					var scale = +_el.nob_scale.getAttribute('data-value'),
-						percX, percY, origoX, origoY;
+					var percX, percY, origoX, origoY;
 
+					scale = +_el.nob_scale.getAttribute('data-value');
+					
 					if (scale === 0) {
 						percX = ((mouseX - self.origoX) / self.cvs.width) * self.scale;
 						percY = ((mouseY - self.origoY) / self.cvs.height) * self.scale;
@@ -128,6 +145,7 @@ sys.app.canvas = {
 				// trigger observer
 				sys.observer.trigger('zoom_pan');
 
+				self.zoomDetails =
 				self.mouseState.type = false;
 				jr(document).unbind('mousemove mouseup', self.doEvent);
 				break;
@@ -173,8 +191,11 @@ sys.app.canvas = {
 			self = _sys.app.canvas,
 			width = self.cvs.width,
 			height = self.cvs.height,
-			percX = self.percX || .5,
-			percY = self.percY || .5;
+			percX = .5,
+			percY = .5,
+			origoX,
+			origoY,
+			zoomDetails;
 
 		self.scale = parseFloat((val * 0.04) + 1).toFixed(2);
 		
@@ -184,8 +205,14 @@ sys.app.canvas = {
 			_el.nob_scale.setAttribute('data-value', val);
 			_sys.nobs.draw(_el.nob_scale);
 		} else {
-			self.origoX = ((width - (width * self.scale)) * percX);
-			self.origoY = ((height - (height * self.scale)) * percY);
+			if (zoomDetails) {
+				origoX = zoomDetails.origoX;
+				origoY = zoomDetails.origoY;
+				percX  = zoomDetails.percX || percX;
+				percY  = zoomDetails.percY || percY;
+			}
+			self.origoX = origoX + ((width - (width * self.scale)) * percX);
+			self.origoY = origoY + ((height - (height * self.scale)) * percY);
 			self.draw();
 		}
 	},
