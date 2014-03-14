@@ -34,10 +34,16 @@ sys.scrollbar = {
 					vHandle = vTrack.find('.scroll_bar'),
 					hHandle = hTrack.find('.scroll_bar');
 
-				vCss.height = ((this.parentNode.offsetHeight / this.offsetHeight) * (vTrack[0].offsetHeight)) +'px';
-				vCss.top = (((this.offsetTop / (this.parentNode.offsetHeight - this.offsetHeight - 12)) * (vTrack[0].offsetHeight - vHandle[0].offsetHeight)) + 6) +'px';
-
-				vHandle.css(vCss);
+				if (vHandle.length) {
+					vCss.height = ((this.parentNode.offsetHeight / this.offsetHeight) * (vTrack[0].offsetHeight)) +'px';
+					vCss.top = (((this.offsetTop / (this.parentNode.offsetHeight - this.offsetHeight - 12)) * (vTrack[0].offsetHeight - vHandle[0].offsetHeight)) + 6) +'px';
+					vHandle.css(vCss);
+				}
+				if (hHandle.length) {
+					hCss.width = ((this.parentNode.offsetWidth / this.offsetWidth) * (vTrack[0].offsetWidth)) +'px';
+					hCss.left = (((this.offsetLeft / (this.parentNode.offsetWidth - this.offsetWidth - 12)) * (vTrack[0].offsetWidth - vHandle[0].offsetWidth)) + 6) +'px';
+					hHandle.css(hCss);
+				}
 				break;
 			case 'mousewheel':
 				var bEl     = jr(this).find('.body'),

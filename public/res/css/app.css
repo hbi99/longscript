@@ -505,7 +505,7 @@
 .inline-menu .menu-item.over,
 .context-menu .menu-item.over {
   color: #ffffff;
-  text-shadow: 0px -1px 1px #f09000;
+  text-shadow: 0px -1px 0px #f09000;
   background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.5) 5%, rgba(0, 0, 0, 0) 79%);
 }
 .inline-menu .menu-item.over,
@@ -514,11 +514,11 @@
 }
 .inline-menu .menu-item.down,
 .context-menu .menu-item.down {
-  background-color: #636363;
+  background-color: #8e8e8e;
 }
 .inline-menu .menu-item.down.hasSub,
 .context-menu .menu-item.down.hasSub {
-  text-shadow: 0px -1px 1px #5b5b5b;
+  text-shadow: 0px -1px 0px #5b5b5b;
 }
 .inline-menu .menu-item.disabled,
 .context-menu .menu-item.disabled {
@@ -915,8 +915,6 @@ figure {
 .area.nav canvas {
   width: 100%;
   height: 100%;
-  background-image: url(../img/bg_checkers.png);
-  background-color: #7a7a7a;
 }
 .area.assets {
   top: 228px;

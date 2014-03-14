@@ -44,31 +44,31 @@ sys.app.assets = {
 			//jr(document).on('contextmenu', 'body, *[data-context]', sys.context.doEvent);
 		},
 		doEvent: function(event) {
-			var _app = sys.app,
-				_el  = sys.el,
+			var _sys = sys,
+				_app = _sys.app,
 				self = _app.assets,
-				_size = self.sizes,
-				srcEl = event.target,
+				size = self.sizes,
+				target = event.target,
 				dim,
 				left;
 			switch(event.type) {
 				case 'mousedown':
 					event.preventDefault();
 					
-					if (srcEl.nodeName.toLowerCase() === 'figure') {
-						_size.drag     = jr(srcEl).addClass('active');
-						_size.clickX   = event.clientX;
-						_size.dragLeft = srcEl.offsetLeft;
-						_size.dragMax  = _size.drag.parent().width() - 10;
-						_size.onchange = sys.shell.exec(srcEl.getAttribute('data-onchange'), true);
-						_size.drag.parents('.assets').addClass('active');
+					if (target.nodeName.toLowerCase() === 'figure') {
+						size.drag     = jr(target).addClass('active');
+						size.clickX   = event.clientX;
+						size.dragLeft = target.offsetLeft;
+						size.dragMax  = size.drag.parent().width() - 10;
+						size.onchange = _sys.shell.exec(target.getAttribute('data-onchange'), true);
+						size.drag.parents('.assets').addClass('active');
 
-						jr(document).bind('mouseup mousemove', _size.doEvent);
+						jr(document).bind('mouseup mousemove', size.doEvent);
 					} else {
 						// slide track is clicked
-						dim = getDim(srcEl);
+						dim = getDim(target);
 						left = Math.max(Math.min(event.clientX - dim.l - 10, dim.w + 2), 0) - 2;
-						jr(srcEl)
+						jr(target)
 							.find('figure')
 							.addClass('animate200')
 							.css({'left': left +'px'})
@@ -78,19 +78,19 @@ sys.app.assets = {
 					}
 					break;
 				case 'mousemove':
-					if (!_size.drag) return;
-					left = event.clientX - _size.clickX + _size.dragLeft;
-					left = Math.max(Math.min(left, _size.dragMax), 0);
-					_size.drag.css({'left': (left - 2) +'px'});
+					if (!size.drag) return;
+					left = event.clientX - size.clickX + size.dragLeft;
+					left = Math.max(Math.min(left, size.dragMax), 0);
+					size.drag.css({'left': (left - 2) +'px'});
 
-					_size.onchange(parseInt((left / _size.dragMax) * 100, 10));
+					size.onchange(parseInt((left / size.dragMax) * 100, 10));
 					break;
 				case 'mouseup':
-					_size.drag.parents('.assets').removeClass('active');
-					_size.drag.removeClass('active');
-					_size.drag = false;
+					size.drag.parents('.assets').removeClass('active');
+					size.drag.removeClass('active');
+					size.drag = false;
 
-					jr(document).unbind('mouseup mousemove', _size.doEvent);
+					jr(document).unbind('mouseup mousemove', size.doEvent);
 					break;
 			}
 		},

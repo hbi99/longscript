@@ -5,11 +5,12 @@ sys.app.navigator = {
 		var _sys = sys,
 			observer = _sys.observer;
 
-		sys.observer.on('image_loaded', this.doEvent);
+		observer.on('image_loaded', this.doEvent);
+		observer.on('zoom_pan', this.doEvent);
 
 		this.cvs = _sys.el.zoomcvs;
 		this.ctx = this.cvs.getContext('2d');
-		this.cvs.width = this.cvs.offsetWidth;
+		this.cvs.width  = this.cvs.offsetWidth;
 		this.cvs.height = this.cvs.offsetHeight;
 		this.dim = getDim(this.cvs);
 
@@ -17,11 +18,13 @@ sys.app.navigator = {
 	},
 	doEvent: function(event) {
 		var _sys = sys,
-			_el  = _sys.el,
 			_app = _sys.app,
 			self = _app.navigator;
 
 		switch(event.type) {
+			case 'zoom_pan':
+				self.draw();
+				break;
 			case 'image_loaded':
 				// reset scaling, origo, etc ?
 				var dim    = self.dim,
@@ -47,31 +50,38 @@ sys.app.navigator = {
 					width : width,
 					height: height
 				};
+				self.scale = self.asset.width / image.width;
 				self.draw();
 				break;
 		}
 	},
 	draw: function() {
-		var _app = sys.app,
-			cvs  = this.cvs,
-			ctx  = this.ctx,
-			dim  = this.dim,
-			asset = this.asset,
-			iX   = (dim.w/2) - (_app.canvas.cvs.imageWidth/2),
-			iY   = (dim.h/2) - (_app.canvas.cvs.imageHeight/2);
-		
+		var _app    = sys.app,
+			_canvas = _app.canvas,
+			info    = _canvas.info,
+			cvs     = this.cvs,
+			ctx     = this.ctx,
+			asset   = this.asset,
+			
+			zoomLeft   = (info.left < 0 ? -(info.left * this.scale) / _canvas.scale : 0) + asset.left,
+			zoomTop    = (info.top  < 0 ? -(info.top  * this.scale) / _canvas.scale : 0) + asset.top,
+			zoomWidth  = asset.width,
+			zoomHeight = asset.height;
+		if (!asset.image) return;
+		// clear canvas
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 
 		if (_app.mode === 'image') {
-			// disable image interpolation
-			//ctx.webkitImageSmoothingEnabled = false;
-
-			ctx.fillStyle = '#636363';
-			ctx.fillRect(0, 0, cvs.width, cvs.height);
-			ctx.clearRect(asset.left-2, asset.top-2, asset.width+4, asset.height+4);
-			
+			// semi-transparent box
+			ctx.fillStyle = 'rgba(0,0,0,0.1)';
+			ctx.fillRect(asset.left-1, asset.top-1, asset.width+2, asset.height+2);
 			// image
 			ctx.drawImage(asset.image, asset.left, asset.top, asset.width, asset.height);
 		}
+		// zoom rectangle
+		ctx.translate(0.5, 0.5);
+		ctx.strokeStyle = '#f90';
+		ctx.strokeRect(zoomLeft, zoomTop, zoomWidth, zoomHeight);
+		ctx.translate(-0.5, -0.5);
 	}
 };

@@ -7,8 +7,7 @@ sys.app.image = {
 		}, 0);
 	},
 	load: function(url) {
-		var _app = sys.app,
-			self = this;
+		var _app = sys.app;
 
 		_app.switchMode('image');
 

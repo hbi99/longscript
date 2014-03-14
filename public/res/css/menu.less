@@ -72,17 +72,17 @@
 		&.down,
 		&.over {
 			color: @menuOver;
-			text-shadow: 0px -1px 1px darken(@menuOverBg, 3%);
+			text-shadow: 0px -1px 0px darken(@menuOverBg, 3%);
 			background-image: -webkit-linear-gradient(top, hsla(0,0%,100%,0) 0%, hsla(0,0%,100%,0.5) 5%, hsla(0,0%,0%,0) 79%);
 		}
 		&.over {
 			background-color: @menuOverBg;
 		}
 		&.down {
-			background-color: @boxContent;
+			background-color: lighten(@boxContent, 17%);
 
 			&.hasSub {
-				text-shadow: 0px -1px 1px darken(@boxContent, 3%);
+				text-shadow: 0px -1px 0px darken(@boxContent, 3%);
 			}
 		}
 		

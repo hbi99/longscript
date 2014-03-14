@@ -68,6 +68,7 @@ sys.app.canvas = {
 			// native events
 			case 'selectstart': return false;
 			case 'mousedown':
+				if (event.button === 2) return;
 				if (event.metaKey || event.ctrlKey) {
 					var percX, percY, origoX, origoY;
 
@@ -116,21 +117,14 @@ sys.app.canvas = {
 					case 'pan':
 						self.origoX = mouseX - mouseState.clickX + mouseState.origoX;
 						self.origoY = mouseY - mouseState.clickY + mouseState.origoY;
-
-						// trigger observer
-						sys.observer.trigger('zoom_pan');
 						break;
 					case 'zoom':
 						var val = Math.min(Math.max(mouseState.org_scale + (mouseState.startY - mouseY), 0), 100);
 						
-						//self.scale = parseFloat((val * 0.04) + 1).toFixed(2);
 						self.zoom(val, true);
 
 						self.origoX = ((self.cvs.width - (self.cvs.width * self.scale)) * self.percX) + mouseState.origoX;
 						self.origoY = ((self.cvs.height - (self.cvs.height * self.scale)) * self.percY) + mouseState.origoY;
-
-						// trigger observer
-						sys.observer.trigger('zoom_pan');
 						break;
 					case 'resize':
 						break;
@@ -141,9 +135,6 @@ sys.app.canvas = {
 				break;
 			case 'mouseup':
 				self.zoom_events('blur');
-				
-				// trigger observer
-				sys.observer.trigger('zoom_pan');
 
 				self.zoomDetails =
 				self.mouseState.type = false;
@@ -170,34 +161,42 @@ sys.app.canvas = {
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 
 		if (_app.mode === 'image') {
+			self.info = {
+				left   : (iX * self.scale) + self.origoX,
+				top    : (iY * self.scale) + self.origoY,
+				width  : cvs.imageWidth * self.scale,
+				height : cvs.imageHeight * self.scale
+			};
 			// disable image interpolation
 			ctx.webkitImageSmoothingEnabled = false;
 			// image
 			ctx.drawImage(_app.image.img,
-							(iX * self.scale) + self.origoX,
-							(iY * self.scale) + self.origoY,
-							cvs.imageWidth * self.scale,
-							cvs.imageHeight * self.scale);
+							self.info.left,
+							self.info.top,
+							self.info.width,
+							self.info.height);
 		}
+		// trigger observer
+		sys.observer.trigger('zoom_pan');
 	},
 	opacity: function(val) {
 		var _el = sys.el;
 		_el.nob_opacity.valEl.textContent = val;
-		_el.canvas_bg.style.opacity = 1-(val/100);
+		_el.canvas_bg.style.opacity = 1 - (val/100);
 	},
 	zoom: function(val, update_nob) {
 		var _sys = sys,
 			_el  = _sys.el,
 			self = _sys.app.canvas,
-			width = self.cvs.width,
+			width  = self.cvs.width,
 			height = self.cvs.height,
-			percX = .5,
-			percY = .5,
-			origoX,
-			origoY,
-			zoomDetails;
+			zoomDetails = self.zoomDetails,
+			percX  = 0.5,
+			percY  = 0.5,
+			origoX = 0,
+			origoY = 0;
 
-		self.scale = parseFloat((val * 0.04) + 1).toFixed(2);
+		self.scale = +parseFloat((val * 0.04) + 1).toFixed(2);
 		
 		_el.zoom_level.textContent = (self.scale * 100).toFixed();
 		
@@ -210,9 +209,10 @@ sys.app.canvas = {
 				origoY = zoomDetails.origoY;
 				percX  = zoomDetails.percX || percX;
 				percY  = zoomDetails.percY || percY;
+				
+				self.origoX = origoX + ((width - (width * self.scale)) * percX);
+				self.origoY = origoY + ((height - (height * self.scale)) * percY);
 			}
-			self.origoX = origoX + ((width - (width * self.scale)) * percX);
-			self.origoY = origoY + ((height - (height * self.scale)) * percY);
 			self.draw();
 		}
 	},
@@ -237,6 +237,7 @@ sys.app.canvas = {
 	}
 };
 
+/* jshint ignore:start */
 /*
  		else {
 			ctx.strokeStyle = '#555';
@@ -255,3 +256,4 @@ sys.app.canvas = {
 			ctx.fillText(_app.assets.activeLetter, w/2, (h/2) - info.height);
 		}
 */
+/* jshint ignore:end */

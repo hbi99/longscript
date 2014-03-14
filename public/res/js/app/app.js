@@ -17,11 +17,10 @@ sys.app = {
 		sys.observer.trigger('app_init');
 	},
 	switchMode: function(mode) {
-		var _app = sys.app,
-			_el  = sys.el;
+		var _sys = sys;
 
 		this.mode = mode;
 
-		sys.observer.trigger('mode_change');
+		_sys.observer.trigger('mode_change');
 	}
 };
