@@ -4,6 +4,7 @@ sys.app.canvas = {
 		var _sys = sys,
 			observer = _sys.observer;
 
+		observer.on('app.resize', this.doEvent);
 		observer.on('font_loaded', this.doEvent);
 		observer.on('image_loaded', this.doEvent);
 		observer.on('active_letter', this.doEvent);
@@ -38,6 +39,12 @@ sys.app.canvas = {
 
 		switch(event.type) {
 			// custom events
+			case 'app.resize':
+				self.dim = getDim(self.cvs);
+				self.cvs.width = self.cvs.offsetWidth;
+				self.cvs.height = self.cvs.offsetHeight;
+				self.draw();
+				break;
 			case 'active_letter':
 			case 'font_loaded':
 				_el.canvasTitle.innerHTML = _app.font.info.name +' [ '+ _app.assets.activeLetter +' ]';

@@ -15,6 +15,7 @@ sys.app = {
 		}
 
 		sys.observer.trigger('app_init');
+		
 	},
 	switchMode: function(mode) {
 		var _sys = sys;

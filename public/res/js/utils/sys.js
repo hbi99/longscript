@@ -28,7 +28,10 @@ require('module')._cache = {};
 				if (name === 'app') continue;
 				if (typeof(this[name].init) === 'function') this[name].init(this);
 			}
+
 			this.app.init();
+
+			jr(window).bind('resize', this.doEvent);
 		},
 		// stuff to do 'onclose'
 		dispose: function() {
@@ -39,6 +42,18 @@ require('module')._cache = {};
 				}
 			}
 			setTimeout(function() {sys = false;},0);
+		},
+		doEvent: function(event) {
+			var _sys = sys;
+			switch (event.type) {
+				case 'resize':
+					_sys.observer.trigger('app.resize', {
+						target : this,
+						width  : this.innerWidth,
+						height : this.innerHeight
+					});
+					break;
+			}
 		},
 		quit: function() {
 			window.close();
