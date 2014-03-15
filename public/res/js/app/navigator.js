@@ -43,12 +43,13 @@ sys.app.navigator = {
 				}
 
 				self.asset = {
-					image : image,
-					ratio : ratio,
-					left  : (dim.w/2) - (width/2),
-					top   : (dim.h/2) - (height/2),
-					width : width,
-					height: height
+					image  : image,
+					margin : margin,
+					ratio  : ratio,
+					left   : (dim.w/2) - (width/2),
+					top    : (dim.h/2) - (height/2),
+					width  : width,
+					height : height
 				};
 				self.scale = self.asset.width / image.width;
 				self.draw();
@@ -62,12 +63,16 @@ sys.app.navigator = {
 			cvs     = this.cvs,
 			ctx     = this.ctx,
 			asset   = this.asset,
-			
 			zoomLeft   = (info.left < 0 ? -(info.left * this.scale) / _canvas.scale : 0) + asset.left,
 			zoomTop    = (info.top  < 0 ? -(info.top  * this.scale) / _canvas.scale : 0) + asset.top,
-			zoomWidth  = asset.width,
-			zoomHeight = asset.height;
+			zoomWidth  = asset.width - (( (info.left + info.width - _canvas.cvs.width) / info.width ) * asset.width) - zoomLeft + asset.left,
+			zoomHeight = asset.height - (( (info.top + info.height - _canvas.cvs.height) / info.height ) * asset.height) - zoomTop + asset.top;
+
 		if (!asset.image) return;
+
+		zoomWidth  = Math.min(asset.width + (asset.left - zoomLeft), zoomWidth);
+		zoomHeight = Math.min(asset.height + (asset.top - zoomTop), zoomHeight);
+
 		// clear canvas
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 

@@ -175,6 +175,14 @@ sys.app.canvas = {
 							self.info.top,
 							self.info.width,
 							self.info.height);
+
+			//ctx.translate(0.5, 0.5);
+			ctx.strokeStyle = '#555';
+			ctx.strokeRect(self.info.left-2,
+							self.info.top-2,
+							self.info.width+4,
+							self.info.height+4);
+			//ctx.translate(-0.5, -0.5);
 		}
 		// trigger observer
 		sys.observer.trigger('zoom_pan');
