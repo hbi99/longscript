@@ -767,6 +767,15 @@ body {
   font: 11px/16px 'regular';
   letter-spacing: 0.5px;
 }
+body.drag_ew * {
+  cursor: ew-resize !important;
+}
+body.drag_ns * {
+  cursor: ns-resize !important;
+}
+body.drag_move * {
+  cursor: move !important;
+}
 ul {
   list-style: none;
   padding: 0px;
@@ -858,6 +867,12 @@ figure {
   visibility: hidden;
   line-height: 0;
   height: 0;
+}
+.track {
+  cursor: pointer;
+}
+.track .handle {
+  cursor: ew-resize;
 }
 .nob-ctrl {
   width: 65px;
@@ -1126,9 +1141,6 @@ figure {
 		*/
 
 }
-.area.timeline:hover .content_fixed .tl_head.tl_controls .speed {
-  opacity: 1;
-}
 .area.timeline .content_fixed {
   color: #ababab;
   text-shadow: 0px 1px 2px #333333;
@@ -1136,6 +1148,9 @@ figure {
 .area.timeline .content_fixed.left {
   width: 221px;
   border-radius: 3px 0px 0px 3px;
+}
+.area.timeline .content_fixed.left:hover .tl_head.tl_controls .speed {
+  opacity: 1;
 }
 .area.timeline .content_fixed.right {
   left: 225px;
@@ -1232,23 +1247,23 @@ figure {
   border-bottom: #757575 1px solid;
 }
 .area.timeline .content_fixed .tl_nob_track .icon-time_nob {
-  top: -14px;
-  left: -8px;
+  top: -1px;
+  left: -1px;
   color: #7f7f7f;
   text-shadow: 0px 0px 2px #424242, 0px 2px 3px #424242;
   font-size: 25px;
-  z-index: 2;
   cursor: ew-resize;
 }
-.area.timeline .content_fixed .tl_nob_track .tl_indicator {
+.area.timeline .content_fixed .tl_nob_track .icon-time_nob:after {
+  content: '';
   position: absolute;
-  top: 13px;
-  left: 23px;
+  top: 10px;
+  left: 8px;
   width: 1px;
   height: 160px;
   background: #f90;
   box-shadow: 0px 0px 1px #333;
-  z-index: 1;
+  z-index: -1;
 }
 .area.timeline .content_fixed li {
   position: relative;
@@ -1262,7 +1277,7 @@ figure {
   left: 5px;
   cursor: pointer;
 }
-.area.timeline .content_fixed .track {
+.area.timeline .content_fixed .anim_track {
   position: absolute;
   top: 4px;
   left: 0px;
@@ -1273,7 +1288,7 @@ figure {
   background-image: -webkit-linear-gradient(bottom, transparent 65%, rgba(255, 255, 255, 0.2) 100%);
   background-color: #54987b;
 }
-.area.timeline .content_fixed .track.orange {
+.area.timeline .content_fixed .anim_track.orange {
   background-color: #b9983c;
   left: 112px;
 }

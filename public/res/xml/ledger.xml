@@ -9,8 +9,11 @@
 		<i object="cvs" long="sys.app.canvas" type="[APP]" description="Cavas.">
 			<i switch="zfb" name="zoom_events" arg="[focus|blur]" description="."/>
 		</i>
-		<i object="assets" long="sys.app.assets.sizes" type="[APP]" description="Assets.">
+		<i object="assets" long="sys.app.assets" type="[APP]" description="Assets.">
 			<i switch="s" name="changeSize" arg="[-1|1]" description="."/>
+		</i>
+		<i object="timeline" long="sys.app.timeline" type="[APP]" description="Assets.">
+			<i switch="s" name="doEvent" arg="[-1|1]" description="."/>
 		</i>
 		<i object="font" long="sys.app.font" type="[APP]" description="Fonts.">
 			<i switch="l" name="load" arg="[name]" description="."/>

@@ -17,6 +17,7 @@
 <script type="text/javascript" src="res/js/utils/language.js"></script>
 <script type="text/javascript" src="res/js/utils/scrollbars.js"></script>
 <script type="text/javascript" src="res/js/utils/nobs.js"></script>
+<script type="text/javascript" src="res/js/utils/dnd_tracks.js"></script>
 <script type="text/javascript" src="res/js/utils/popup.js"></script>
 <!-- misc -->
 <script type="text/javascript" src="res/js/utils/extras.js"></script>
@@ -92,8 +93,8 @@
 			<li><figure class="icon-new"></figure></li>
 			<li class="left">
 				<figure class="icon-mountain" data-cmd="assets -s less"></figure>
-				<span class="slider" data-el="assets_slider">
-					<figure class="icon-slider_nob" data-onchange="assets -s"></figure>
+				<span class="track slider" data-el="assets_slider">
+					<figure class="handle icon-slider_nob" data-onchange="assets -s"></figure>
 				</span>
 				<figure class="icon-mountain big" data-cmd="assets -s more"></figure>
 			</li>
@@ -145,16 +146,14 @@
 					<div>40</div>
 					<div>50</div>
 				</div>
-				<div class="tl_nob_track">
-					<div class="tl_indicator">
-						<figure class="icon-time_nob"></figure>
-					</div>
+				<div class="track tl_nob_track" data-onchange="timeline -s">
+					<figure class="handle icon-time_nob" data-onchange="timeline -s"></figure>
 				</div>
 			</div>
 			<div class="content tl_body">
 				<ul class="body">
-					<li><div class="track">&#160;</div></li>
-					<li><div class="track orange">&#160;</div></li>
+					<li><div class="anim_track">&#160;</div></li>
+					<li><div class="anim_track orange">&#160;</div></li>
 				</ul>
 			</div>
 

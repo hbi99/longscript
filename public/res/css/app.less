@@ -255,16 +255,6 @@
 		right: 19px;
 		border-radius: 5px 5px 0px 5px;
 
-		&:hover {
-			.content_fixed {
-				.tl_head.tl_controls {
-					.speed {
-						opacity: 1;
-					}
-				}
-			}
-		}
-
 		.content_fixed {
 			//background-image: url(../img/bg_tl_body.png);
 			color: darken(@boxFocusHl, 13%);
@@ -273,6 +263,14 @@
 			&.left {
 				width: 221px;
 				border-radius: 3px 0px 0px 3px;
+
+				&:hover {
+					.tl_head.tl_controls {
+						.speed {
+							opacity: 1;
+						}
+					}
+				}
 			}
 			&.right {
 				left: 225px;
@@ -382,24 +380,25 @@
 				border-bottom: lighten(@boxContent, 7%) 1px solid;
 
 				.icon-time_nob {
-					top: -14px;
-					left: -8px;
+					top: -1px;
+					left: -1px;
 					color: lighten(@boxContent, 11%);
 					text-shadow: 0px 0px 2px darken(@boxContent, 13%),
 								0px 2px 3px darken(@boxContent, 13%);
 					font-size: 25px;
-					z-index: 2;
 					cursor: ew-resize;
-				}
-				.tl_indicator {
-					position: absolute;
-					top: 13px;
-					left: 23px;
-					width: 1px;
-					height: 160px;
-					background: #f90;
-					box-shadow: 0px 0px 1px #333;
-					z-index: 1;
+
+					&:after {
+						content: '';
+						position: absolute;
+						top: 10px;
+						left: 8px;
+						width: 1px;
+						height: 160px;
+						background: #f90;
+						box-shadow: 0px 0px 1px #333;
+						z-index: -1;
+					}
 				}
 			}
 			li {
@@ -415,7 +414,7 @@
 					cursor: pointer;
 				}
 			}
-			.track {
+			.anim_track {
 				position: absolute;
 				top: 4px;
 				left: 0px;
@@ -425,6 +424,7 @@
 				box-shadow: 0px 1px 7px #444;
 				background-image: -webkit-linear-gradient(bottom, transparent 65%, rgba(255,255,255,0.2) 100%);
 				background-color: #54987b;
+				//opacity: 0.5;
 
 				&.orange {
 					background-color: #b9983c;

@@ -18,6 +18,10 @@ body {
 	font: 11px/16px @fontFamily;
 	letter-spacing: 0.5px;
 	//-webkit-font-smoothing: antialiased;
+
+	&.drag_ew * { cursor: ew-resize !important; }
+	&.drag_ns * { cursor: ns-resize !important; }
+	&.drag_move * { cursor: move !important; }
 }
 
 ul {
@@ -119,6 +123,14 @@ figure {
 			line-height: 0;
 			height: 0;
 		}
+	}
+}
+
+.track {
+	cursor: pointer;
+
+	.handle {
+		cursor: ew-resize;
 	}
 }
 
