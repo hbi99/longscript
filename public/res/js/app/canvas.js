@@ -33,7 +33,9 @@ sys.app.canvas = {
 			mouseX = event.pageX - dim.l,
 			mouseY = event.pageY - dim.t,
 			mouseState = self.mouseState,
-			scale;
+			scale,
+			origoX,
+			origoY;
 
 		if (event.preventDefault) event.preventDefault();
 
@@ -77,7 +79,7 @@ sys.app.canvas = {
 			case 'mousedown':
 				if (event.button === 2) return;
 				if (event.metaKey || event.ctrlKey) {
-					var percX, percY, origoX, origoY;
+					var percX, percY;
 
 					scale = +_el.nob_scale.getAttribute('data-value');
 					
@@ -122,12 +124,23 @@ sys.app.canvas = {
 
 				switch (mouseState.type) {
 					case 'pan':
-						self.origoX = mouseX - mouseState.clickX + mouseState.origoX;
-						self.origoY = mouseY - mouseState.clickY + mouseState.origoY;
+						var img = _app.image.img,
+							img_half_width  = (img.width / 2) * self.scale,
+							img_half_height = (img.height / 2) * self.scale,
+							cvs_half_width  = (self.cvs.width / 2) * (self.scale - 1),
+							cvs_half_height = (self.cvs.height / 2) * (self.scale - 1);
+
+						origoX = mouseX - mouseState.clickX + mouseState.origoX;
+						origoY = mouseY - mouseState.clickY + mouseState.origoY;
+
+						origoX = Math.max(Math.min(origoX, img_half_width - cvs_half_width), -img_half_width - cvs_half_width);
+						origoY = Math.max(Math.min(origoY, img_half_height - cvs_half_height), -img_half_height - cvs_half_height);
+
+						self.origoX = origoX;
+						self.origoY = origoY;
 						break;
 					case 'zoom':
 						var val = Math.min(Math.max(mouseState.org_scale + (mouseState.startY - mouseY), 0), 100);
-						
 						self.zoom(val, true);
 
 						self.origoX = ((self.cvs.width - (self.cvs.width * self.scale)) * self.percX) + mouseState.origoX;
