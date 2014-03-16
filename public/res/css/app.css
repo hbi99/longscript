@@ -961,7 +961,7 @@ figure {
   box-shadow: 0px 1px 3px #515151;
 }
 .area.assets .content .body.assets li figure {
-  background: #757575;
+  background: #5b5b5b;
   float: left;
   width: 25px;
   height: 25px;
@@ -1081,18 +1081,27 @@ figure {
 .area.timeline .content .layers figure {
   color: #333;
   text-shadow: 0px 1px 2px #777;
+  margin-left: 3px;
 }
 .area.timeline .content_fixed .layers li,
 .area.timeline .content .layers li {
   height: 23px;
-  padding: 0px 3px;
   line-height: 11px;
-  border-top: #727272 1px solid;
-  border-bottom: #555 1px solid;
+  border-top: #757575 1px solid;
+  border-bottom: #515151 1px solid;
 }
 .area.timeline .content_fixed .layers li.active,
 .area.timeline .content .layers li.active {
-  height: 73px;
+  height: 51px;
+}
+.area.timeline .content_fixed .layers li canvas,
+.area.timeline .content .layers li canvas {
+  float: left;
+  width: 64px;
+  height: 50px;
+  border-left: #757575 1px solid;
+  border-right: #515151 1px solid;
+  margin: 0px;
 }
 .area.timeline .scroll_bg.horizontal {
   left: 225px;

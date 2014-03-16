@@ -140,7 +140,7 @@
 						}
 
 						figure {
-							background: lighten(@boxContent, 7%);
+							background: darken(@boxContent, 3%);
 							float: left;
 							width: 25px;
 							height: 25px;
@@ -282,16 +282,25 @@
 				figure {
 					color: #333;
 					text-shadow: 0px 1px 2px #777;
+					margin-left: 3px;
 				}
 				li {
 					height: 23px;
-					padding: 0px 3px;
 					line-height: 11px;
-					border-top: #727272 1px solid;
-					border-bottom: #555 1px solid;
+					border-top: lighten(@boxContent, 7%) 1px solid;
+					border-bottom: darken(@boxContent, 7%) 1px solid;
 
 					&.active {
-						height: 73px;
+						height: 51px;
+					}
+					canvas {
+						float: left;
+						//background: rgba(0,0,0,0.1);
+						width: 64px;
+						height: 50px;
+						border-left: lighten(@boxContent, 7%) 1px solid;
+						border-right: darken(@boxContent, 7%) 1px solid;
+						margin: 0px;
 					}
 				}
 			}

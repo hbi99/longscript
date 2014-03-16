@@ -187,6 +187,12 @@ sys.app.canvas = {
 				width  : cvs.imageWidth * self.scale,
 				height : cvs.imageHeight * self.scale
 			};
+			// semi-transparent box
+			ctx.fillStyle = 'rgba(255,255,255,0.08)';
+			ctx.fillRect(self.info.left-1,
+						self.info.top-1,
+						self.info.width+2,
+						self.info.height+2)
 			// disable image interpolation
 			ctx.webkitImageSmoothingEnabled = false;
 			// image
@@ -195,8 +201,8 @@ sys.app.canvas = {
 							self.info.top,
 							self.info.width,
 							self.info.height);
-
 			//ctx.translate(0.5, 0.5);
+			ctx.lineWidth = '0.25';
 			ctx.strokeStyle = '#555';
 			ctx.strokeRect(self.info.left-2,
 							self.info.top-2,
@@ -237,7 +243,7 @@ sys.app.canvas = {
 				origoY = zoomDetails.origoY;
 				percX  = zoomDetails.percX || percX;
 				percY  = zoomDetails.percY || percY;
-				
+
 				self.origoX = origoX + ((width - (width * self.scale)) * percX);
 				self.origoY = origoY + ((height - (height * self.scale)) * percY);
 			}

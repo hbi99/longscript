@@ -22,6 +22,7 @@ sys.app.navigator = {
 			self = _app.navigator;
 
 		switch(event.type) {
+			// custom events
 			case 'zoom_pan':
 				self.draw();
 				break;
@@ -78,7 +79,7 @@ sys.app.navigator = {
 
 		if (_app.mode === 'image') {
 			// semi-transparent box
-			ctx.fillStyle = 'rgba(0,0,0,0.1)';
+			ctx.fillStyle = 'rgba(255,255,255,0.08)';
 			ctx.fillRect(asset.left-1, asset.top-1, asset.width+2, asset.height+2);
 			// image
 			ctx.drawImage(asset.image, asset.left, asset.top, asset.width, asset.height);
