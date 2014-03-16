@@ -108,31 +108,59 @@
 	<section class="area timeline panel" data-el="box_timeline">
 		<div class="content_fixed left">
 
-			<ul class="layers">
-				<li>
-					<figure class="icon-eye_on"></figure>
-					hello_white.png
-				</li>
-				<!--
-				<li>
-					<figure class="icon-eye_off"></figure>
-					layer_2.png
-				</li>
-				-->
-			</ul>
+			<div class="tl_head tl_controls">
+				<div class="primary">
+					<figure class="icon-to_start"></figure>
+					<figure class="icon-arrow_right"></figure>
+					<figure class="icon-to_end"></figure>
+				</div>
+				<figure class="icon-loop hideMe"></figure>
+				<span class="speed">
+					<figure class="icon-clock"></figure>
+					<span class="speed_level" data-el="speed_level">100</span>
+				</span>
+			</div>
+			<div class="tl_body">
+				<ul>
+					<li>
+						<figure class="icon-eye_on"></figure>
+						Left brush
+					</li>
+					<li>
+						<figure class="icon-eye_on"></figure>
+						Right brush
+					</li>
+				</ul>
+			</div>
 
 		</div>
-		<div class="content right">
+		<div class="content_fixed right">
 
-			<ul class="body layers">
-				<li></li>
-				<!--
-				<li></li>
-				-->
-			</ul>
+			<div class="tl_head">
+				<div class="frame_nrs">
+					<div>&#160;</div>
+					<div>10</div>
+					<div>20</div>
+					<div>30</div>
+					<div>40</div>
+					<div>50</div>
+				</div>
+				<div class="tl_nob_track">
+					<div class="tl_indicator">
+						<figure class="icon-time_nob"></figure>
+					</div>
+				</div>
+			</div>
+			<div class="content tl_body">
+				<ul class="body">
+					<li><div class="track">&#160;</div></li>
+					<li><div class="track orange">&#160;</div></li>
+				</ul>
+			</div>
 
 		</div>
 		<div class="scroll_bg vertical">
+			<div class="concave ltl"></div>
 			<div class="scroll_bar"></div>
 		</div>
 		<div class="scroll_bg horizontal">

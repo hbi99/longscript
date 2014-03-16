@@ -215,8 +215,8 @@
                 j  = 0, 
                 jl = type.length,
                 isNative,
-                event,
-                listener;
+                listener,
+                event;
             for (; j<jl; j++) {
                 isNative = sys.events.nativeEvents.indexOf(type[j]) > -1;
                 if (isNative) {
@@ -242,7 +242,7 @@
                                     break;
                                 }
                             }
-                            if (el.parentNode === null && !isNative) return this;
+                            if (el.parentNode === null && !isNative) break;
                             el = el.parentNode;
                         }
                     }

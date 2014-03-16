@@ -64,15 +64,15 @@ sys.app.navigator = {
 			cvs     = this.cvs,
 			ctx     = this.ctx,
 			asset   = this.asset,
-			zoomLeft   = (info.left < 0 ? -(info.left * this.scale) / _canvas.scale : 0) + asset.left,
-			zoomTop    = (info.top  < 0 ? -(info.top  * this.scale) / _canvas.scale : 0) + asset.top,
+			zoomLeft   = parseInt((info.left < 0 ? -(info.left * this.scale) / _canvas.scale : 0) + asset.left, 10),
+			zoomTop    = parseInt((info.top  < 0 ? -(info.top  * this.scale) / _canvas.scale : 0) + asset.top, 10),
 			zoomWidth  = asset.width - (( (info.left + info.width - _canvas.cvs.width) / info.width ) * asset.width) - zoomLeft + asset.left,
 			zoomHeight = asset.height - (( (info.top + info.height - _canvas.cvs.height) / info.height ) * asset.height) - zoomTop + asset.top;
 
 		if (!asset.image) return;
 
-		zoomWidth  = Math.min(asset.width + (asset.left - zoomLeft), zoomWidth);
-		zoomHeight = Math.min(asset.height + (asset.top - zoomTop), zoomHeight);
+		zoomWidth  = parseInt(Math.min(asset.width + (asset.left - zoomLeft), zoomWidth), 10);
+		zoomHeight = parseInt(Math.min(asset.height + (asset.top - zoomTop), zoomHeight), 10);
 
 		// clear canvas
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
