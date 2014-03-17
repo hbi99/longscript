@@ -6,7 +6,9 @@ sys.scrollbar = {
 
 		jr(document).on('mousedown', '.scroll_bg', this.doEvent);
 		jr(document).on('mousewheel', '.content', this.doEvent);
-		jr('.content .body').bind('calculate', this.doEvent);
+		jr('.content .body')
+			.bind('calculate', this.doEvent)
+			.trigger('calculate');
 	},
 	dispose: function() {
 
@@ -31,22 +33,24 @@ sys.scrollbar = {
 					panel   = tEl.parents('.panel'),
 					vTrack  = panel.find('.scroll_bg.vertical'),
 					hTrack  = panel.find('.scroll_bg.horizontal'),
-					vHandle = vTrack.find('.scroll_bar'),
-					hHandle = hTrack.find('.scroll_bar');
+					vHandle = vTrack.length ? vTrack.find('.scroll_bar') : false,
+					hHandle = hTrack.length ? hTrack.find('.scroll_bar') : false;
 
-				if (vHandle.length) {
+				if (vHandle) {
 					vCss.height = ((this.parentNode.offsetHeight / this.offsetHeight) * (vTrack[0].offsetHeight)) +'px';
 					vCss.top = (((this.offsetTop / (this.parentNode.offsetHeight - this.offsetHeight - 12)) * (vTrack[0].offsetHeight - vHandle[0].offsetHeight)) + 6) +'px';
+					vCss.display = this.parentNode.offsetHeight > this.offsetHeight ? 'none' : 'block';
 					vHandle.css(vCss);
 				}
-				if (hHandle.length) {
+				if (hHandle) {
 					hCss.width = ((this.parentNode.offsetWidth / this.offsetWidth) * (vTrack[0].offsetWidth)) +'px';
 					hCss.left = (((this.offsetLeft / (this.parentNode.offsetWidth - this.offsetWidth - 12)) * (vTrack[0].offsetWidth - vHandle[0].offsetWidth)) + 6) +'px';
+					vCss.display = this.parentNode.offsetWidth > this.offsetWidth ? 'none' : 'block';
 					hHandle.css(hCss);
 				}
 				break;
 			case 'mousewheel':
-				var bEl     = jr(this).find('.body'),
+				var bEl     = jr(this).find('.body').trigger('scroll'),
 					pEl     = bEl.parents('.panel'),
 					vTrkEl  = pEl.find('.scroll_bg.vertical'),
 					hTrkEl  = pEl.find('.scroll_bg.horizontal'),
@@ -56,8 +60,8 @@ sys.scrollbar = {
 					deltaX  = ((event.wheelDeltaX / 40) * 10) * -1,
 					valY    = (bEl.length) ? bEl[0].offsetTop - deltaY : 0,
 					valX    = (bEl.length) ? bEl[0].offsetLeft - deltaX : 0,
-					valYMax = (valY) ? this.offsetHeight - bEl[0].offsetHeight : 0,
-					valXMax = (valY) ? this.offsetWidth - bEl[0].offsetWidth : 0;
+					valYMax = (valY) ? this.offsetHeight - bEl[0].scrollHeight : 0,
+					valXMax = (valX) ? this.offsetWidth - bEl[0].scrollWidth : 0;
 				
 				cCss = {
 					top: Math.min(Math.max(valY, valYMax), 0) +'px',
