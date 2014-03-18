@@ -48,7 +48,7 @@
 			<span data-cmd="gui -x cmd_theme_3" class="LIVE button box left theme_3">3</span>
 			<figure data-cmd="cmix -o" class="LIVE button box left icon-open_file" title="Settings"></figure>
 		</div>
-		<span data-cmd="gui -x cmd_toggleHotzones" class="LIVE TOGGLE btn_toggle toggle_off right toggleHotzones"><span>Hotzones</span></span>
+		<span data-cmd="sys -x toggle_hotzones" class="LIVE TOGGLE btn_toggle toggle_off right toggleHotzones"><span>Hotzones</span></span>
 		<!-- HOTKEYS TOGGLE 
 		<span class="LIVE TOGGLE btn_toggle toggle_off right"><span>Hotkeys</span></span>
 		-->
@@ -151,9 +151,9 @@
 	</section>
 
 	<section class="area timeline panel" data-el="box_timeline">
-		<div class="content_fixed left">
+		<div class="content_fixed left" data-el="body_rows_left">
 
-			<div class="tl_head tl_controls">
+			<div class="tl_head tl_controls" data-el="body_cols_left">
 				<div class="primary">
 					<figure class="icon-to_start"></figure>
 					<figure class="icon-arrow_right"></figure>
@@ -214,14 +214,7 @@
 		<div class="content_fixed right">
 
 			<div class="tl_head" data-el="body_cols">
-				<div class="frame_nrs">
-					<div>&#160;</div>
-					<div>10</div>
-					<div>20</div>
-					<div>30</div>
-					<div>40</div>
-					<div>50</div>
-				</div>
+				<div class="frame_nrs" data-el="frame_nrs"></div>
 				<div class="track tl_nob_track" data-onchange="timeline -s">
 					<figure class="handle icon-time_nob" data-onchange="timeline -s"></figure>
 				</div>

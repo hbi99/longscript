@@ -8,6 +8,9 @@
 @boxFocusHl:		#ccc;
 @boxText:			#333;
 
+@hotzone:			rgba(0,255,200,.25);
+@hz_speed:			300ms;
+
 @popCover:			#2a2a2a;
 @popTitleColor:		#888;
 @popContentColor:	#aaa;
@@ -97,7 +100,10 @@
 		&:hover {
 			.options {
 				li.left {
-					opacity: 1;
+					figure,
+					.slider {
+						opacity: 1;
+					}
 				}
 			}
 		}
@@ -192,8 +198,25 @@
 			li.left {
 				float: left;
 				position: relative;
-				opacity: 0;
-				-webkit-transition: 100ms opacity ease-in-out;
+
+				&:before {
+					content: '';
+					position: absolute;
+					top: 8px;
+					left: 0px;
+					bottom: 3px;
+					width: 114px;
+					background: @hotzone;
+					border-radius: 1px;
+					opacity: 0;
+					-webkit-transition: @hz_speed opacity ease-in-out;
+				}
+
+				figure,
+				.slider {
+					opacity: 0;
+					-webkit-transition: 100ms opacity ease-in-out;
+				}
 
 				.slider {
 					position: absolute;
@@ -263,20 +286,43 @@
 			&.left {
 				width: 221px;
 				border-radius: 3px 0px 0px 3px;
+				overflow: visible;
+				z-index: 3;
 
 				&:hover {
 					.tl_head.tl_controls {
 						.speed {
-							opacity: 1;
+							figure,
+							.speed_level {
+								opacity: 1;
+							}
 						}
 					}
 				}
-
+				&.hscrolled:after {
+					content: '';
+					position: absolute;
+					top: 0px;
+					bottom: 0px;
+					right: 0px;
+					width: 5px;
+					box-shadow: 2px 0px 5px rgba(0,0,0,0.25);
+				}
+				
 				.tl_body {
+					position: absolute;
 					overflow: hidden;
 
 					ul {
 						position: relative;
+
+						li {
+
+							&:hover {
+								color: darken(@optionHover, 7%);
+								text-shadow: 0px 1px 2px @boxBgColor;
+							}
+						}
 					}
 				}
 			}
@@ -284,6 +330,9 @@
 				left: 225px;
 				border-radius: 0px 3px 3px 0px;
 
+				.tl_head {
+					width: 99999px;
+				}
 				.content {
 					padding: 0px 0px 0px 0px;
 
@@ -312,6 +361,10 @@
 				height: 31px;
 				border-bottom: darken(@boxContent, 7%) 1px solid;
 
+				&.vscrolled {
+					box-shadow: -1.5px 2px 5px rgba(0,0,0,0.25);
+				}
+
 				&.tl_controls {
 					padding: 1px 3px;
 					height: 29px;
@@ -336,33 +389,61 @@
 					}
 					.speed {
 						position: absolute;
-						top: 6px;
-						right: 6px;
-						width: 37px;
-						text-align: center;
-						background: darken(@boxFace, 3%);
-						color: darken(@boxFocusHl, 11%);
-						padding: 2px 0px 0px;
-						border-radius: 2px;
-						white-space: nowrap;
+						top: 7px;
+						right: 11px;
 						cursor: pointer;
-						opacity: 0;
-						-webkit-transition: 100ms opacity ease-in-out;
 
-						&:after {
-							content: '%';
-							color: #777;
-							position: relative;
-							left: 0px;
+						&:before {
+							content: '';
+							position: absolute;
+							top: 0px;
+							left: -29px;
+							bottom: 0px;
+							width: 56px;
+							background: @hotzone;
+							border-radius: 1px;
+							opacity: 0;
+							-webkit-transition: @hz_speed opacity ease-in-out;
 						}
 
 						.speed_level {
+							position: relative;
+							top: 1px;
+							left: -3px;
 
+							&:before {
+								content: '';
+								position: absolute;
+								top: -3px;
+								left: -7px;
+								width: 37px;
+								height: 16px;
+								background: darken(@boxFace, 3%);
+								color: darken(@boxFocusHl, 11%);
+								border-radius: 2px;
+								z-index: -1;
+								opacity: 1;
+							}
+							&:after {
+								content: '%';
+								color: lighten(@boxFace, 23%);
+								position: relative;
+								top: 0px;
+								right: -3px;
+								z-index: 3;
+							}
+						}
+
+						&:after,
+						figure,
+						.speed_level {
+							opacity: 0;
+							-webkit-transition: 100ms opacity ease-in-out;
 						}
 						figure {
 							position: absolute;
-							top: 1px;
-							left: -17px;
+							top: 0px;
+							left: -28px;
 						}
 					}
 				}
@@ -408,7 +489,6 @@
 			}
 			.frame_nrs {
 				height: 29px;
-				width: 99999px;
 				background-image: url(../img/bg_tl_head.png);
 				background-repeat: repeat-x;
 				background-position: 0px 14px;
@@ -542,6 +622,19 @@
 		}
 	}
 }
+
+
+/*
+ * TOGGLERS
+ */
+.show_hotzones	{
+	.area.assets .options li.left:before,
+	.timeline .content_fixed .tl_head.tl_controls .speed:before {
+		opacity: 1;
+	}
+}
+
+
 
 /*
  * CANVAS

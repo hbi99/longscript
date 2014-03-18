@@ -4,18 +4,40 @@ sys.app.timeline = {
 		var _sys = sys,
 			el = _sys.el;
 
+		this.doEvent('populate_frame_nrs');
+
 		jr('.right .body', el.box_timeline).bind('scroll', this.doEvent);
 	},
 	doEvent: function(event) {
 		var _sys   = sys,
 			el     = _sys.el,
-			self   = sys.app.timeline,
-			target = event.taget;
-		switch (event.type) {
+			cmd = (typeof(event) === 'string') ? event : event.type,
+			target;
+		switch (cmd) {
 			case 'scroll':
 				target = event.toElement;
 				el.body_cols.style.left = target.offsetLeft +'px';
 				el.body_rows.style.top = target.offsetTop +'px';
+
+				if (target.offsetTop === 0) {
+					el.body_cols.classList.remove('vscrolled');
+					el.body_cols_left.classList.remove('vscrolled');
+				} else {
+					el.body_cols.classList.add('vscrolled');
+					el.body_cols_left.classList.add('vscrolled');
+				}
+				if (target.offsetLeft === 0) {
+					el.body_rows_left.classList.remove('hscrolled');
+				} else {
+					el.body_rows_left.classList.add('hscrolled');
+				}
+				break;
+			case 'populate_frame_nrs':
+				target = '<div>&#160;</div>';
+				for (var i=1; i<50; i++) {
+					target += '<div>'+ i +'0</div>';
+				}
+				el.frame_nrs.innerHTML = target;
 				break;
 		}
 	}

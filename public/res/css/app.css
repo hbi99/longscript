@@ -956,8 +956,10 @@ figure {
   width: 261px;
   border-radius: 5px;
 }
-.area.assets.active .options li.left,
-.area.assets:hover .options li.left {
+.area.assets.active .options li.left figure,
+.area.assets:hover .options li.left figure,
+.area.assets.active .options li.left .slider,
+.area.assets:hover .options li.left .slider {
   opacity: 1;
 }
 .area.assets .content {
@@ -1036,6 +1038,21 @@ figure {
 .area.assets .options li.left {
   float: left;
   position: relative;
+}
+.area.assets .options li.left:before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 0px;
+  bottom: 3px;
+  width: 114px;
+  background: rgba(0, 255, 200, 0.25);
+  border-radius: 1px;
+  opacity: 0;
+  -webkit-transition: 300ms opacity ease-in-out;
+}
+.area.assets .options li.left figure,
+.area.assets .options li.left .slider {
   opacity: 0;
   -webkit-transition: 100ms opacity ease-in-out;
 }
@@ -1094,19 +1111,39 @@ figure {
 .area.timeline .content_fixed.left {
   width: 221px;
   border-radius: 3px 0px 0px 3px;
+  overflow: visible;
+  z-index: 3;
 }
-.area.timeline .content_fixed.left:hover .tl_head.tl_controls .speed {
+.area.timeline .content_fixed.left:hover .tl_head.tl_controls .speed figure,
+.area.timeline .content_fixed.left:hover .tl_head.tl_controls .speed .speed_level {
   opacity: 1;
 }
+.area.timeline .content_fixed.left.hscrolled:after {
+  content: '';
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  width: 5px;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.25);
+}
 .area.timeline .content_fixed.left .tl_body {
+  position: absolute;
   overflow: hidden;
 }
 .area.timeline .content_fixed.left .tl_body ul {
   position: relative;
 }
+.area.timeline .content_fixed.left .tl_body ul li:hover {
+  color: #ededed;
+  text-shadow: 0px 1px 2px #2a2a2a;
+}
 .area.timeline .content_fixed.right {
   left: 225px;
   border-radius: 0px 3px 3px 0px;
+}
+.area.timeline .content_fixed.right .tl_head {
+  width: 99999px;
 }
 .area.timeline .content_fixed.right .content {
   padding: 0px 0px 0px 0px;
@@ -1131,6 +1168,9 @@ figure {
   height: 31px;
   border-bottom: #515151 1px solid;
 }
+.area.timeline .content_fixed .tl_head.vscrolled {
+  box-shadow: -1.5px 2px 5px rgba(0, 0, 0, 0.25);
+}
 .area.timeline .content_fixed .tl_head.tl_controls {
   padding: 1px 3px;
   height: 29px;
@@ -1153,29 +1193,58 @@ figure {
 }
 .area.timeline .content_fixed .tl_head.tl_controls .speed {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 7px;
+  right: 11px;
+  cursor: pointer;
+}
+.area.timeline .content_fixed .tl_head.tl_controls .speed:before {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: -29px;
+  bottom: 0px;
+  width: 56px;
+  background: rgba(0, 255, 200, 0.25);
+  border-radius: 1px;
+  opacity: 0;
+  -webkit-transition: 300ms opacity ease-in-out;
+}
+.area.timeline .content_fixed .tl_head.tl_controls .speed .speed_level {
+  position: relative;
+  top: 1px;
+  left: -3px;
+}
+.area.timeline .content_fixed .tl_head.tl_controls .speed .speed_level:before {
+  content: '';
+  position: absolute;
+  top: -3px;
+  left: -7px;
   width: 37px;
-  text-align: center;
+  height: 16px;
   background: #3d3d3d;
   color: #b0b0b0;
-  padding: 2px 0px 0px;
   border-radius: 2px;
-  white-space: nowrap;
-  cursor: pointer;
+  z-index: -1;
+  opacity: 1;
+}
+.area.timeline .content_fixed .tl_head.tl_controls .speed .speed_level:after {
+  content: '%';
+  color: #808080;
+  position: relative;
+  top: 0px;
+  right: -3px;
+  z-index: 3;
+}
+.area.timeline .content_fixed .tl_head.tl_controls .speed:after,
+.area.timeline .content_fixed .tl_head.tl_controls .speed figure,
+.area.timeline .content_fixed .tl_head.tl_controls .speed .speed_level {
   opacity: 0;
   -webkit-transition: 100ms opacity ease-in-out;
 }
-.area.timeline .content_fixed .tl_head.tl_controls .speed:after {
-  content: '%';
-  color: #777;
-  position: relative;
-  left: 0px;
-}
 .area.timeline .content_fixed .tl_head.tl_controls .speed figure {
   position: absolute;
-  top: 1px;
-  left: -17px;
+  top: 0px;
+  left: -28px;
 }
 .area.timeline .content_fixed .tl_body {
   top: 32px;
@@ -1257,7 +1326,6 @@ figure {
 }
 .area.timeline .content_fixed .frame_nrs {
   height: 29px;
-  width: 99999px;
   background-image: url(../img/bg_tl_head.png);
   background-repeat: repeat-x;
   background-position: 0px 14px;
@@ -1372,6 +1440,13 @@ figure {
   color: #777;
   position: relative;
   left: 2px;
+}
+/*
+ * TOGGLERS
+ */
+.show_hotzones .area.assets .options li.left:before,
+.show_hotzones .timeline .content_fixed .tl_head.tl_controls .speed:before {
+  opacity: 1;
 }
 /*
  * CANVAS

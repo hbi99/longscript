@@ -192,7 +192,7 @@ sys.app.canvas = {
 			ctx.fillRect(self.info.left-1,
 						self.info.top-1,
 						self.info.width+2,
-						self.info.height+2)
+						self.info.height+2);
 			// disable image interpolation
 			ctx.webkitImageSmoothingEnabled = false;
 			// image

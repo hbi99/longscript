@@ -43,14 +43,14 @@ sys.scrollbar = {
 					vHandle.css(vCss);
 				}
 				if (hHandle) {
-					hCss.width = ((this.parentNode.offsetWidth / this.offsetWidth) * (vTrack[0].offsetWidth)) +'px';
-					hCss.left = (((this.offsetLeft / (this.parentNode.offsetWidth - this.offsetWidth - 12)) * (vTrack[0].offsetWidth - vHandle[0].offsetWidth)) + 6) +'px';
+					hCss.width = ((this.parentNode.offsetWidth / this.offsetWidth) * (hTrack[0].offsetWidth)) +'px';
+					hCss.left = (((this.offsetLeft / (this.parentNode.offsetWidth - this.offsetWidth - 12)) * (hTrack[0].offsetWidth - hHandle[0].offsetWidth)) + 6) +'px';
 					vCss.display = this.parentNode.offsetWidth > this.offsetWidth ? 'none' : 'block';
 					hHandle.css(hCss);
 				}
 				break;
 			case 'mousewheel':
-				var bEl     = jr(this).find('.body').trigger('scroll'),
+				var bEl     = jr(this).find('.body'),
 					pEl     = bEl.parents('.panel'),
 					vTrkEl  = pEl.find('.scroll_bg.vertical'),
 					hTrkEl  = pEl.find('.scroll_bg.horizontal'),
@@ -64,16 +64,19 @@ sys.scrollbar = {
 					valXMax = (valX) ? this.offsetWidth - bEl[0].scrollWidth : 0;
 				
 				cCss = {
-					top: Math.min(Math.max(valY, valYMax), 0) +'px',
-					left: Math.min(Math.max(valX, valXMax), 0) +'px'
+					top: Math.min(Math.max(valY, valYMax), 0),
+					left: Math.min(Math.max(valX, valXMax), 0)
 				};
-				bEl.css(cCss);
 				vHndlEl.css({
 					top: (((parseInt(cCss.top, 10) / valYMax) * (vTrkEl.height() - vHndlEl.height() - 12)) + 6) +'px'
 				});
 				hHndlEl.css({
-					left: (((parseInt(cCss.left, 10) / valXMax) * (vTrkEl.width() - vHndlEl.width() - 12)) + 6) +'px'
+					left: (((parseInt(cCss.left, 10) / valXMax) * (hTrkEl.width() - hHndlEl.width() - 12)) + 6) +'px'
 				});
+				bEl.css({
+					top: cCss.top +'px',
+					left: cCss.left +'px'
+				}).trigger('scroll');
 				break;
 			case 'mousedown':
 				event.preventDefault();

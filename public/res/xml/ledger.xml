@@ -4,6 +4,7 @@
 		<i object="sys" long="sys" type="[SYS]" description="System.">
 			<i switch="r" name="reload" arg="NONE" description="Reloads application."/>
 			<i switch="q" name="quit" arg="NONE" description="Quits application."/>
+			<i switch="x" name="doEvent" arg="COMMAND" description="Executes commands."/>
 			<i switch="dev" name="toggle_dev" arg="NONE" description="Opens developer tools."/>
 		</i>
 		<i object="cvs" long="sys.app.canvas" type="[APP]" description="Cavas.">
