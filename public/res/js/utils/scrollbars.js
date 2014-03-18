@@ -123,7 +123,7 @@ sys.scrollbar = {
 						.addClass('animate300')
 						.css(cCss)
 						.wait(320, function() {
-							this.removeClass('animate300');
+							this.removeClass('animate300').trigger('scroll');
 						});
 
 					hndlEl
@@ -143,7 +143,7 @@ sys.scrollbar = {
 				cCss[_scroll.prop] = ((val / _scroll.dragMax) * _scroll.content.hMax) +'px';
 				
 				_scroll.drag.css(hCss);
-				_scroll.content.el.css(cCss);
+				_scroll.content.el.css(cCss).trigger('scroll');
 				break;
 			case 'mouseup':
 				_scroll.drag.parent().removeClass('active');
