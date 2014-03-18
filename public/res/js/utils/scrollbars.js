@@ -1,8 +1,13 @@
 
 sys.scrollbar = {
 	init: function() {
+		var _sys = sys,
+			observer = _sys.observer;
+
 		//this.sb = jr('.scroll_bg');
 		//console.log( this.sb );
+
+		observer.on('app.resize', this.doEvent);
 
 		jr(document).on('mousedown', '.scroll_bg', this.doEvent);
 		jr(document).on('mousewheel', '.content', this.doEvent);
@@ -27,6 +32,9 @@ sys.scrollbar = {
 			srcDim,
 			val;
 		switch(event.type) {
+			case 'app.resize':
+				jr('.content .body').trigger('calculate');
+				break;
 			case 'calculate':
 				// calculate scrollbar
 				var tEl     = jr(this),
