@@ -47,13 +47,13 @@ sys.scrollbar = {
 				if (vHandle) {
 					vCss.height = ((this.parentNode.offsetHeight / this.offsetHeight) * (vTrack[0].offsetHeight)) +'px';
 					vCss.top = (((this.offsetTop / (this.parentNode.offsetHeight - this.offsetHeight - 12)) * (vTrack[0].offsetHeight - vHandle[0].offsetHeight)) + 6) +'px';
-					vCss.display = this.parentNode.offsetHeight > this.offsetHeight ? 'none' : 'block';
+					vCss.display = this.parentNode.offsetHeight >= this.offsetHeight ? 'none' : 'block';
 					vHandle.css(vCss);
 				}
 				if (hHandle) {
 					hCss.width = ((this.parentNode.offsetWidth / this.offsetWidth) * (hTrack[0].offsetWidth)) +'px';
 					hCss.left = (((this.offsetLeft / (this.parentNode.offsetWidth - this.offsetWidth - 12)) * (hTrack[0].offsetWidth - hHandle[0].offsetWidth)) + 6) +'px';
-					vCss.display = this.parentNode.offsetWidth > this.offsetWidth ? 'none' : 'block';
+					hCss.display = this.parentNode.offsetWidth >= this.offsetWidth ? 'none' : 'block';
 					hHandle.css(hCss);
 				}
 				break;
