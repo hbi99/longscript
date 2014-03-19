@@ -9,6 +9,7 @@ sys.app.canvas = {
 		observer.on('image_loaded', this.doEvent);
 		observer.on('active_letter', this.doEvent);
 		observer.on('nob_zoom', this.doEvent);
+		observer.on('nob_opacity', this.doEvent);
 
 		this.cvs = _sys.el.cvs;
 		this.ctx = this.cvs.getContext('2d');
@@ -27,7 +28,7 @@ sys.app.canvas = {
 	doEvent: function(event) {
 		var _sys   = sys,
 			_app   = _sys.app,
-			_el    = _sys.el,
+			el    = _sys.el,
 			self   = _app.canvas,
 			dim    = self.dim,
 			mouseX = event.pageX - dim.l,
@@ -49,18 +50,20 @@ sys.app.canvas = {
 				break;
 			case 'active_letter':
 			case 'font_loaded':
-				_el.canvasTitle.innerHTML = _app.font.info.name +' [ '+ _app.assets.activeLetter +' ]';
+				el.canvasTitle.innerHTML = _app.font.info.name +' [ '+ _app.assets.activeLetter +' ]';
 				self.draw();
 				break;
 			case 'image_loaded':
 				// reset scaling, origo, etc ?
 				self.draw();
 				break;
+			case 'nob_opacity':
+				break;
 			case 'nob_zoom':
 				var details = event.details;
 
 				if (details.type === 'start') {
-					scale = +_el.nob_scale.getAttribute('data-value');
+					scale = +el.nob_scale.getAttribute('data-value');
 					self.zoomDetails = {
 						origoX: self.origoX,
 						origoY: self.origoY
@@ -81,7 +84,7 @@ sys.app.canvas = {
 				if (event.metaKey || event.ctrlKey) {
 					var percX, percY;
 
-					scale = +_el.nob_scale.getAttribute('data-value');
+					scale = +el.nob_scale.getAttribute('data-value');
 					
 					if (scale === 0) {
 						percX = ((mouseX - self.origoX) / self.cvs.width) * self.scale;
@@ -214,13 +217,13 @@ sys.app.canvas = {
 		sys.observer.trigger('zoom_pan');
 	},
 	opacity: function(val) {
-		var _el = sys.el;
-		_el.nob_opacity.valEl.textContent = val;
-		_el.canvas_bg.style.opacity = 1 - (val/100);
+		var el = sys.el;
+		el.nob_opacity.valEl.textContent = val;
+		el.canvas_bg.style.opacity = 1 - (val/100);
 	},
 	zoom: function(val, update_nob) {
 		var _sys = sys,
-			_el  = _sys.el,
+			el  = _sys.el,
 			self = _sys.app.canvas,
 			width  = self.cvs.width,
 			height = self.cvs.height,
@@ -232,11 +235,11 @@ sys.app.canvas = {
 
 		self.scale = +parseFloat((val * 0.04) + 1).toFixed(2);
 		
-		_el.zoom_level.textContent = (self.scale * 100).toFixed();
+		el.zoom_level.textContent = (self.scale * 100).toFixed();
 		
 		if (update_nob) {
-			_el.nob_scale.setAttribute('data-value', val);
-			_sys.nobs.draw(_el.nob_scale);
+			el.nob_scale.setAttribute('data-value', val);
+			_sys.nobs.draw(el.nob_scale);
 		} else {
 			if (zoomDetails) {
 				origoX = zoomDetails.origoX;
@@ -251,17 +254,17 @@ sys.app.canvas = {
 		}
 	},
 	zoom_events: function(type) {
-		var _el  = sys.el;
+		var el  = sys.el;
 		switch (type) {
 			case 'focus':
-				jr(_el.cvs_zoom)
+				jr(el.cvs_zoom)
 					.css({'display': 'block'})
 					.wait(1, function() {
 						this.addClass('active');
 					});
 				break;
 			case 'blur':
-				jr(_el.cvs_zoom)
+				jr(el.cvs_zoom)
 					.removeClass('active')
 					.wait(320, function() {
 						this.css({'display': 'none'});

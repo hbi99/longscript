@@ -141,17 +141,22 @@ sys.events = {
 			_name,
 			_eventHandler,
 			_handleSelector,
-			_fbHandler;
+			_fbHandler,
+			_fbEl;
 		if (type === 'mousedown' && event.button === 0) {
 			if (target.getAttribute('data-context') !== 'exception') sys.context.clear( target );
 			_fbHandler = target.getAttribute('data-event_fb');
+			_fbEl = sys.events.focusEl;
 			if (_fbHandler) {
+				if (_fbEl) {
+					sys.shell.exec(_fbEl.getAttribute('data-event_fb') +' blur');
+				}
 				sys.events.focusEl = target;
 				return sys.shell.exec(_fbHandler +' focus');
 			}
-			if (sys.events.focusEl && !target.getAttribute('data-onchange')) {
+			if (_fbEl && !target.getAttribute('data-onchange')) {
 				if (jr(target).parents('*[data-focus_none]').length > 0) return;
-				_fbHandler = sys.events.focusEl.getAttribute('data-event_fb');
+				_fbHandler = _fbEl.getAttribute('data-event_fb');
 				sys.events.focusEl = false;
 				return sys.shell.exec(_fbHandler +' blur');
 			}

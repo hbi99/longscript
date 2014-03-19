@@ -2,9 +2,13 @@
 sys.app.timeline = {
 	init: function() {
 		var _sys = sys,
-			el = _sys.el;
+			el = _sys.el,
+			observer = _sys.observer;
+
+		observer.on('nob_speed', this.doEvent);
 
 		this.doEvent('populate_frame_nrs');
+		//this.speed_events('focus');
 
 		jr('.right .body', el.box_timeline).bind('scroll', this.doEvent);
 	},
@@ -38,6 +42,30 @@ sys.app.timeline = {
 					target += '<div>'+ i +'0</div>';
 				}
 				el.frame_nrs.innerHTML = target;
+				break;
+			case 'nob_speed':
+				el.speed_level.textContent = event.details.value || 0;
+				break;
+		}
+	},
+	speed_events: function(type) {
+		var _el  = sys.el;
+		switch (type) {
+			case 'focus':
+				jr(_el.speed_level.parentNode).addClass('focused');
+				jr(_el.anim_speed)
+					.css({'display': 'block'})
+					.wait(1, function() {
+						this.addClass('active');
+					});
+				break;
+			case 'blur':
+				jr(_el.speed_level.parentNode).removeClass('focused');
+				jr(_el.anim_speed)
+					.removeClass('active')
+					.wait(320, function() {
+						this.css({'display': 'none'});
+					});
 				break;
 		}
 	}

@@ -162,7 +162,7 @@
 				<figure class="icon-loop hideMe"></figure>
 				<span class="speed">
 					<figure class="icon-clock"></figure>
-					<span class="speed_level" data-el="speed_level" data-event_fb="cvs -zfb">50</span>
+					<span class="speed_level" data-el="speed_level" data-event_fb="timeline -sp">50</span>
 				</span>
 			</div>
 			<div class="tl_body">
@@ -261,7 +261,7 @@
 </div>
 
 <!-- INLINE DIALOGS -->
-<div class="inline-menu arrBR" data-el="cvs_zoom" data-focus_none="1">
+<div class="inline-menu arrBR cvs_zoom" data-el="cvs_zoom" data-focus_none="1">
 	<div class="cntnr">
 		<div class="nob-ctrl">
 			<div class="nob-title">Opacity</div>
@@ -271,6 +271,16 @@
 		<div class="nob-ctrl">
 			<div class="nob-title">Scale</div>
 			<canvas width="44" height="34" class="nob" data-el="nob_scale" data-onchange="nob_zoom"></canvas>
+			<div class="nob-value"><span>0</span>%</div>
+		</div>
+	</div>
+</div>
+
+<div class="inline-menu arrTL anim_speed" data-el="anim_speed" data-focus_none="1">
+	<div class="cntnr">
+		<div class="nob-ctrl">
+			<div class="nob-title">Speed</div>
+			<canvas width="44" height="34" class="nob" data-el="nob_speed" data-onchange="nob_speed" data-color="#00c700"></canvas>
 			<div class="nob-value"><span>0</span>%</div>
 		</div>
 	</div>
