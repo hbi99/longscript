@@ -3,6 +3,7 @@ sys.app.assets = {
 	active: false,
 	init: function() {
 		sys.observer.on('mode_change', this.doEvent);
+		sys.observer.on('file_loaded', this.doEvent);
 		sys.observer.on('font_loaded', this.doEvent);
 		sys.observer.on('image_loaded', this.doEvent);
 	},
@@ -29,6 +30,14 @@ sys.app.assets = {
 				jr('.body', _el.box_assets)
 					.removeClass('glyphs assets')
 					.addClass(mode);
+				break;
+			case 'file_loaded':
+				var tmp = transform({
+						match: '//file',
+						template: 'assets'
+					});
+
+				jr(_el.assetsList).html(tmp.xml);
 				break;
 			case 'font_loaded':
 				_el.assetsList.style.fontFamily = _app.font.info.family;

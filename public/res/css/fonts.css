@@ -35,6 +35,17 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+[class^="icon-"].left,
+[class*=" icon-"].left {
+  float: left;
+}
+[class^="icon-"].right,
+[class*=" icon-"].right {
+  float: right;
+}
+.icon-add:before {
+  content: "\e61c";
+}
 .icon-search:before {
   content: "\e600";
 }

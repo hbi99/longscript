@@ -44,7 +44,8 @@ sys.app.timeline = {
 				el.frame_nrs.innerHTML = target;
 				break;
 			case 'nob_speed':
-				el.speed_level.textContent = event.details.value || 0;
+				var details = event.details;
+				details.srcElement.textContent = details.value || 0;
 				break;
 		}
 	},

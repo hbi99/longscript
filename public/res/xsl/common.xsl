@@ -29,4 +29,15 @@
 	</div></div>
 </xsl:template>
 
+<xsl:template name="assets">
+	<xsl:for-each select=".//assets/*">
+		<li>
+			<figure>
+				<xsl:attribute name="style">background-image: url(<xsl:value-of select="@source"/>);</xsl:attribute>
+			&#160;</figure>
+			<span><xsl:value-of select="@name"/></span>
+		</li>
+	</xsl:for-each>
+</xsl:template>
+
 </xsl:stylesheet>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<file>
+		<assets>
+			<image name="hb.png" source="res/img/hb.png"/>
+			<image name="hello_white.png" source="res/img/hello_white.png"/>
+		</assets>
+		<frames length="30">[10,10,10]</frames>
+	</file>
+</data>

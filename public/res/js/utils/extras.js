@@ -50,7 +50,7 @@ var transform = function(options) {
 	treeTemplate.setAttribute('match', options.match);
 	xslPrc.importStylesheet(sys.fs.xsl);
 
-	ownerDocument = document.implementation.createDocument("", "", null);
+	ownerDocument = document.implementation.createDocument('', '', null);
 	fragment = xslPrc.transformToFragment(sys.fs.xml, ownerDocument);
 	treeTemplate.removeAttribute('match');
 	// trim fragment
@@ -58,7 +58,8 @@ var transform = function(options) {
 	if (fragment.lastChild && fragment.lastChild.nodeType === 3) fragment.removeChild(fragment.lastChild);
 	
 	if (options.silent) return fragment;
-	else if (!options.target) return fragment.childNodes[0];
+	//else if (!options.target) return fragment.childNodes[0];
+	else if (!options.target) return fragment;
 	else jr(options.target).html(fragment.xml);
 };
 

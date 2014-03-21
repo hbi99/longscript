@@ -28,8 +28,9 @@ sys.app.canvas = {
 	doEvent: function(event) {
 		var _sys   = sys,
 			_app   = _sys.app,
-			el    = _sys.el,
+			el     = _sys.el,
 			self   = _app.canvas,
+			doc    = document,
 			dim    = self.dim,
 			mouseX = event.pageX - dim.l,
 			mouseY = event.pageY - dim.t,
@@ -120,7 +121,8 @@ sys.app.canvas = {
 						clickY: mouseY
 					};
 				}
-				jr(document).bind('mousemove mouseup', self.doEvent);
+				doc.body.classList.add('cursor_hide');
+				jr(doc).bind('mousemove mouseup', self.doEvent);
 				break;
 			case 'mousemove':
 				if (!mouseState.type) return;
@@ -161,7 +163,8 @@ sys.app.canvas = {
 
 				self.zoomDetails =
 				self.mouseState.type = false;
-				jr(document).unbind('mousemove mouseup', self.doEvent);
+				doc.body.classList.remove('cursor_hide');
+				jr(doc).unbind('mousemove mouseup', self.doEvent);
 				break;
 		}
 	},

@@ -15,7 +15,8 @@ sys.nobs = {
 	},
 	dispose: function() {},
 	doEvent: function(event) {
-		var self = sys.nobs,
+		var _sys = sys,
+			self = _sys.nobs,
 			observer_el = self.el,
 			observer_type,
 			onchange;
@@ -31,7 +32,7 @@ sys.nobs = {
 				self.clickY = event.clientY;
 				self.clickX = event.clientX;
 				self.orgValue = self.el.getAttribute('data-value');
-				//bodyStyle.cursor = 'none';
+				document.body.classList.add('cursor_hide');
 
 				observer_type = 'start';
 				jr(document).bind('mousemove mouseup', self.doEvent);
@@ -45,20 +46,22 @@ sys.nobs = {
 				if (!self.el) return;
 				self.el = false;
 				observer_type = 'end';
-				//bodyStyle.cursor = '';
+				document.body.classList.remove('cursor_hide');
 				jr(document).unbind('mousemove mouseup', self.doEvent);
 				break;
 		}
 		onchange = observer_el.getAttribute('data-onchange');
 		if (!onchange) return;
-		sys.observer.trigger(onchange, {
-			type: observer_type,
-			target: observer_el,
-			value: observer_el.getAttribute('data-value')
+		_sys.observer.trigger(onchange, {
+			srcElement : _sys.events.focusEl,
+			type       : observer_type,
+			target     : observer_el,
+			value      : observer_el.getAttribute('data-value')
 		});
 	},
 	draw: function(cvs, isInit) {
-		var ctx  = cvs.getContext('2d'),
+		var _sys = sys,
+			ctx  = cvs.getContext('2d'),
 			d = cvs.width,
 			lw = 4,
 			r = d/2,
@@ -99,11 +102,12 @@ sys.nobs = {
 
 		// Call func
 		if (isInit) return;
-		onchange = cvs.getAttribute('data-onchange');
-		if (!onchange) return;
-		sys.observer.trigger(onchange, {
-			value: val,
-			target: cvs
-		});
+		// onchange = cvs.getAttribute('data-onchange');
+		// if (!onchange) return;
+		// _sys.observer.trigger(onchange, {
+		// 	el: _sys.events.focusEl,
+		// 	value: val,
+		// 	target: cvs
+		// });
 	}
 };

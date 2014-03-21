@@ -148,6 +148,7 @@ sys.events = {
 			_fbHandler = target.getAttribute('data-event_fb');
 			_fbEl = sys.events.focusEl;
 			if (_fbHandler) {
+				if (sys.events.focusEl === target) return;
 				if (_fbEl) {
 					sys.shell.exec(_fbEl.getAttribute('data-event_fb') +' blur');
 				}

@@ -35,6 +35,17 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+[class^="icon-"].left,
+[class*=" icon-"].left {
+  float: left;
+}
+[class^="icon-"].right,
+[class*=" icon-"].right {
+  float: right;
+}
+.icon-add:before {
+  content: "\e61c";
+}
 .icon-search:before {
   content: "\e600";
 }
@@ -792,6 +803,9 @@ body.drag_ns * {
 body.drag_move * {
   cursor: move !important;
 }
+body.cursor_hide * {
+  cursor: none !important;
+}
 ul {
   list-style: none;
   padding: 0px;
@@ -1318,7 +1332,7 @@ figure {
 }
 .area.timeline .content_fixed .tl_body li:nth-child(2) .anim_track {
   margin-left: 120px;
-  width: 380px;
+  width: 374px;
 }
 .area.timeline .content_fixed .tl_body li:nth-child(3) .anim_track {
   margin-left: 50px;
@@ -1391,14 +1405,34 @@ figure {
 .area.timeline .content_fixed li {
   position: relative;
   border-bottom: #515151 1px solid;
-  padding: 3px 0px 3px 23px;
+  padding: 3px 3px 3px 23px;
   height: 15px;
+  -webkit-transition: 100ms opacity ease-in-out;
+}
+.area.timeline .content_fixed li:hover figure:not(.icon-eye_on) {
+  opacity: 1;
+}
+.area.timeline .content_fixed li span {
+  float: left;
 }
 .area.timeline .content_fixed li figure {
+  position: relative;
+  top: -1px;
+  margin-right: 2px;
+  cursor: pointer;
+}
+.area.timeline .content_fixed li figure:not(.icon-eye_on) {
+  color: #8e8e8e;
+  text-shadow: 0px 1px 2px #333333;
+  opacity: 0;
+}
+.area.timeline .content_fixed li figure:not(.icon-eye_on):hover {
+  color: #ffffff;
+}
+.area.timeline .content_fixed li figure.icon-eye_on {
   position: absolute;
   top: 3px;
   left: 5px;
-  cursor: pointer;
 }
 .area.timeline .scroll_bg.vertical {
   top: 30px;

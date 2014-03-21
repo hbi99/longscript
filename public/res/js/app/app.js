@@ -15,7 +15,17 @@ sys.app = {
 		}
 
 		sys.observer.trigger('app_init');
-		
+
+		this.load('res/xml/hb.xml');
+	},
+	load: function(path) {
+		var _sys = sys,
+			file = _sys.fs.load({path: path}).dom,
+			xFile = file.selectSingleNode('//file');
+
+		_sys.app.file = _sys.fs.xml.documentElement.appendChild(xFile);
+
+		_sys.observer.trigger('file_loaded');
 	},
 	switchMode: function(mode) {
 		var _sys = sys;
