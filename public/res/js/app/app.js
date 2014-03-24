@@ -16,16 +16,31 @@ sys.app = {
 
 		sys.observer.trigger('app_init');
 
+		//this.load('res/xml/font.xml');
 		this.load('res/xml/hb.xml');
+		//this.load('res/xml/hello.xml');
 	},
 	load: function(path) {
 		var _sys = sys,
+			self = _sys.app,
 			file = _sys.fs.load({path: path}).dom,
 			xFile = file.selectSingleNode('//file');
 
-		_sys.app.file = _sys.fs.xml.documentElement.appendChild(xFile);
+		self.file = _sys.fs.xml.documentElement.appendChild(xFile);
+		self.mode = xFile.getAttribute('mode');
 
-		_sys.observer.trigger('file_loaded');
+		if (self.mode === 'font') {
+
+		} else {
+			_sys.observer.trigger('file_loaded');
+			//self.image.load();
+		}
+	},
+	fileMeta: function(name) {
+		var _sys = sys,
+			self = _sys.app,
+			node = self.file.selectSingleNode('//file//*[@name="'+ name +'"]');
+		return node ? node.getAttribute('value') : false;
 	},
 	switchMode: function(mode) {
 		var _sys = sys;

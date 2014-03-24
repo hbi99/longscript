@@ -5,9 +5,10 @@ sys.app.canvas = {
 			observer = _sys.observer;
 
 		observer.on('app.resize', this.doEvent);
-		observer.on('font_loaded', this.doEvent);
-		observer.on('image_loaded', this.doEvent);
-		observer.on('active_letter', this.doEvent);
+		observer.on('file_loaded', this.doEvent);
+		//observer.on('font_loaded', this.doEvent);
+		//observer.on('image_loaded', this.doEvent);
+		//observer.on('active_letter', this.doEvent);
 		observer.on('nob_zoom', this.doEvent);
 		observer.on('nob_opacity', this.doEvent);
 
@@ -49,14 +50,16 @@ sys.app.canvas = {
 				self.cvs.height = self.cvs.offsetHeight;
 				self.draw();
 				break;
-			case 'active_letter':
-			case 'font_loaded':
-				el.canvasTitle.innerHTML = _app.font.info.name +' [ '+ _app.assets.activeLetter +' ]';
-				self.draw();
-				break;
-			case 'image_loaded':
+			case 'file_loaded':
+				if (_app.mode === 'font') {
+					el.canvasTitle.innerHTML = _app.fileMeta('name') +' [ '+ _app.assets.activeLetter +' ]';
+				} else {
+					el.canvasTitle.innerHTML = _app.fileMeta('name');
+				}
 				// reset scaling, origo, etc ?
-				self.draw();
+				//self.draw();
+				break;
+			case 'active_letter':
 				break;
 			case 'nob_opacity':
 				break;
@@ -176,13 +179,6 @@ sys.app.canvas = {
 			dim  = self.dim,
 			iX   = (dim.w/2) - (cvs.imageWidth/2),
 			iY   = (dim.h/2) - (cvs.imageHeight/2);
-
-		// for crispy lines
-		//ctx.translate(.5,.5);
-		//ctx.beginPath();
-		//ctx.fillStyle = '#636363';
-		//ctx.fillRect(0, 0, dim.w, dim.h);
-		//ctx.translate(-.5,-.5);
 
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 

@@ -130,3 +130,9 @@
 .icon-clock:before {
   content: "\e61b";
 }
+.icon-arrow_up:before {
+  content: "\e61d";
+}
+.icon-arrow_down:before {
+  content: "\e61e";
+}

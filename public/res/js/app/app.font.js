@@ -21,17 +21,17 @@ sys.app.font = {
 			'ŋŌōŎŏŐőŒœŔŕŖŗŘřŚśŜŝŞşŠšŢţŤťŦŧŨũŪūŬŭŮůŰűŲųŴŵŶŷŸŹźŻżŽžſƒǼǽǾǿȘșȚț',
 	fillChars: function() {
 		var chars = this.chars,
-			i     = 0,
-			il    = chars.length,
-			str   = '';
-		for (; i<il; i++) {
+			str   = '',
+			i;
+		for (i=0; i<chars.length; i++) {
 			str += '<li>'+ chars[i] +'</li>';
 		}
-		jr('.fonts')
-			.html(str)
-			.on('click', 'li', this.doEvent)
-			.find('li:nth(0)')
-			.trigger('click');
+		//jr('.fonts')
+		//	.html(str)
+		//	.on('click', 'li', this.doEvent)
+		//	.find('li:nth(0)')
+		//	.trigger('click');
+		return str;
 	},
 	measure: function() {
 		// Measure character width

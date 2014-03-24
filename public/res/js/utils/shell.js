@@ -23,7 +23,7 @@ sys.shell = {
 		}
 		//if (sys.app.el.floatFld) sys.app.el.floatFld.blur();
 
-		if (cmd) sys.shell.exec(cmd);
+		if (cmd) sys.shell.exec(cmd, false, event.target);
 		return false;
 	},
 	err: function(cmd, errnum) {
@@ -32,7 +32,7 @@ sys.shell = {
 			error: (typeof(errnum) === 'number')? this.errorStr[errnum] : errnum
 		};
 	},
-	exec: function(cmd, getFunc) {
+	exec: function(cmd, getFunc, el) {
 		var oCmd = cmd.split(' '),
 			xAlias,
 			xCmd,
@@ -79,6 +79,7 @@ sys.shell = {
 			if (i === il-2) fThis = fFinal;
 			if (!fFinal) return this.err(cmd, 103);
 		}
+		if (el) args.push(el);
 		if (typeof(fFinal) !== 'function') return this.err(cmd, 101);
 		if (getFunc) return fFinal.bind(fThis);
 		ret = fFinal.apply(fThis, args);

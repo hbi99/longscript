@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<file mode="image">
+		<assets>
+			<image name="hello_white.png" source="res/img/hello_white.png"/>
+		</assets>
+		<timeline length="30">
+			<layer>
+				<brush>[10,10,10]</brush>
+			</layer>
+		</timeline>
+	</file>
+</data>

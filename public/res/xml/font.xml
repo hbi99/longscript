@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<data>
+	<file mode="font">
+		<meta name="name" value="Over the Rainbow" />
+		<meta name="font-name" value="Over the Rainbow" />
+		<meta name="font-family" value="Over the Rainbow" />
+		<meta name="font-url" value="http://fonts.googleapis.com/css?family=Over+the+Rainbow" />
+		<assets>
+			<i id="2" glyph="b">
+				<brush name="Brush 1">[10,10,10]</brush>
+			</i>
+		</assets>
+		<timeline length="30">
+			<layer asset_id="2" start="0">
+				<brush name="Brush 1" start="0">[[10,10,10],[12,12,20]]</brush>
+			</layer>
+		</timeline>
+	</file>
+</data>

@@ -5,8 +5,9 @@ sys.app.navigator = {
 		var _sys = sys,
 			observer = _sys.observer;
 
-		observer.on('image_loaded', this.doEvent);
-		observer.on('zoom_pan', this.doEvent);
+		observer.on('file_loaded', this.doEvent);
+		//observer.on('image_loaded', this.doEvent);
+		//observer.on('zoom_pan', this.doEvent);
 
 		this.cvs = _sys.el.zoomcvs;
 		this.ctx = this.cvs.getContext('2d');
@@ -25,6 +26,8 @@ sys.app.navigator = {
 			// custom events
 			case 'zoom_pan':
 				self.draw();
+				break;
+			case 'file_loaded':
 				break;
 			case 'image_loaded':
 				// reset scaling, origo, etc ?

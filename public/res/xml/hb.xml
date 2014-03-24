@@ -1,10 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
-	<file>
+	<file mode="image">
+		<meta name="name" value="HB" />
 		<assets>
-			<image name="hb.png" source="res/img/hb.png"/>
-			<image name="hello_white.png" source="res/img/hello_white.png"/>
+			<image id="1" name="hb.png" source="res/img/hb.png"/>
+			<image id="2" name="hello_white.png" source="res/img/hello_white.png"/>
 		</assets>
-		<frames length="30">[10,10,10]</frames>
+		<timeline length="30">
+			<layer asset_id="1" start="0">
+				<brush name="Left brush" start="0" value="[10,10,10]"/>
+				<!--<brush name="Right brush" start="8" value="[110,110,10]"/>-->
+			</layer>
+			<layer asset_id="2" start="4">
+				<brush name="Brush 1" start="0" value="[10,10,10]"/>
+			</layer>
+		</timeline>
 	</file>
 </data>

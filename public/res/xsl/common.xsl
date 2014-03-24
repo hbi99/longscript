@@ -40,4 +40,35 @@
 	</xsl:for-each>
 </xsl:template>
 
+<xsl:template name="timeline_left">
+	<xsl:for-each select=".//timeline/layer">
+		<li>
+			<figure class="icon-eye_on">&#160;</figure>
+			<figure class="icon-trashcan right">&#160;</figure>
+			<figure class="icon-add right">&#160;</figure>
+			<span class="layer_name"><xsl:value-of select="//file/assets/*[@id=current()/@asset_id]/@name"/></span>
+		</li>
+		<xsl:call-template name="timeline_left_brushes"/>
+	</xsl:for-each>
+</xsl:template>
+
+<xsl:template name="timeline_left_brushes">
+	<xsl:for-each select="./brush">
+		<li class="brush">
+			<figure class="icon-eye_on">&#160;</figure>
+			<figure class="icon-trashcan right">&#160;</figure>
+			<figure class="icon-add right">&#160;</figure>
+			<span class="brush_name"><xsl:value-of select="@name"/></span>
+		</li>
+	</xsl:for-each>
+</xsl:template>
+
+
+<xsl:template name="timeline_right">
+	<xsl:for-each select=".//timeline/layer">
+		<li><div class="anim_track teal">&#160;</div></li>
+	</xsl:for-each>
+</xsl:template>
+
 </xsl:stylesheet>
+

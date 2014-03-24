@@ -130,6 +130,12 @@
 .icon-clock:before {
   content: "\e61b";
 }
+.icon-arrow_up:before {
+  content: "\e61d";
+}
+.icon-arrow_down:before {
+  content: "\e61e";
+}
 /**	TOOLBAR	**/
 .left {
   float: left;
@@ -1162,11 +1168,81 @@ figure {
   overflow: hidden;
 }
 .area.timeline .content_fixed.left .tl_body ul {
+  clear: both;
   position: relative;
 }
-.area.timeline .content_fixed.left .tl_body ul li:hover {
+.area.timeline .content_fixed.left .tl_body ul .tl_layer {
+  height: 15px;
+  padding: 2px 0px 3px 0px;
+  margin-right: 11px;
+  border-top: #707070 1px solid;
+}
+.area.timeline .content_fixed.left .tl_body ul.brushes {
+  margin-right: 11px;
+}
+.area.timeline .content_fixed.left .tl_body ul.brushes li {
+  padding: 3px 0px;
+  height: 16px;
+  border: 0px;
+}
+.area.timeline .content_fixed.left .tl_body ul > li {
+  clear: both;
+  height: 21px;
+  overflow: hidden;
+  -webkit-transition: 200ms height ease-in-out;
+}
+.area.timeline .content_fixed.left .tl_body ul li {
+  padding: 0px;
+}
+.area.timeline .content_fixed.left .tl_body ul li:hover > span {
   color: #ededed;
   text-shadow: 0px 1px 2px #2a2a2a;
+}
+.area.timeline .content_fixed.left .tl_body ul li:hover figure:not(.icon-eye_on) {
+  opacity: 1;
+}
+.area.timeline .content_fixed.left .tl_body ul li span {
+  float: left;
+  margin-left: 22px;
+}
+.area.timeline .content_fixed.left .tl_body ul li figure {
+  position: relative;
+  top: -1px;
+  margin-right: 2px;
+  cursor: pointer;
+}
+.area.timeline .content_fixed.left .tl_body ul li figure.icon-eye_on {
+  position: absolute;
+  top: 1px;
+  left: 5px;
+  font-size: 22px;
+}
+.area.timeline .content_fixed.left .tl_body ul li figure.icon-trashcan,
+.area.timeline .content_fixed.left .tl_body ul li figure.icon-add {
+  font-size: 21px;
+  color: #8e8e8e;
+  text-shadow: 0px 1px 2px #333333;
+  opacity: 0;
+}
+.area.timeline .content_fixed.left .tl_body ul li figure.icon-trashcan:hover,
+.area.timeline .content_fixed.left .tl_body ul li figure.icon-add:hover {
+  color: #ffffff;
+}
+.area.timeline .content_fixed.left .tl_body ul li figure.icon-arrow_up,
+.area.timeline .content_fixed.left .tl_body ul li figure.icon-arrow_down {
+  border-top: #636363 1px solid;
+  border-left: #515151 1px solid;
+  text-shadow: 0px 1px 2px #7f7f7f;
+  position: absolute;
+  top: -1px;
+  bottom: 0px;
+  left: auto;
+  right: 0px;
+  font-size: 17px;
+  margin: 0px;
+  width: 11px;
+  height: auto;
+  padding: 3px 0px;
 }
 .area.timeline .content_fixed.right {
   left: 225px;
@@ -1291,13 +1367,21 @@ figure {
   right: 1px;
   box-shadow: 0px 0px 0px;
   border-radius: 0px;
+  /**/
+
+}
+.area.timeline .content_fixed .tl_body .track_parent {
+  position: relative;
+  top: -3px;
+  height: 21px;
+  background: rgba(255, 255, 255, 0.05);
+  width: 543px;
 }
 .area.timeline .content_fixed .tl_body .anim_track {
   position: relative;
   top: 1px;
-  margin-left: 0px;
-  width: 240px;
   height: 13px;
+  width: 14px;
   border-radius: 2px;
   box-shadow: 0px 1px 7px #444;
   background-image: -webkit-linear-gradient(bottom, transparent 65%, rgba(255, 255, 255, 0.2) 100%);
@@ -1330,13 +1414,17 @@ figure {
 .area.timeline .content_fixed .tl_body .anim_track.teal {
   background-color: #7ebcb5;
 }
+.area.timeline .content_fixed .tl_body li:nth-child(1) .anim_track {
+  margin-left: 0px;
+  width: 542px;
+}
 .area.timeline .content_fixed .tl_body li:nth-child(2) .anim_track {
-  margin-left: 120px;
-  width: 374px;
+  margin-left: 0px;
+  width: 334px;
 }
 .area.timeline .content_fixed .tl_body li:nth-child(3) .anim_track {
-  margin-left: 50px;
-  width: 180px;
+  margin-left: 250px;
+  width: 292px;
 }
 .area.timeline .content_fixed .tl_body li:nth-child(4) .anim_track {
   margin-left: 210px;
@@ -1405,34 +1493,9 @@ figure {
 .area.timeline .content_fixed li {
   position: relative;
   border-bottom: #515151 1px solid;
-  padding: 3px 3px 3px 23px;
-  height: 15px;
+  padding: 3px 0px;
+  min-height: 15px;
   -webkit-transition: 100ms opacity ease-in-out;
-}
-.area.timeline .content_fixed li:hover figure:not(.icon-eye_on) {
-  opacity: 1;
-}
-.area.timeline .content_fixed li span {
-  float: left;
-}
-.area.timeline .content_fixed li figure {
-  position: relative;
-  top: -1px;
-  margin-right: 2px;
-  cursor: pointer;
-}
-.area.timeline .content_fixed li figure:not(.icon-eye_on) {
-  color: #8e8e8e;
-  text-shadow: 0px 1px 2px #333333;
-  opacity: 0;
-}
-.area.timeline .content_fixed li figure:not(.icon-eye_on):hover {
-  color: #ffffff;
-}
-.area.timeline .content_fixed li figure.icon-eye_on {
-  position: absolute;
-  top: 3px;
-  left: 5px;
 }
 .area.timeline .scroll_bg.vertical {
   top: 30px;
