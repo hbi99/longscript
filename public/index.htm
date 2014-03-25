@@ -127,8 +127,8 @@
 			</div>
 			<div class="tl_body">
 				<ul data-el="tl_body_rows">
-					<li>
-						<div class="tl_layer">
+					<li data-track_row_id="1">
+						<div class="tl_layer" data-dblclick="timeline -s dblclick_layer">
 							<figure class="icon-eye_on"></figure>
 							<figure class="icon-arrow_down" data-cmd="timeline -s toggle_layer"></figure>
 							<!--
@@ -152,16 +152,25 @@
 						</ul>
 
 					</li>
-					<li>
-						<div class="tl_layer">
+					<li data-track_row_id="2">
+						<div class="tl_layer" data-dblclick="timeline -s dblclick_layer">
 							<figure class="icon-eye_on"></figure>
 							<figure class="icon-arrow_down" data-cmd="timeline -s toggle_layer"></figure>
 							<!--
 							<figure class="icon-trashcan right"></figure>
 							<figure class="icon-add right"></figure>
 							-->
-							<span>hb.png</span>
+							<span>Another image</span>
 						</div>
+
+						<ul class="brushes">
+							<li>
+								<figure class="icon-trashcan right"></figure>
+								<figure class="icon-add right"></figure>
+								<span>Left brush</span>
+							</li>
+						</ul>
+
 					</li>
 				</ul>
 			</div>
@@ -178,15 +187,27 @@
 			<div class="content tl_body">
 				<ul class="body" data-el="tl_content"><!--
 					<li><div class="track_parent">&#160;</div></li>-->
-					<li><div class="anim_track teal">&#160;</div></li>
-					<li><div class="anim_track purple">&#160;</div></li>
+					<li data-track_id="1">
+						<div class="anim_track teal">&#160;</div>
+						<ul class="brush_tracks">
+							<li><div class="anim_track orange">&#160;</div></li>
+							<li><div class="anim_track khaki">&#160;</div></li>
+						</ul>
+					</li>
+					<li data-track_id="2">
+						<div class="anim_track purple">&#160;</div>
+						<ul class="brush_tracks">
+							<li><div class="anim_track silver">&#160;</div></li>
+						</ul>
+					</li>
+					<!--
 					<li><div class="anim_track orange">&#160;</div></li>
 					<li><div class="anim_track maroon">&#160;</div></li>
 					<li><div class="anim_track blue">&#160;</div></li>
 					<li><div class="anim_track silver">&#160;</div></li>
 					<li><div class="anim_track yellow">&#160;</div></li>
 					<li><div class="anim_track brown">&#160;</div></li>
-					<li><div class="anim_track khaki">&#160;</div></li>
+					<li><div class="anim_track khaki">&#160;</div></li>-->
 				</ul>
 			</div>
 

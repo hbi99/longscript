@@ -8,6 +8,7 @@ sys.shell = {
 	},
 	init: function() {
 		jr(document).on('mousedown', '[data-cmd]', this.doCmd);
+		jr(document).on('dblclick', '[data-dblclick]', this.doCmd);
 	},
 	doCmd: function(event) {
 		var cmd;
@@ -19,7 +20,7 @@ sys.shell = {
 			if (event.target.className.indexOf('button') > -1) {
 				event.preventDefault();
 			}
-			cmd = this.dataset.cmd;
+			cmd = this.getAttribute((event.type === 'click')? 'data-cmd' : 'data-dblclick');
 		}
 		//if (sys.app.el.floatFld) sys.app.el.floatFld.blur();
 

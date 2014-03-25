@@ -17,6 +17,7 @@ sys.app.timeline = {
 		var _sys = sys,
 			_el  = _sys.el,
 			_jr  = jr,
+			self = _sys.app.timeline,
 			cmd  = (typeof(event) === 'string') ? event : event.type,
 			target;
 		switch (cmd) {
@@ -46,14 +47,24 @@ sys.app.timeline = {
 				var details = event.details;
 				details.srcElement.textContent = details.value || 0;
 				break;
+			case 'dblclick_layer':
+				target = _jr(arguments[1]).find('figure:nth(1)')[0];
+				return self.doEvent('toggle_layer', target);
 			case 'toggle_layer':
-				target = arguments[1];
-				if (target.className === 'icon-arrow_down') {
-					target.className = 'icon-arrow_up';
-					target.parentNode.parentNode.style.height = '65px';
+				var arrow   = jr(arguments[1]),
+					lRow    = arrow.parents('li'),
+					rowId   = lRow.attr('data-track_row_id'),
+					tRow    = _jr('li[data-track_id="'+ rowId +'"] .brush_tracks', _el.tl_content),
+					cHeight = lRow.find('.brushes').height();
+
+				if (arrow.hasClass('icon-arrow_down')) {
+					arrow.removeClass('icon-arrow_down').addClass('icon-arrow_up');
+					lRow.css({'height': (lRow.height() + cHeight) +'px'});
+					tRow.css({'height': (cHeight) +'px'});
 				} else{
-					target.className = 'icon-arrow_down';
-					target.parentNode.parentNode.style.height = '';
+					arrow.removeClass('icon-arrow_up').addClass('icon-arrow_down');
+					lRow.css({'height': ''});
+					tRow.css({'height': ''});
 				}
 				break;
 			// native events
