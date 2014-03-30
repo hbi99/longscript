@@ -8,6 +8,7 @@ sys.tracks = {
 		var _sys = sys,
 			self = _sys.tracks,
 			target = event.target,
+			tParent,
 			dim,
 			left;
 		switch(event.type) {
@@ -16,12 +17,19 @@ sys.tracks = {
 				target = jr(event.target);
 
 				if (target.hasClass('handle')) {
+					tParent = target.parent('.track');
+
 					self.drag     = target.addClass('active');
 					self.clickX   = event.clientX;
 					self.dragLeft = target[0].offsetLeft;
-					self.dragMax  = target.parent('.track').width() - 10;
-					self.onchange = _sys.shell.exec(target.attr('data-onchange'), true);
+					self.dragMax  = tParent.width() - 10;
+					self.onchange = target.attr('data-onchange');
+
 					self.drag.parents('.panel').addClass('active');
+					
+					if (tParent.hasClass('tl_nob_track')) {
+						self.dragMax = tParent.parent().find('.frame_ends').left()-15
+					}
 
 					jr(document)
 						.bind('mouseup mousemove', self.doEvent)
@@ -46,7 +54,10 @@ sys.tracks = {
 				left = Math.max(Math.min(left, self.dragMax), 0);
 				self.drag.css({'left': (left - 2) +'px'});
 
-				self.onchange(parseInt((left / self.dragMax) * 100, 10));
+				_sys.observer.trigger(self.onchange, {
+					value: parseInt((left / self.dragMax) * 100, 10),
+					left: left
+				});
 				break;
 			case 'mouseup':
 				self.drag.parents('.panel').removeClass('active');

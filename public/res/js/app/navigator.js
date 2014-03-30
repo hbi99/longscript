@@ -5,9 +5,8 @@ sys.app.navigator = {
 		var _sys = sys,
 			observer = _sys.observer;
 
-		observer.on('file_loaded', this.doEvent);
-		//observer.on('image_loaded', this.doEvent);
-		//observer.on('zoom_pan', this.doEvent);
+		observer.on('assets_loaded', this.doEvent);
+		observer.on('zoom_pan', this.doEvent);
 
 		this.cvs = _sys.el.zoomcvs;
 		this.ctx = this.cvs.getContext('2d');
@@ -20,6 +19,7 @@ sys.app.navigator = {
 	doEvent: function(event) {
 		var _sys = sys,
 			_app = _sys.app,
+			info = _app.canvas.info,
 			self = _app.navigator;
 
 		switch(event.type) {
@@ -27,13 +27,11 @@ sys.app.navigator = {
 			case 'zoom_pan':
 				self.draw();
 				break;
-			case 'file_loaded':
-				break;
-			case 'image_loaded':
+			case 'assets_loaded':
 				// reset scaling, origo, etc ?
 				var dim    = self.dim,
-					image  = event.details.el,
-					ratio  = image.width / image.height,
+					image  = info['1'].img,
+					ratio  = info.scaledWidth / info.scaledHeight,
 					margin = 15,
 					width,
 					height;
@@ -67,10 +65,10 @@ sys.app.navigator = {
 			cvs     = this.cvs,
 			ctx     = this.ctx,
 			asset   = this.asset,
-			zoomLeft   = parseInt((info.left < 0 ? -(info.left * this.scale) / _canvas.scale : 0) + asset.left, 10),
-			zoomTop    = parseInt((info.top  < 0 ? -(info.top  * this.scale) / _canvas.scale : 0) + asset.top, 10),
-			zoomWidth  = asset.width - (( (info.left + info.width - _canvas.cvs.width) / info.width ) * asset.width) - zoomLeft + asset.left,
-			zoomHeight = asset.height - (( (info.top + info.height - _canvas.cvs.height) / info.height ) * asset.height) - zoomTop + asset.top;
+			zoomLeft   = parseInt((info.left < 0 ? -(info.left * this.scale) / info.scale : 0) + asset.left, 10),
+			zoomTop    = parseInt((info.top  < 0 ? -(info.top  * this.scale) / info.scale : 0) + asset.top, 10),
+			zoomWidth  = asset.width - (( (info.left + info.scaledWidth - _canvas.cvs.width) / info.scaledWidth ) * asset.width) - zoomLeft + asset.left,
+			zoomHeight = asset.height - (( (info.top + info.scaledHeight - _canvas.cvs.height) / info.scaledHeight ) * asset.height) - zoomTop + asset.top;
 
 		if (!asset.image) return;
 

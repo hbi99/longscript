@@ -85,6 +85,13 @@
             }
             return false;
         },
+        setClass: function(names, el) {
+            var arr = (el)? [el] : this;
+            for (var i=0, il=arr.length; i<il; i++) {
+                arr[i].className = names;
+            }
+            return arr;
+        },
         addClass: function(names, el) {
             var arr = (el)? [el] : this;
             for (var i=0, il=arr.length; i<il; i++) {

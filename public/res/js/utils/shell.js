@@ -20,7 +20,7 @@ sys.shell = {
 			if (event.target.className.indexOf('button') > -1) {
 				event.preventDefault();
 			}
-			cmd = this.getAttribute((event.type === 'click')? 'data-cmd' : 'data-dblclick');
+			cmd = this.getAttribute((event.type === 'mousedown')? 'data-cmd' : 'data-dblclick');
 		}
 		//if (sys.app.el.floatFld) sys.app.el.floatFld.blur();
 

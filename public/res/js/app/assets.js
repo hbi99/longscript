@@ -6,6 +6,7 @@ sys.app.assets = {
 			observer = _sys.observer;
 
 		observer.on('file_loaded', this.doEvent);
+		observer.on('assets_size', this.doEvent);
 		//observer.on('mode_change', this.doEvent);
 		//observer.on('font_loaded', this.doEvent);
 		//observer.on('image_loaded', this.doEvent);
@@ -17,12 +18,17 @@ sys.app.assets = {
 			_jr  = jr,
 			self = _app.assets;
 		switch(event.type) {
+			// native events
 			case 'click':
 				jr(this.parentNode).find('.active').removeClass('active');
 				jr(this).addClass('active');
 				self.active = jr(this);
 				self.activeLetter = self.active.html();
 				sys.observer.trigger('active_letter', self);
+				break;
+			// custom events
+			case 'assets_size':
+				// todo
 				break;
 			case 'file_loaded':
 				var modeClass = (_app.mode === 'font')? 'glyphs' : 'assets',
@@ -44,11 +50,13 @@ sys.app.assets = {
 					.html(content)
 					.removeClass('glyphs assets')
 					.addClass(modeClass);
+				
+				_sys.observer.trigger('load_assets');
 				break;
-			case 'font_loaded':
-				_el.assetsList.style.fontFamily = _app.font.info.family;
-				self.active.trigger('click');
-				break;
+//			case 'font_loaded':
+//				_el.assetsList.style.fontFamily = _app.font.info.family;
+//				self.active.trigger('click');
+//				break;
 //			case 'mode_change':
 //				var mode = _app.mode === 'font' ? 'glyphs' : 'assets',
 //					box_title = _sys.language.getPhrase( mode );

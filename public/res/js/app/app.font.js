@@ -13,6 +13,20 @@ sys.app.font = {
 		//this.load('Over the Rainbow');
 		//this.load('Allura');
 	},
+	doEvent: function(event) {
+		var _sys = sys,
+			_app = _sys.app,
+			file = _app.file,
+			self = _app.font,
+			cmd  = (typeof(event) === 'string')? event : event.type;
+
+		switch (cmd) {
+			// custom events
+			case 'load_assets':
+				if (file.getAttribute('mode') !== 'font') return;
+				break;
+		}
+	},
 	chars:  'abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'+
 			'!"#$%&\'()*+,-./:;<=>?@[\\]^_`ˆˇ˘˙˚˛˜˝–—‘’‚“”„•‹›€'+
 			'{|}~¡¢£¤¥§¨©ª«¬®¯°±´µ¶·¸º»¿ÀÁÂÃÄÅÆÇÈÉÊ'+

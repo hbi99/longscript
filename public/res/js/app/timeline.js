@@ -7,6 +7,8 @@ sys.app.timeline = {
 
 		observer.on('file_loaded', this.doEvent);
 		observer.on('nob_speed', this.doEvent);
+		observer.on('assets_loaded', this.doEvent);
+		observer.on('frame_index_change', this.doEvent);
 
 		this.doEvent('populate_frame_nrs');
 		//this.speed_events('focus');
@@ -15,15 +17,24 @@ sys.app.timeline = {
 	},
 	doEvent: function(event) {
 		var _sys = sys,
+			_app = _sys.app,
 			_el  = _sys.el,
 			_jr  = jr,
-			self = _sys.app.timeline,
+			file = _app.file,
+			self = _app.timeline,
 			cmd  = (typeof(event) === 'string') ? event : event.type,
 			target;
 		switch (cmd) {
 			// custom events
+			case 'frame_index_change':
+				self.frameIndex = Math.round(event.details.left / 16);
+				break;
 			case 'file_loaded':
-				return;
+				//return;
+				var xTimeline = file.selectSingleNode('.//timeline');
+
+				_jr(_el.frame_ends).css({'left': (xTimeline.getAttribute('length') * 16) +'px'});
+
 				// rendreing left
 				_jr(_el.tl_body_rows).html( transform({
 						match: '//file',
@@ -35,6 +46,9 @@ sys.app.timeline = {
 						match: '//file',
 						template: 'timeline_right'
 					}).xml );
+
+				// temp
+				//self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
 				break;
 			case 'populate_frame_nrs':
 				target = '<div>&#160;</div>';
@@ -66,6 +80,22 @@ sys.app.timeline = {
 					lRow.css({'height': ''});
 					tRow.css({'height': ''});
 				}
+				break;
+			case 'make_track_active':
+				var row = _jr(arguments[1]),
+					track_el = (row.attr('data-track') === 'parent')? row : row.parents('[data-track=parent]'),
+					row_id = track_el.attr('data-track_row_id') || track_el.attr('data-track_id');
+
+				_jr(_el.tl_body_rows).find('.active').removeClass('active');
+				_jr(_el.tl_content).find('.active').removeClass('active');
+
+				_jr('[data-track_row_id='+ row_id +']', _el.tl_body_rows).addClass('active');
+				_jr('[data-track_id='+ row_id +']', _el.tl_content).addClass('active');
+				break;
+			case 'change_track_color':
+				var new_color = arguments[1],
+					track_el = _sys.context.info.el;
+				_jr(track_el.parentNode).find('.anim_track').setClass('anim_track '+ new_color);
 				break;
 			// native events
 			case 'scroll':

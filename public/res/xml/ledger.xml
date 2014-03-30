@@ -8,13 +8,13 @@
 			<i switch="dev" name="toggle_dev" arg="NONE" description="Opens developer tools."/>
 		</i>
 		<i object="cvs" long="sys.app.canvas" type="[APP]" description="Cavas.">
-			<i switch="zfb" name="zoom_events" arg="[focus|blur]" description="."/>
+			<i switch="zfb" name="zoomEvents" arg="[focus|blur]" description="."/>
 		</i>
 		<i object="assets" long="sys.app.assets" type="[APP]" description="Assets.">
 			<i switch="s" name="changeSize" arg="[-1|1]" description="."/>
 		</i>
 		<i object="timeline" long="sys.app.timeline" type="[APP]" description="Assets.">
-			<i switch="s" name="doEvent" arg="[-1|1]" description="."/>
+			<i switch="s" name="doEvent" arg="[command]" description="."/>
 			<i switch="sp" name="speed_events" arg="[focus|blur]" description="."/>
 		</i>
 		<i object="font" long="sys.app.font" type="[APP]" description="Fonts.">
@@ -61,6 +61,21 @@
 			<i name="Show Developer Tools" action="sys -dev" description="."/>
 			<i type="divider"/>
 			<i name="About&#8230;" action="popup -a 'app_about'" description="."/>
+		</i>
+		<i for="tl_track">
+			<i name="Expand" action="" description="."/>
+			<i type="divider"/>
+			<i name="Track color&#8230;">
+				<i name="Purple" action="timeline -s change_track_color purple" />
+				<i name="Orange" action="timeline -s change_track_color orange" />
+				<i name="Maroon" action="timeline -s change_track_color maroon" />
+				<i name="Blue" action="timeline -s change_track_color blue" />
+				<i name="Silver" action="timeline -s change_track_color silver" />
+				<i name="Yellow" action="timeline -s change_track_color yellow" />
+				<i name="Brown" action="timeline -s change_track_color brown" />
+				<i name="Khaki" action="timeline -s change_track_color khaki" />
+				<i name="Teal" action="timeline -s change_track_color teal" />
+			</i>
 		</i>
 	</context>
 	<hotkeys>

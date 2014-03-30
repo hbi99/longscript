@@ -1,19 +1,30 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
-	<file mode="image">
-		<meta name="name" value="HB" />
+	<file mode="image" width="296" height="323">
+		<meta name="name" value="HB animation" />
 		<assets>
 			<image id="1" name="hb.png" source="res/img/hb.png"/>
+			<!--
 			<image id="2" name="hello_white.png" source="res/img/hello_white.png"/>
+			-->
 		</assets>
 		<timeline length="30">
-			<layer asset_id="1" start="0">
-				<brush name="Left brush" start="0" value="[10,10,10]"/>
-				<!--<brush name="Right brush" start="8" value="[110,110,10]"/>-->
+			<layer index="1" asset_id="1" color="purple" start="0" length="30">
+				<brush name="Left brush" color="purple" start="0" length="30" value="[[10,10,10],[20,20,10],[30,30,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10]]"/>
+				<brush name="Right brush" color="purple" start="0" length="30" value="[[10,10,10],[20,20,10],[30,30,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10]]"/>
 			</layer>
-			<layer asset_id="2" start="4">
-				<brush name="Brush 1" start="0" value="[10,10,10]"/>
+			<!--
+			<layer index="2" asset_id="2" color="orange" start="2" length="5">
+				<brush name="Brush 1" color="orange" start="0" length="5" value="[[10,10,10],[10,10,10]]"/>
+				<brush name="Right brush" color="purple" start="8" length="6" value="[[110,110,10],[10,10,10]]"/>
 			</layer>
+			<layer index="3" asset_id="1" color="yellow" start="3" length="3">
+				<brush name="Brush 1" color="yellow" start="0" length="3" value="[[10,10,10],[10,10,10]]"/>
+			</layer>
+			<layer index="4" asset_id="2" color="khaki" start="4" length="3">
+				<brush name="Brush 1" color="khaki" start="0" length="3" value="[[10,10,10],[10,10,10]]"/>
+			</layer>
+			-->
 		</timeline>
 	</file>
 </data>
