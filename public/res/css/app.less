@@ -421,6 +421,7 @@
 						display: table;
 						min-width: 100%;
 						background-image: url(../img/bg_tl_body.png);
+						background-position: -16px 0px;
 
 						ul {
 
@@ -610,13 +611,17 @@
 				height: 29px;
 				background-image: url(../img/bg_tl_head.png);
 				background-repeat: repeat-x;
-				background-position: 0px 14px;
+				background-position: -16px 14px;
 				color: darken(@boxFocusHl, 19%);
 
 				div {
 					float: left;
 					width: 160px;
 					text-align: left;
+
+					&:first-child {
+						width: 144px;
+					}
 				}
 			}
 			.tl_nob_track {

@@ -28,7 +28,7 @@ sys.app.assets = {
 				break;
 			// custom events
 			case 'assets_size':
-				// todo
+				// TODO
 				break;
 			case 'file_loaded':
 				var modeClass = (_app.mode === 'font')? 'glyphs' : 'assets',

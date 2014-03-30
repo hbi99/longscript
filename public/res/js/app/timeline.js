@@ -20,6 +20,7 @@ sys.app.timeline = {
 			_app = _sys.app,
 			_el  = _sys.el,
 			_jr  = jr,
+			_canvas = _app.canvas,
 			file = _app.file,
 			self = _app.timeline,
 			cmd  = (typeof(event) === 'string') ? event : event.type,
@@ -27,7 +28,13 @@ sys.app.timeline = {
 		switch (cmd) {
 			// custom events
 			case 'frame_index_change':
-				self.frameIndex = Math.round(event.details.left / 16);
+				target = self.frameIndex;
+				self.frameIndex = Math.floor(event.details.left / 16);
+				if (target !== self.frameIndex) {
+					_canvas.info.frameIndex = self.frameIndex;
+					_canvas.updateBallCvs();
+					_canvas.draw();
+				}
 				break;
 			case 'file_loaded':
 				//return;

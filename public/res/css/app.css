@@ -1265,6 +1265,7 @@ figure {
   display: table;
   min-width: 100%;
   background-image: url(../img/bg_tl_body.png);
+  background-position: -16px 0px;
 }
 .area.timeline .content_fixed.right .content .body ul.brush_tracks {
   margin-top: 5px;
@@ -1448,13 +1449,16 @@ figure {
   height: 29px;
   background-image: url(../img/bg_tl_head.png);
   background-repeat: repeat-x;
-  background-position: 0px 14px;
+  background-position: -16px 14px;
   color: #9c9c9c;
 }
 .area.timeline .content_fixed .frame_nrs div {
   float: left;
   width: 160px;
   text-align: left;
+}
+.area.timeline .content_fixed .frame_nrs div:first-child {
+  width: 144px;
 }
 .area.timeline .content_fixed .tl_nob_track {
   position: absolute;

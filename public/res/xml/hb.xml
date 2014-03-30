@@ -11,7 +11,7 @@
 		<timeline length="30">
 			<layer index="1" asset_id="1" color="purple" start="0" length="30">
 				<brush name="Left brush" color="purple" start="0" length="30" value="[[10,10,10],[20,20,10],[30,30,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10]]"/>
-				<brush name="Right brush" color="purple" start="0" length="30" value="[[10,10,10],[20,20,10],[30,30,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10]]"/>
+				<brush name="Right brush" color="purple" start="6" length="24" value="[[10,10,10],[20,20,10],[30,30,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10]]"/>
 			</layer>
 			<!--
 			<layer index="2" asset_id="2" color="orange" start="2" length="5">
