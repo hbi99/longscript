@@ -55,7 +55,30 @@ sys.app.timeline = {
 					}).xml );
 
 				// temp
-				//self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
+				self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
+				break;
+			case 'get_canvas_palette':
+				var tracks = _jr('.brush_tracks .anim_track', _el.tl_content),
+					palette = [],
+					il = tracks.length,
+					i = 0,
+					color,
+					p;
+				for (; i<il; i++) {
+					color = getStyle(tracks[i], 'backgroundColor');
+					p = color.match(/\d{1,}/g);
+					palette.push({
+						color: color,
+						trans: 'rgba('+ p[0] +','+ p[1] +','+ p[2] +',0.65)'
+					});
+				}
+				return palette;
+			case 'goto_frame':
+				_el.frame_nob.style.left = ((arguments[1] * 16)-17) +'px';
+
+				// reset scaling, origo, etc ?
+				_canvas.updateBallCvs();
+				_canvas.draw();
 				break;
 			case 'populate_frame_nrs':
 				target = '<div>&#160;</div>';
@@ -102,7 +125,11 @@ sys.app.timeline = {
 			case 'change_track_color':
 				var new_color = arguments[1],
 					track_el = _sys.context.info.el;
-				_jr(track_el.parentNode).find('.anim_track').setClass('anim_track '+ new_color);
+				_jr(track_el).setClass('anim_track '+ new_color);
+
+				_canvas.info.palette = _app.timeline.doEvent('get_canvas_palette');
+				_canvas.updateBallCvs();
+				_canvas.draw();
 				break;
 			// native events
 			case 'scroll':

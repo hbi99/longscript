@@ -115,7 +115,7 @@
 .icon-pause:before {
   content: "\e616";
 }
-.icon-time_nob:before {
+.icon-frame_nob:before {
   content: "\e617";
 }
 .icon-to_start:before {
@@ -1469,7 +1469,7 @@ figure {
   border-top: #515151 1px solid;
   border-bottom: #757575 1px solid;
 }
-.area.timeline .content_fixed .tl_nob_track .icon-time_nob {
+.area.timeline .content_fixed .tl_nob_track .icon-frame_nob {
   top: -1px;
   left: -1px;
   color: #7f7f7f;
@@ -1477,7 +1477,7 @@ figure {
   font-size: 25px;
   cursor: ew-resize;
 }
-.area.timeline .content_fixed .tl_nob_track .icon-time_nob:after {
+.area.timeline .content_fixed .tl_nob_track .icon-frame_nob:after {
   content: '';
   position: absolute;
   top: 10px;
