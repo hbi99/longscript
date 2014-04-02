@@ -44,9 +44,18 @@
 	<xsl:for-each select=".//timeline/layer">
 		<xsl:sort order="ascending" select="@index"/>
 		<li data-track="parent" data-cmd="timeline -s make_track_active">
-			<xsl:attribute name="data-track_row_id">track_<xsl:value-of select="position()"/></xsl:attribute>
-			<div class="tl_layer" data-dblclick="timeline -s dblclick_layer">
-				<figure class="icon-eye_on">&#160;</figure>
+			<div data-dblclick="timeline -s dblclick_layer">
+				<xsl:attribute name="data-brush_id">track_<xsl:value-of select="@id"/></xsl:attribute>
+				<xsl:attribute name="class">
+					tl_layer <xsl:value-of select="@color"/>
+					<xsl:if test="@hidden = 1"> is_hidden</xsl:if>
+				</xsl:attribute>
+				<figure data-cmd="timeline -s toggle_visible">
+					<xsl:attribute name="class"><xsl:choose>
+						<xsl:when test="@hidden = 1">icon-eye_off</xsl:when>
+						<xsl:otherwise>icon-eye_on</xsl:otherwise>
+					</xsl:choose></xsl:attribute>
+					&#160;</figure>
 				<figure class="icon-arrow_down" data-cmd="timeline -s toggle_layer">&#160;</figure>
 				<span class="layer_name"><xsl:value-of select="//file/assets/*[@id=current()/@asset_id]/@name"/></span>
 			</div>
@@ -54,7 +63,14 @@
             <ul class="brushes">
 				<xsl:for-each select="./brush">
 				<li>
-					<xsl:attribute name="data-brush_id">brush_<xsl:value-of select="count(../preceding-sibling::*)+1"/>-<xsl:value-of select="position()"/></xsl:attribute>
+					<xsl:attribute name="class"><xsl:if test="@hidden = 1">is_hidden</xsl:if></xsl:attribute>
+					<xsl:attribute name="data-brush_id">brush_<xsl:value-of select="@id"/></xsl:attribute>
+					<figure data-cmd="timeline -s toggle_visible">
+						<xsl:attribute name="class"><xsl:choose>
+							<xsl:when test="@hidden = 1">icon-eye_off</xsl:when>
+							<xsl:otherwise>icon-eye_on</xsl:otherwise>
+						</xsl:choose></xsl:attribute>
+						&#160;</figure>
 					<figure class="icon-trashcan right">&#160;</figure>
 					<figure class="icon-add right">&#160;</figure>
 					<span><xsl:value-of select="@name"/></span>
@@ -70,10 +86,13 @@
 	<xsl:for-each select=".//timeline/layer">
 		<xsl:sort order="ascending" select="@index"/>
 		<li data-track="parent" data-cmd="timeline -s make_track_active">
-			<xsl:attribute name="data-track_id">track_<xsl:value-of select="position()"/></xsl:attribute>
 
 			<div data-context="tl_track">
-				<xsl:attribute name="class">anim_track <xsl:value-of select="@color"/></xsl:attribute>
+				<xsl:attribute name="data-track_id">track_<xsl:value-of select="@id"/></xsl:attribute>
+				<xsl:attribute name="class">
+					anim_track <xsl:value-of select="@color"/>
+					<xsl:if test="@hidden = 1"> is_hidden</xsl:if>
+				</xsl:attribute>
 				<xsl:attribute name="style">
 					margin-left: <xsl:value-of select="@start * 16"/>px;
 					width: <xsl:value-of select="(@length * 16)-1"/>px;
@@ -85,7 +104,11 @@
 				<xsl:for-each select="./brush">
 				<li>
 					<div data-context="tl_track">
-						<xsl:attribute name="class">anim_track <xsl:value-of select="@color"/></xsl:attribute>
+						<xsl:attribute name="data-track_id">brush_<xsl:value-of select="@id"/></xsl:attribute>
+						<xsl:attribute name="class">
+							anim_track <xsl:value-of select="@color"/>
+							<xsl:if test="@hidden = 1"> is_hidden</xsl:if>
+						</xsl:attribute>
 						<xsl:attribute name="style">
 							margin-left: <xsl:value-of select="(@start + ../@start)*16"/>px;
 							width: <xsl:value-of select="(@length * 16)-1"/>px;

@@ -339,6 +339,22 @@
 								&:hover figure:not(.icon-eye_on) {
 									opacity: 1;
 								}
+
+								span {
+									padding-left: 11px;
+
+									&:before {
+										content: '';
+										position: absolute;
+										top: 8px;
+										left: 25px;
+										width: 3px;
+										height: 3px;
+										border-radius: 2px;
+										background: darken(@boxFocusHl, 29%);
+										box-shadow: 0px 1px 2px darken(@boxContent, 19%);
+									}
+								}
 							}
 						}
 
@@ -349,11 +365,16 @@
 							-webkit-transition: 350ms height ease-in-out;
 						}
 
+						.is_hidden span {
+							color: darken(@boxFocusHl, 23%);
+							text-shadow: 0px 1px 2px darken(@boxContent, 9%);
+						}
+
 						li {
 							padding: 0px;
 
-							div:hover > span,
-							&:hover > span {
+							div:hover:not(.is_hidden) > span,
+							&:hover:not(.is_hidden) > span {
 								color: darken(@optionHover, 7%);
 								text-shadow: 0px 1px 2px @boxBgColor;
 							}
@@ -369,6 +390,7 @@
 								margin-right: 2px;
 								cursor: pointer;
 
+								&.icon-eye_off,
 								&.icon-eye_on {
 									position: absolute;
 									top: 2px;
@@ -438,7 +460,7 @@
 									border-bottom: 0px;
 
 									.anim_track {
-										opacity: 0.65;
+										opacity: 0.6;
 									}
 								}
 							}
@@ -574,6 +596,11 @@
 					background: rgba(255,255,255,0.05);
 					width: 543px;
 				}
+
+				div.anim_track.is_hidden {
+					background-color: rgba(255,255,255,0.35);
+					opacity: 0.6;
+				}
 				.anim_track {
 					position: relative;
 					top: 1px;
@@ -581,12 +608,12 @@
 					width: 14px;
 					border-radius: 2px;
 					box-shadow: 0px 1px 7px #444;
-					background-image: -webkit-linear-gradient(bottom, transparent 65%, rgba(255,255,255,0.2) 100%);
+					background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.25) 0%, transparent 15%, transparent 50%, rgba(0,0,0,0.25) 100%);
 					background-color: #54987b;
 					//opacity: 0.5;
 
 					&.purple { background-color: #bb7ebc; }
-					&.orange { background-color: #df7460; }
+					&.orange { background-color: #f90; }
 					&.maroon { background-color: #e73f3f; }
 					&.blue   { background-color: #8a88d0; }
 					&.silver { background-color: #b7b7b7; }
@@ -594,6 +621,7 @@
 					&.brown  { background-color: #be7735; }
 					&.khaki  { background-color: #b39a6b; }
 					&.teal   { background-color: #7ebcb5; }
+					&.green  { background-color: #7ebc75; }
 				}
 				/*
 				.teal    { margin-left: 0px; width: 462px; }

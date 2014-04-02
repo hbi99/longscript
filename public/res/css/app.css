@@ -1194,17 +1194,35 @@ figure {
 .area.timeline .content_fixed.left .tl_body ul.brushes li:hover figure:not(.icon-eye_on) {
   opacity: 1;
 }
+.area.timeline .content_fixed.left .tl_body ul.brushes li span {
+  padding-left: 11px;
+}
+.area.timeline .content_fixed.left .tl_body ul.brushes li span:before {
+  content: '';
+  position: absolute;
+  top: 8px;
+  left: 25px;
+  width: 3px;
+  height: 3px;
+  border-radius: 2px;
+  background: #828282;
+  box-shadow: 0px 1px 2px #333333;
+}
 .area.timeline .content_fixed.left .tl_body ul > li {
   clear: both;
   height: 21px;
   overflow: hidden;
   -webkit-transition: 350ms height ease-in-out;
 }
+.area.timeline .content_fixed.left .tl_body ul .is_hidden span {
+  color: #919191;
+  text-shadow: 0px 1px 2px #4c4c4c;
+}
 .area.timeline .content_fixed.left .tl_body ul li {
   padding: 0px;
 }
-.area.timeline .content_fixed.left .tl_body ul li div:hover > span,
-.area.timeline .content_fixed.left .tl_body ul li:hover > span {
+.area.timeline .content_fixed.left .tl_body ul li div:hover:not(.is_hidden) > span,
+.area.timeline .content_fixed.left .tl_body ul li:hover:not(.is_hidden) > span {
   color: #ededed;
   text-shadow: 0px 1px 2px #2a2a2a;
 }
@@ -1218,6 +1236,7 @@ figure {
   margin-right: 2px;
   cursor: pointer;
 }
+.area.timeline .content_fixed.left .tl_body ul li figure.icon-eye_off,
 .area.timeline .content_fixed.left .tl_body ul li figure.icon-eye_on {
   position: absolute;
   top: 2px;
@@ -1279,7 +1298,7 @@ figure {
   border-bottom: 0px;
 }
 .area.timeline .content_fixed.right .content .body ul.brush_tracks li .anim_track {
-  opacity: 0.65;
+  opacity: 0.6;
 }
 .area.timeline .content_fixed.right .content .body li {
   position: relative;
@@ -1408,6 +1427,10 @@ figure {
   background: rgba(255, 255, 255, 0.05);
   width: 543px;
 }
+.area.timeline .content_fixed .tl_body div.anim_track.is_hidden {
+  background-color: rgba(255, 255, 255, 0.35);
+  opacity: 0.6;
+}
 .area.timeline .content_fixed .tl_body .anim_track {
   position: relative;
   top: 1px;
@@ -1415,14 +1438,14 @@ figure {
   width: 14px;
   border-radius: 2px;
   box-shadow: 0px 1px 7px #444;
-  background-image: -webkit-linear-gradient(bottom, transparent 65%, rgba(255, 255, 255, 0.2) 100%);
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.25) 0%, transparent 15%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
   background-color: #54987b;
 }
 .area.timeline .content_fixed .tl_body .anim_track.purple {
   background-color: #bb7ebc;
 }
 .area.timeline .content_fixed .tl_body .anim_track.orange {
-  background-color: #df7460;
+  background-color: #f90;
 }
 .area.timeline .content_fixed .tl_body .anim_track.maroon {
   background-color: #e73f3f;
@@ -1444,6 +1467,9 @@ figure {
 }
 .area.timeline .content_fixed .tl_body .anim_track.teal {
   background-color: #7ebcb5;
+}
+.area.timeline .content_fixed .tl_body .anim_track.green {
+  background-color: #7ebc75;
 }
 .area.timeline .content_fixed .frame_nrs {
   height: 29px;

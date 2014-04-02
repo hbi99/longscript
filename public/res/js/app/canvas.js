@@ -117,9 +117,10 @@ sys.app.canvas = {
 				info.origoX = +_app.fileMeta('origoX') || 0;
 				info.origoY = +_app.fileMeta('origoY') || 0;
 				info.scale = +_app.fileMeta('scale') || 1;
-				self.zoom(info.scale * 20, true);
+				if (info.scale > 1) self.zoom(info.scale * 20, true);
 
-				info.palette = _app.timeline.doEvent('get_canvas_palette');
+				info.palette = _app.timeline.doEvent('get_track_palette');
+				info.visible = _app.timeline.doEvent('get_track_visible');
 
 				info.frameIndex = +_app.fileMeta('frameIndex') || 1;
 				_app.timeline.doEvent('goto_frame', info.frameIndex);
@@ -226,19 +227,18 @@ sys.app.canvas = {
 				switch (mouseState.type) {
 					case 'pan':
 						var img = _app.image.img,
-							img_half_width  = (img.width / 2) * info.scale,
-							img_half_height = (img.height / 2) * info.scale,
+							img_half_width  = img.width * info.scale,
+							img_half_height = img.height * info.scale,
 							cvs_half_width  = (self.cvs.width / 2) * (info.scale - 1),
 							cvs_half_height = (self.cvs.height / 2) * (info.scale - 1);
 
 						origoX = mouseX - mouseState.clickX + mouseState.origoX;
 						origoY = mouseY - mouseState.clickY + mouseState.origoY;
 
-						origoX = Math.max(Math.min(origoX, img_half_width - cvs_half_width), -img_half_width - cvs_half_width);
-						origoY = Math.max(Math.min(origoY, img_half_height - cvs_half_height), -img_half_height - cvs_half_height);
+						//info.origoX = Math.max(Math.min(origoX, img_half_width - cvs_half_width), -img_half_width - cvs_half_width);
+						//info.origoY = Math.max(Math.min(origoY, img_half_height - cvs_half_height), -img_half_height - cvs_half_height);
 
-						info.origoX = origoX;
-						info.origoY = origoY;
+						info.origoY = Math.min(origoY, (self.cvs.width - (img.width * 2) * info.scale));
 
 						self.updateBallCvs();
 						break;
@@ -296,11 +296,6 @@ sys.app.canvas = {
 		ctx.roundRect(0, 0, cvs.width, cvs.height, 4).fill();
 
 		if (_app.mode === 'image') {
-			info.left = (info.iX * info.scale) + info.origoX;
-			info.top = (info.iY * info.scale) + info.origoY;
-			info.scaledWidth = info.width * info.scale;
-			info.scaledHeight = info.height * info.scale;
-			
 			// semi-transparent box
 			ctx.clearRect(  info.left-1,
 							info.top-1,
@@ -323,6 +318,7 @@ sys.app.canvas = {
 			ctx.globalCompositeOperation = 'source-over';
 			//ctx.fillStyle = 'rgba(255,0,255,0.4)';
 			for (var k=0, kl=frame.length; k<kl; k++) {
+				if (info.visible[k] !== 1) continue;
 				ctx.fillStyle = info.palette[k].trans;
 
 				ball = frame[k];
@@ -353,18 +349,32 @@ sys.app.canvas = {
 			info = self.info,
 			ballCvs = self.ballCvs,
 			ballCtx = self.ballCtx,
-
 			sequence = info.sequence,
 			frame = sequence[info.frameIndex],
 			pi2  = self.pi2,
 			ball;
 
+		// some calculations
+		info.left = (info.iX * info.scale) + info.origoX;
+		info.top = (info.iY * info.scale) + info.origoY;
+		info.scaledWidth = info.width * info.scale;
+		info.scaledHeight = info.height * info.scale;
+		// clear canvas
 		ballCtx.clearRect(0, 0, ballCvs.width, ballCvs.height);
-
+		// clip canvas
+		ballCtx.save();
+		ballCtx.beginPath();
+		ballCtx.rect(info.left,
+					info.top,
+					info.scaledWidth,
+					info.scaledHeight);
+		ballCtx.clip();
+		// draw balls
 		for (var i=0, il=info.frameIndex; i<il; i++) {
 			var prev_frame = sequence[i];
 			for (var j=0, jl=prev_frame.length; j<jl; j++) {
 				
+				if (info.visible[j] !== 1) continue;
 				ballCtx.fillStyle = info.palette[j].color;
 				
 				ball = prev_frame[j];
@@ -376,6 +386,7 @@ sys.app.canvas = {
 				ballCtx.fill();
 			}
 		}
+		ballCtx.restore();
 	},
 	opacity: function(val) {
 		var el = sys.el;

@@ -57,7 +57,25 @@ sys.app.timeline = {
 				// temp
 				self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
 				break;
-			case 'get_canvas_palette':
+			case 'toggle_visible':
+				var iconEl  = jr(arguments[1]),
+					isOn    = iconEl.hasClass('icon-eye_on'),
+					rowEl   = iconEl.parents('[data-brush_id]'),
+					rowId   = rowEl.attr('data-brush_id'),
+					trackEl = _jr('div[data-track_id='+ rowId +']', _el.tl_content);
+				if (isOn) {
+					trackEl.addClass('is_hidden');
+					iconEl.parent().addClass('is_hidden');
+					iconEl.removeClass('icon-eye_on').addClass('icon-eye_off');
+				} else {
+					trackEl.removeClass('is_hidden');
+					iconEl.parent().removeClass('is_hidden');
+					iconEl.removeClass('icon-eye_off').addClass('icon-eye_on');
+				}
+				break;
+			case 'get_track_visible':
+				return [1,1];
+			case 'get_track_palette':
 				var tracks = _jr('.brush_tracks .anim_track', _el.tl_content),
 					palette = [],
 					il = tracks.length,
@@ -97,8 +115,8 @@ sys.app.timeline = {
 			case 'toggle_layer':
 				var arrow   = jr(arguments[1]),
 					lRow    = arrow.parents('li'),
-					rowId   = lRow.attr('data-track_row_id'),
-					tRow    = _jr('li[data-track_id="'+ rowId +'"] .brush_tracks', _el.tl_content),
+					rowId   = arrow.parent().attr('data-brush_id'),
+					tRow    = _jr('div[data-track_id="'+ rowId +'"]', _el.tl_content).parent().find('.brush_tracks'),
 					cHeight = lRow.find('.brushes').height();
 
 				if (arrow.hasClass('icon-arrow_down')) {
@@ -114,12 +132,12 @@ sys.app.timeline = {
 			case 'make_track_active':
 				var row = _jr(arguments[1]),
 					track_el = (row.attr('data-track') === 'parent')? row : row.parents('[data-track=parent]'),
-					row_id = track_el.attr('data-track_row_id') || track_el.attr('data-track_id');
+					row_id = track_el.attr('data-brush_id') || track_el.attr('data-track_id');
 
 				_jr(_el.tl_body_rows).find('.active').removeClass('active');
 				_jr(_el.tl_content).find('.active').removeClass('active');
 
-				_jr('[data-track_row_id='+ row_id +']', _el.tl_body_rows).addClass('active');
+				_jr('[data-brush_id='+ row_id +']', _el.tl_body_rows).addClass('active');
 				_jr('[data-track_id='+ row_id +']', _el.tl_content).addClass('active');
 				break;
 			case 'change_track_color':
@@ -127,7 +145,7 @@ sys.app.timeline = {
 					track_el = _sys.context.info.el;
 				_jr(track_el).setClass('anim_track '+ new_color);
 
-				_canvas.info.palette = _app.timeline.doEvent('get_canvas_palette');
+				_canvas.info.palette = _app.timeline.doEvent('get_track_palette');
 				_canvas.updateBallCvs();
 				_canvas.draw();
 				break;

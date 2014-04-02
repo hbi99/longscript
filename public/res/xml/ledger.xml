@@ -75,6 +75,7 @@
 				<i name="Brown" action="timeline -s change_track_color brown" />
 				<i name="Khaki" action="timeline -s change_track_color khaki" />
 				<i name="Teal" action="timeline -s change_track_color teal" />
+				<i name="Green" action="timeline -s change_track_color green" />
 			</i>
 		</i>
 	</context>

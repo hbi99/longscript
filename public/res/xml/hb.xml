@@ -2,31 +2,33 @@
 <data>
 	<file mode="image" width="296" height="323">
 		<meta name="name" value="HB animation" />
+		<!--
 		<meta name="scale" value="5" />
 		<meta name="origoX" value="-1540.7" />
 		<meta name="origoY" value="-172" />
 		<meta name="frameIndex" value="14" />
+		-->
 		<assets>
 			<image id="1" name="hb.png" source="res/img/hb.png"/>
-			<!--
 			<image id="2" name="hello_white.png" source="res/img/hello_white.png"/>
+			<!--
 			-->
 		</assets>
 		<timeline length="37">
-			<layer index="1" asset_id="1" color="purple" start="0" length="37">
-				<brush name="Left brush" color="yellow" start="0" length="37" value="[[10,10,10],[20,20,10],[30,30,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10]]"/>
-				<brush name="Right brush" color="orange" start="6" length="31" value="[[10,10,10],[20,20,10],[30,30,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10]]"/>
+			<layer id="1" asset_id="1" color="purple" start="0" length="37">
+				<brush id="1-1" name="Left brush" color="green" start="0" length="37" value="[[10,10,10],[20,20,10],[30,30,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10]]"/>
+				<brush id="1-2" name="Right brush" color="orange" start="6" length="31" value="[[10,10,10],[20,20,10],[30,30,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10],[10,10,10]]"/>
 			</layer>
 			<!--
-			<layer index="2" asset_id="2" color="orange" start="2" length="5">
-				<brush name="Brush 1" color="orange" start="0" length="5" value="[[10,10,10],[10,10,10]]"/>
-				<brush name="Right brush" color="purple" start="8" length="6" value="[[110,110,10],[10,10,10]]"/>
+			<layer id="2" asset_id="2" color="orange" start="2" length="5">
+				<brush id="2-1" name="Brush 1" color="orange" start="0" length="5" value="[[10,10,10],[10,10,10]]"/>
+				<brush id="2-2" name="Right brush" color="purple" start="8" length="6" value="[[110,110,10],[10,10,10]]"/>
 			</layer>
-			<layer index="3" asset_id="1" color="yellow" start="3" length="3">
-				<brush name="Brush 1" color="yellow" start="0" length="3" value="[[10,10,10],[10,10,10]]"/>
+			<layer id="3" asset_id="1" color="yellow" start="3" length="3">
+				<brush id="3-1" name="Brush 1" color="yellow" start="0" length="3" value="[[10,10,10],[10,10,10]]"/>
 			</layer>
-			<layer index="4" asset_id="2" color="khaki" start="4" length="3">
-				<brush name="Brush 1" color="khaki" start="0" length="3" value="[[10,10,10],[10,10,10]]"/>
+			<layer id="4" asset_id="2" color="khaki" start="4" length="3">
+				<brush id="4-1" name="Brush 1" color="khaki" start="0" length="3" value="[[10,10,10],[10,10,10]]"/>
 			</layer>
 			-->
 		</timeline>
