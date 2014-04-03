@@ -4,7 +4,7 @@ sys.language = {
 
 	},
 	getPhrase: function(id) {
-		var xNode = sys.fs.xml.selectSingleNode('//language/*[@id="'+ id +'"]');
+		var xNode = sys.ledger.selectSingleNode('//language/*[@id="'+ id +'"]');
 		if (!xNode) return;
 		var retStr = xNode.getAttribute('str');
 		retStr = retStr.replace(/\\n/g, '<br/>');

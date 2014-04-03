@@ -26,7 +26,7 @@ sys.app = {
 			file = _sys.fs.load({path: path}).dom,
 			xFile = file.selectSingleNode('//file');
 
-		self.file = _sys.fs.xml.documentElement.appendChild(xFile);
+		self.file = _sys.ledger.documentElement.appendChild(xFile);
 		self.mode = xFile.getAttribute('mode');
 
 		if (self.mode === 'font') {

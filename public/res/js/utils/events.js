@@ -40,7 +40,7 @@ sys.events = {
 	},
 	registerHotkeys: function() {
 		var _sys = sys,
-			hotkeys = _sys.fs.xml.selectNodes('//hotkeys/*');
+			hotkeys = _sys.ledger.selectNodes('//hotkeys/*');
 		if (hotkeys.length > 0) {
 			var keys = {};
 			for (var i=0, il=hotkeys.length; i<il; i++) {

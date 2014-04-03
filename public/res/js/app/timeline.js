@@ -55,14 +55,22 @@ sys.app.timeline = {
 					}).xml );
 
 				// temp
-				self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
+				//self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
 				break;
 			case 'toggle_visible':
 				var iconEl  = jr(arguments[1]),
 					isOn    = iconEl.hasClass('icon-eye_on'),
 					rowEl   = iconEl.parents('[data-brush_id]'),
 					rowId   = rowEl.attr('data-brush_id'),
-					trackEl = _jr('div[data-track_id='+ rowId +']', _el.tl_content);
+					trackEl = _jr('div[data-track_id='+ rowId +']', _el.tl_content),
+					childCheck = true,
+					siblLen,
+					isAllOff;
+				if (rowEl.parent().attr('data-track') === 'parent') {
+					iconEl = rowEl.parent().find('.icon-eye_on, .icon-eye_off');
+					trackEl = _jr('div[data-track_id='+ rowId +']', _el.tl_content).parent().find('.anim_track');
+					childCheck = false;
+				}
 				if (isOn) {
 					trackEl.addClass('is_hidden');
 					iconEl.parent().addClass('is_hidden');
@@ -72,9 +80,32 @@ sys.app.timeline = {
 					iconEl.parent().removeClass('is_hidden');
 					iconEl.removeClass('icon-eye_off').addClass('icon-eye_on');
 				}
+				if (childCheck) {
+					childCheck = rowEl.parent();
+					siblLen = childCheck.find('li').length;
+					isAllOff = siblLen === childCheck.find('.icon-eye_off').length;
+					childCheck.parent()
+							.find('div > .icon-eye_on, div > .icon-eye_off')
+							.setClass( isAllOff ? 'icon-eye_off' : 'icon-eye_on' );
+
+					rowId = childCheck.parent().find('div.tl_layer').attr('data-brush_id');
+					trackEl = _jr('div[data-track_id='+ rowId +']', _el.tl_content);
+					trackEl[ isAllOff ? 'addClass' : 'removeClass' ]('is_hidden');
+				}
+				_canvas.info.visible = self.doEvent('get_track_visible');
+				_canvas.updateBallCvs();
+				_canvas.draw();
 				break;
 			case 'get_track_visible':
-				return [1,1];
+				var rows = _jr('li', _el.tl_body_rows),
+					jl = rows.length,
+					j = 0,
+					rVisible = [];
+				for (; j<jl; j++) {
+					if (rows[j].getAttribute('data-track') === 'parent') continue;
+					rVisible.push( _jr(rows[j]).hasClass('is_hidden') ? 0 : 1 );
+				}
+				return rVisible;
 			case 'get_track_palette':
 				var tracks = _jr('.brush_tracks .anim_track', _el.tl_content),
 					palette = [],
@@ -92,7 +123,7 @@ sys.app.timeline = {
 				}
 				return palette;
 			case 'goto_frame':
-				_el.frame_nob.style.left = ((arguments[1] * 16)-17) +'px';
+				_el.frame_nob.style.left = ((arguments[1] * 16)-1) +'px';
 
 				// reset scaling, origo, etc ?
 				_canvas.updateBallCvs();

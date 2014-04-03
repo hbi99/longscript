@@ -9,7 +9,6 @@ sys.app.canvas = {
 		observer.on('app.resize', this.doEvent);
 		observer.on('file_loaded', this.doEvent);
 		observer.on('assets_loaded', this.doEvent);
-		//observer.on('active_letter', this.doEvent);
 		observer.on('nob_zoom', this.doEvent);
 		observer.on('nob_opacity', this.doEvent);
 
@@ -27,6 +26,7 @@ sys.app.canvas = {
 		this.dim = getDim(this.cvs);
 
 		this.info = {
+			mode: 'design',
 			scale: 1,
 			origoX: 0,
 			origoY: 0,
@@ -39,63 +39,88 @@ sys.app.canvas = {
 
 		//this.zoomEvents('focus');
 	},
-	doEvent: function(event) {
+	doEvent: function(event, srcEl) {
 		var _sys   = sys,
 			_app   = _sys.app,
 			_el    = _sys.el,
+			_jr    = jr,
 			self   = _app.canvas,
 			info   = self.info,
 			doc    = document,
 			dim    = self.dim,
-			mouseX = event.pageX - dim.l,
-			mouseY = event.pageY - dim.t,
-			mouseState = self.mouseState,
+			type   = typeof(event) === 'string' ? event : event.type,
+			mouseState,
 			details,
 			scale,
+			sequence,
+			frame,
+			isCircle,
+			mouseX,
+			mouseY,
 			origoX,
 			origoY,
 			percX,
 			percY,
-			sequence = info.sequence,
-			frame = sequence[info.frameIndex],
-			isCircle,
-			mouseX = event.pageX - dim.l,
-			mouseY = event.pageY - dim.t,
 			ball,
 			ballX,
 			ballY,
 			ballR;
 
-		if (event.preventDefault) event.preventDefault();
+		if (event.bubbles) {
+			event.preventDefault();
 
-		if (!mouseState.type) {
-			for (var i=0, il=frame.length; i<il; i++) {
-				ball = frame[i];
-				ballX = ((info.iX + ball[0]) * info.scale) + info.origoX - mouseX;
-				ballY = ((info.iY + ball[1]) * info.scale) + info.origoY - mouseY;
-				ballR = ball[2] * info.scale;
-				isCircle = Math.sqrt(Math.pow(ballX, 2) + Math.pow(ballY, 2)) <= ballR;
+			mouseX     = event.pageX - dim.l;
+			mouseY     = event.pageY - dim.t;
+			mouseState = self.mouseState;
+			sequence   = info.sequence;
+			frame      = sequence[info.frameIndex];
 
-				/* debug purpose 
-				self.ctx.globalCompositeOperation = 'source-over';
-				self.ctx.fillStyle = 'rgb(255,0,0)';
-				self.ctx.beginPath();
-				self.ctx.arc(   ballX + mouseX,
-								ballY + mouseY,
-								ballR, 0, self.pi2, false);
-				self.ctx.fill();
-				*/
-				//console.log( info.origoX );
-				if (isCircle) break;
+			if (!mouseState.type) {
+				for (var i=0, il=frame.length; i<il; i++) {
+					ball = frame[i];
+					ballX = ((info.iX + ball[0]) * info.scale) + info.origoX - mouseX;
+					ballY = ((info.iY + ball[1]) * info.scale) + info.origoY - mouseY;
+					ballR = ball[2] * info.scale;
+					isCircle = Math.sqrt(Math.pow(ballX, 2) + Math.pow(ballY, 2)) <= ballR;
+					/* debug purpose 
+					self.ctx.globalCompositeOperation = 'source-over';
+					self.ctx.fillStyle = 'rgb(255,0,0)';
+					self.ctx.beginPath();
+					self.ctx.arc(   ballX + mouseX,
+									ballY + mouseY,
+									ballR, 0, self.pi2, false);
+					self.ctx.fill();
+					*/
+					if (isCircle) break;
+				}
 			}
 		}
-
-		switch(event.type) {
+		switch(type) {
 			// custom events
+			case 'mode_design':
+			case 'mode_preview':
+				self.info.mode = type.split('_')[1];
+				// update canvas
+				self.updateBallCvs();
+				self.draw();
+			case 'mode_code':
+				// update UI
+				srcEl = _jr('li[data-cmd="cvs -s '+ type +'"]');
+				srcEl.parent().find('.active').removeClass('active');
+				srcEl.addClass('active');
+				// update context menu
+				var xMenu = _sys.ledger.selectNodes('//context//*[@radioId="viewMode"]'),
+					kl = xMenu.length,
+					k = 0;
+				for (; k<kl; k++) {
+					if (xMenu[k].getAttribute('action') === 'cvs -s '+ type) xMenu[k].setAttribute('checked', 1);
+					else xMenu[k].removeAttribute('checked');
+				}
+				break;
 			case 'app.resize':
 				self.dim = getDim(self.cvs);
-				self.ballCvs.width =
-				self.cvs.width     = _el.canvas_bg.offsetWidth;
+				self.ballCvs.width  =
+				self.cvs.width      = _el.canvas_bg.offsetWidth;
 				self.ballCvs.height =
 				self.cvs.height     = _el.canvas_bg.offsetHeight;
 				self.draw();
@@ -109,27 +134,25 @@ sys.app.canvas = {
 				break;
 			case 'assets_loaded':
 				// set workarea width + height
-				info.width = +_app.file.getAttribute('width');
+				info.width  = +_app.file.getAttribute('width');
 				info.height = +_app.file.getAttribute('height');
 				info.iX = (dim.w/2) - (info.width/2);
 				info.iY = (dim.h/2) - (info.height/2);
 				// remebered from when file is saved
 				info.origoX = +_app.fileMeta('origoX') || 0;
 				info.origoY = +_app.fileMeta('origoY') || 0;
-				info.scale = +_app.fileMeta('scale') || 1;
+				info.scale  = +_app.fileMeta('scale') || 1;
 				if (info.scale > 1) self.zoom(info.scale * 20, true);
 
 				info.palette = _app.timeline.doEvent('get_track_palette');
 				info.visible = _app.timeline.doEvent('get_track_visible');
 
-				info.frameIndex = +_app.fileMeta('frameIndex') || 1;
+				info.frameIndex = new Number(_app.fileMeta('frameIndex')) || 0;
 				_app.timeline.doEvent('goto_frame', info.frameIndex);
 
 				// reset scaling, origo, etc ?
 				//self.updateBallCvs();
 				//self.draw();
-				break;
-			case 'active_letter':
 				break;
 			case 'nob_opacity':
 				details = event.details;
@@ -226,19 +249,13 @@ sys.app.canvas = {
 
 				switch (mouseState.type) {
 					case 'pan':
-						var img = _app.image.img,
-							img_half_width  = img.width * info.scale,
-							img_half_height = img.height * info.scale,
-							cvs_half_width  = (self.cvs.width / 2) * (info.scale - 1),
-							cvs_half_height = (self.cvs.height / 2) * (info.scale - 1);
-
 						origoX = mouseX - mouseState.clickX + mouseState.origoX;
 						origoY = mouseY - mouseState.clickY + mouseState.origoY;
-
 						//info.origoX = Math.max(Math.min(origoX, img_half_width - cvs_half_width), -img_half_width - cvs_half_width);
 						//info.origoY = Math.max(Math.min(origoY, img_half_height - cvs_half_height), -img_half_height - cvs_half_height);
 
-						info.origoY = Math.min(origoY, (self.cvs.width - (img.width * 2) * info.scale));
+						info.origoX = Math.min(origoX, 1/info.scale);
+						info.origoY = Math.min(origoY, 1/info.scale);
 
 						self.updateBallCvs();
 						break;
@@ -301,33 +318,47 @@ sys.app.canvas = {
 							info.top-1,
 							info.scaledWidth+2,
 							info.scaledHeight+2);
-
 			// disable image interpolation
 			ctx.webkitImageSmoothingEnabled = false;
-			// image
-			ctx.drawImage(  info['1'].img,
-							info.left,
-							info.top,
-							info.scaledWidth,
-							info.scaledHeight);
 
-			ctx.globalCompositeOperation = 'source-atop';
-			ctx.drawImage(ballCvs, 0, 0);
+			if (info.mode === 'design') {
+				// image
+				ctx.drawImage(  info['1'].img,
+								info.left,
+								info.top,
+								info.scaledWidth,
+								info.scaledHeight);
 
-			// current frame
-			ctx.globalCompositeOperation = 'source-over';
-			//ctx.fillStyle = 'rgba(255,0,255,0.4)';
-			for (var k=0, kl=frame.length; k<kl; k++) {
-				if (info.visible[k] !== 1) continue;
-				ctx.fillStyle = info.palette[k].trans;
+				ctx.globalCompositeOperation = 'source-atop';
+				ctx.drawImage(ballCvs, 0, 0);
 
-				ball = frame[k];
-				ctx.beginPath();
-				ctx.arc((info.iX + ball[0]) * info.scale + info.origoX,
-						(info.iY + ball[1]) * info.scale + info.origoY,
-						ball[2] * info.scale,
-						0, pi2, false);
-				ctx.fill();
+				// current frame
+				ctx.globalCompositeOperation = 'source-over';
+				//ctx.fillStyle = 'rgba(255,0,255,0.4)';
+				for (var k=0, kl=frame.length; k<kl; k++) {
+					if (info.visible[k] !== 1) continue;
+					ctx.fillStyle = info.palette[k].trans;
+
+					ball = frame[k];
+					ctx.beginPath();
+					ctx.arc((info.iX + ball[0]) * info.scale + info.origoX,
+							(info.iY + ball[1]) * info.scale + info.origoY,
+							ball[2] * info.scale,
+							0, pi2, false);
+					ctx.fill();
+				}
+			} else {
+				ctx.save();
+				ctx.globalCompositeOperation = 'source-over';
+				ctx.drawImage(ballCvs, 0, 0);
+				// image
+				ctx.globalCompositeOperation = 'source-in';
+				ctx.drawImage(  info['1'].img,
+								info.left,
+								info.top,
+								info.scaledWidth,
+								info.scaledHeight);
+				ctx.restore();
 			}
 			
 			// canvas rectangle

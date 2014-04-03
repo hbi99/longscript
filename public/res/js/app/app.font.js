@@ -62,7 +62,7 @@ sys.app.font = {
 	load: function(name) {
 		var _sys  = sys,
 			self  = this,
-			xFont = _sys.fs.xml.selectSingleNode('//fonts/*[@name="'+ name +'"]');
+			xFont = _sys.ledger.selectSingleNode('//fonts/*[@name="'+ name +'"]');
 
 		_app.switchMode('font');
 

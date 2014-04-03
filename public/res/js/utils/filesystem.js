@@ -4,6 +4,7 @@ sys.fs = {
 		this.fs = require('fs');
 		this.path = require('path');
 
+		sys.ledger = 
 		this.xml = this.load({path: 'res/xml/ledger.xml'}).dom;
 		this.xsl = this.load({path: 'res/xsl/common.xsl'}).dom;
 		

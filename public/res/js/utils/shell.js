@@ -22,9 +22,9 @@ sys.shell = {
 			}
 			cmd = this.getAttribute((event.type === 'mousedown')? 'data-cmd' : 'data-dblclick');
 		}
-		//if (sys.app.el.floatFld) sys.app.el.floatFld.blur();
 
-		if (cmd) sys.shell.exec(cmd, false, event.target);
+		//if (cmd) sys.shell.exec(cmd, false, event.target);
+		if (cmd) sys.shell.exec(cmd, false, this);
 		return false;
 	},
 	err: function(cmd, errnum) {
@@ -54,14 +54,14 @@ sys.shell = {
 		}
 		args = args.slice(2,-1).split("' '");
 		if (args.length > 0 && args[0].slice(0,1) === '-') {
-			xCmd = sys.fs.xml.selectNodes('//alias/*[@object="'+ oCmd[0] +'"]/*[@switch="'+ args[0].slice(1) +'"]');
+			xCmd = sys.ledger.selectNodes('//alias/*[@object="'+ oCmd[0] +'"]/*[@switch="'+ args[0].slice(1) +'"]');
 			if (xCmd.length === 0) return this.err(cmd, 101);
 			oCmd[0] = xCmd[0].getAttribute('name');
 			args = args.splice(1);
 		}
-		xCmd = xCmd || sys.fs.xml.selectNodes('//alias//*[@name="'+ oCmd[0] +'"]');
+		xCmd = xCmd || sys.ledger.selectNodes('//alias//*[@name="'+ oCmd[0] +'"]');
 		if (!xCmd.length) {
-			xAlias = sys.fs.xml.selectSingleNode('//alias//*[@alias="'+ oCmd[0] +'"]');
+			xAlias = sys.ledger.selectSingleNode('//alias//*[@alias="'+ oCmd[0] +'"]');
 			if (xAlias) {
 				xCmd = [xAlias];
 				oCmd[0] = xAlias.getAttribute('name');

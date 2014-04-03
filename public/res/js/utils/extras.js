@@ -42,7 +42,7 @@ var transform = function(options) {
 		xslPrc = new XSLTProcessor();
 
 	if (options.template === 'menu') {
-		var xMenu = sys.fs.xml.selectSingleNode( options.match );
+		var xMenu = sys.ledger.selectSingleNode( options.match );
 		if (xMenu.getAttribute('invoke')) {
 			options.match = '//context//*[@for=\''+ xMenu.getAttribute('invoke') +'\']';
 		}
@@ -51,7 +51,7 @@ var transform = function(options) {
 	xslPrc.importStylesheet(sys.fs.xsl);
 
 	ownerDocument = document.implementation.createDocument('', '', null);
-	fragment = xslPrc.transformToFragment(sys.fs.xml, ownerDocument);
+	fragment = xslPrc.transformToFragment(sys.ledger, ownerDocument);
 	treeTemplate.removeAttribute('match');
 	// trim fragment
 	if (fragment.firstChild && fragment.firstChild.nodeType === 3) fragment.removeChild(fragment.firstChild);

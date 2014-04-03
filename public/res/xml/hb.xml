@@ -2,11 +2,18 @@
 <data>
 	<file mode="image" width="296" height="323">
 		<meta name="name" value="HB animation" />
-		<!--
+		<!---->
+		<meta name="mode" value="design" />
 		<meta name="scale" value="5" />
 		<meta name="origoX" value="-1540.7" />
 		<meta name="origoY" value="-172" />
-		<meta name="frameIndex" value="14" />
+		<meta name="frameIndex" value="1" />
+		
+			<!--
+		<meta name="scale" value="1.25" />
+		<meta name="origoX" value="-340" />
+		<meta name="origoY" value="-237" />
+		<meta name="frameIndex" value="1" />
 		-->
 		<assets>
 			<image id="1" name="hb.png" source="res/img/hb.png"/>

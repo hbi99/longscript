@@ -11,8 +11,8 @@ sys.context = {
 		this.fastVars.rootEl.html('');
 	},
 	createMenu: function(oMenu) {
-		//var xTemplate = sys.fs.xml.createElement('i');
-		var xDoc = sys.fs.xml,
+		//var xTemplate = sys.ledger.createElement('i');
+		var xDoc = sys.ledger,
 			xTarget = xDoc.selectSingleNode('//*[@for="'+ oMenu._settings.target +'"]'),
 			xTemplate = xDoc.ownerDocument.createElement('i'),
 			xMenu, node, attr;
@@ -44,7 +44,7 @@ sys.context = {
 	},
 	doEvent: function(event) {
 		var _sys = sys,
-			xDoc = _sys.fs.xml,
+			xDoc = _sys.ledger,
 			context = _sys.context,
 			oHeight,
 			oWidth,
@@ -101,7 +101,7 @@ sys.context = {
 			case 'contextmenu':
 				if (!this.dataset || !this.dataset.context) return;
 				var menuXPath = '//context//*[@for=\''+ this.dataset.context +'\']',
-					menuXNode = _sys.fs.xml.selectSingleNode(menuXPath);
+					menuXNode = _sys.ledger.selectSingleNode(menuXPath);
 				if (!menuXNode) return;
 
 				var rootMenu = context.fastVars.rootEl.html(transform({

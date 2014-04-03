@@ -61,9 +61,9 @@
 			<canvas data-el="cvs"></canvas>
 		</div>
 		<ul class="options">
-			<li class="active"><figure class="icon-image"></figure>Design view</li>
-			<li><figure class="icon-play"></figure>Preview</li>
-			<li><figure class="icon-code"></figure>Code view</li>
+			<li data-cmd="cvs -s mode_design" class="active"><figure class="icon-image"></figure>Design view</li>
+			<li data-cmd="cvs -s mode_preview"><figure class="icon-play"></figure>Preview</li>
+			<li data-cmd="cvs -s mode_code"><figure class="icon-code"></figure>Code view</li>
 			<li class="search">
 				<figure class="icon-search"></figure>
 				<span class="zoom_level" data-el="zoom_level" data-event_fb="cvs -zfb">100</span>
@@ -126,47 +126,7 @@
 				</span>
 			</div>
 			<div class="tl_body">
-				<ul data-el="tl_body_rows">
-					<!--
-					<li data-track_row_id="1" class="active">
-						<div class="tl_layer" data-dblclick="timeline -s dblclick_layer">
-							<figure class="icon-eye_on"></figure>
-							<figure class="icon-arrow_down" data-cmd="timeline -s toggle_layer"></figure>
-							<span>hb.png</span>
-						</div>
-
-						<ul class="brushes">
-							<li>
-								<figure class="icon-trashcan right"></figure>
-								<figure class="icon-add right"></figure>
-								<span>Left brush</span>
-							</li>
-							<li>
-								<figure class="icon-trashcan right"></figure>
-								<figure class="icon-add right"></figure>
-								<span>Right brush</span>
-							</li>
-						</ul>
-
-					</li>
-					<li data-track_row_id="2">
-						<div class="tl_layer" data-dblclick="timeline -s dblclick_layer">
-							<figure class="icon-eye_on"></figure>
-							<figure class="icon-arrow_down" data-cmd="timeline -s toggle_layer"></figure>
-							<span>Another image</span>
-						</div>
-
-						<ul class="brushes">
-							<li>
-								<figure class="icon-trashcan right"></figure>
-								<figure class="icon-add right"></figure>
-								<span>Left brush</span>
-							</li>
-						</ul>
-
-					</li>
-					-->
-				</ul>
+				<ul data-el="tl_body_rows"></ul>
 			</div>
 
 		</div>
@@ -180,23 +140,7 @@
 				<div class="frame_ends" data-el="frame_ends"></div>
 			</div>
 			<div class="content tl_body">
-				<ul class="body" data-el="tl_content">
-					<!--
-					<li data-track_id="1" class="active">
-						<div class="anim_track teal">&#160;</div>
-						<ul class="brush_tracks">
-							<li><div class="anim_track orange">&#160;</div></li>
-							<li><div class="anim_track khaki">&#160;</div></li>
-						</ul>
-					</li>
-					<li data-track_id="2">
-						<div class="anim_track purple">&#160;</div>
-						<ul class="brush_tracks">
-							<li><div class="anim_track silver">&#160;</div></li>
-						</ul>
-					</li>
-					-->
-				</ul>
+				<ul class="body" data-el="tl_content"></ul>
 			</div>
 
 		</div>
