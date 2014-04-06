@@ -23,7 +23,7 @@ sys.app.font = {
 		switch (cmd) {
 			// custom events
 			case 'load_assets':
-				if (file.getAttribute('mode') !== 'font') return;
+				if (file.getAttribute('type') !== 'font') return;
 				break;
 		}
 	},

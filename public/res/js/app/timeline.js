@@ -55,7 +55,7 @@ sys.app.timeline = {
 					}).xml );
 
 				// temp
-				//self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
+				self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
 				break;
 			case 'toggle_visible':
 				var iconEl  = jr(arguments[1]),

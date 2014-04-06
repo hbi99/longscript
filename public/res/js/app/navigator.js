@@ -78,7 +78,7 @@ sys.app.navigator = {
 		// clear canvas
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
 
-		if (_app.mode === 'image') {
+		if (_app.type === 'image') {
 			// semi-transparent box
 			ctx.fillStyle = 'rgba(255,255,255,0.08)';
 			ctx.fillRect(asset.left-1, asset.top-1, asset.width+2, asset.height+2);

@@ -33,12 +33,12 @@
 </head>
 <body>
 
-<section class="app-layout" data-el="layout">
+<section class="app-layout code-mode" data-el="layout">
 	<section class="area top">
-		<div class="buttonGroup tools btn-extra left">
+		<div class="buttonGroup tools">
 			<figure class="LIVE button box left icon-new_file add-chevron disabled" data-el="newFileTool" title="New file"></figure>
-			<figure class="LIVE button box left icon-open_file" data-cmd="proj -d" title="Open folder"></figure>
-			<figure class="LIVE button box left icon-save" data-cmd="fs -s" title="Save"></figure>
+			<figure class="LIVE button box left icon-open_file" data-cmd="cvs -s open_file" title="Open folder"></figure>
+			<figure class="LIVE button box left icon-save" data-cmd="cvs -s save_file" title="Save"></figure>
 		</div>
 		
 		<div class="buttonGroup btn-extra themeButtons left hideMe">
@@ -59,6 +59,7 @@
 		<div class="content">
 			<div class="area canvas-bg" data-el="canvas_bg"></div>
 			<canvas data-el="cvs"></canvas>
+			<div class="area code-view" data-el="code_view"></div>
 		</div>
 		<ul class="options">
 			<li data-cmd="cvs -s mode_design" class="active"><figure class="icon-image"></figure>Design view</li>

@@ -943,6 +943,80 @@ figure {
   z-index: -1;
   opacity: 0;
 }
+.app-layout.code-mode .canvas .content {
+  box-shadow: 0px 0px 0px;
+  background: transparent;
+}
+.app-layout.code-mode .canvas ul.options .search {
+  display: none;
+}
+.app-layout.code-mode .canvas .code-view {
+  display: block;
+}
+.app-layout.code-mode .nav,
+.app-layout.code-mode .assets,
+.app-layout.code-mode .timeline {
+  opacity: 0.5;
+  -webkit-filter: blur(2px);
+}
+.app-layout.code-mode .nav:after,
+.app-layout.code-mode .assets:after,
+.app-layout.code-mode .timeline:after {
+  display: block;
+}
+.app-layout .nav,
+.app-layout .assets,
+.app-layout .timeline {
+  -webkit-transition: 400ms opacity ease-in-out;
+}
+.code-view {
+  background: #272727;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  padding-top: 2px;
+  z-index: 3;
+  font-family: Monaco, 'Consolas', 'Courier New';
+  font-size: 12px;
+  line-height: 15px;
+  color: #999;
+  box-shadow: inset 3px 3px 17px #222222, inset 1px 1px 1px #222222;
+}
+.code-view .line-numbers {
+  float: left;
+  width: 40px;
+  color: #444;
+}
+.code-view .line-numbers span {
+  display: block;
+  text-align: right;
+}
+.code-view pre {
+  margin: 0px 0px 0px 7px;
+  float: left;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+.code-view pre .punctuation {
+  color: #66f;
+}
+.code-view pre .nt {
+  color: #b5f;
+}
+.code-view pre .na {
+  color: #f90;
+}
+.code-view pre .s {
+  color: #88f;
+}
+.code-view pre .jscode {
+  color: #888;
+}
+.code-view pre .jscomment {
+  color: #3a3;
+}
 .area.top {
   top: 0px;
   height: 22px;
@@ -976,6 +1050,9 @@ figure {
   opacity: 1;
   z-index: 2;
 }
+.area.canvas .code-view {
+  display: none;
+}
 .area.canvas .options li {
   float: left;
   padding: 2px 7px 1px 3px;
@@ -985,6 +1062,16 @@ figure {
   left: auto;
   height: 200px;
   width: 280px;
+}
+.area.nav:after {
+  display: none;
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  z-index: 2;
 }
 .area.nav canvas {
   width: 100%;
@@ -997,6 +1084,16 @@ figure {
   left: auto;
   width: 261px;
   border-radius: 5px;
+}
+.area.assets:after {
+  display: none;
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: -21px;
+  bottom: 0px;
+  z-index: 2;
 }
 .area.assets.active .options li.left figure,
 .area.assets:hover .options li.left figure,
@@ -1145,6 +1242,16 @@ figure {
   bottom: 19px;
   right: 19px;
   border-radius: 5px 5px 0px 5px;
+}
+.area.timeline:after {
+  display: none;
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: -21px;
+  bottom: -21px;
+  z-index: 23;
 }
 .area.timeline .content_fixed {
   color: #ababab;
@@ -1441,34 +1548,34 @@ figure {
   background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.25) 0%, transparent 15%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
   background-color: #54987b;
 }
-.area.timeline .content_fixed .tl_body .anim_track.purple {
+.area.timeline .content_fixed .tl_body .anim_track.color_purple {
   background-color: #bb7ebc;
 }
-.area.timeline .content_fixed .tl_body .anim_track.orange {
+.area.timeline .content_fixed .tl_body .anim_track.color_orange {
   background-color: #f90;
 }
-.area.timeline .content_fixed .tl_body .anim_track.maroon {
+.area.timeline .content_fixed .tl_body .anim_track.color_maroon {
   background-color: #e73f3f;
 }
-.area.timeline .content_fixed .tl_body .anim_track.blue {
+.area.timeline .content_fixed .tl_body .anim_track.color_blue {
   background-color: #8a88d0;
 }
-.area.timeline .content_fixed .tl_body .anim_track.silver {
+.area.timeline .content_fixed .tl_body .anim_track.color_silver {
   background-color: #b7b7b7;
 }
-.area.timeline .content_fixed .tl_body .anim_track.yellow {
+.area.timeline .content_fixed .tl_body .anim_track.color_yellow {
   background-color: #beab29;
 }
-.area.timeline .content_fixed .tl_body .anim_track.brown {
+.area.timeline .content_fixed .tl_body .anim_track.color_brown {
   background-color: #be7735;
 }
-.area.timeline .content_fixed .tl_body .anim_track.khaki {
+.area.timeline .content_fixed .tl_body .anim_track.color_khaki {
   background-color: #b39a6b;
 }
-.area.timeline .content_fixed .tl_body .anim_track.teal {
+.area.timeline .content_fixed .tl_body .anim_track.color_teal {
   background-color: #7ebcb5;
 }
-.area.timeline .content_fixed .tl_body .anim_track.green {
+.area.timeline .content_fixed .tl_body .anim_track.color_green {
   background-color: #7ebc75;
 }
 .area.timeline .content_fixed .frame_nrs {

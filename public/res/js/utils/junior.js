@@ -85,6 +85,18 @@
             }
             return false;
         },
+        likeClass: function(name, el) {
+            var arr = (el)? [el] : this,
+                rgx = new RegExp(name +'\\w+', 'g'),
+                match;
+            for (var i=0, il=arr.length; i<il; i++) {
+                match = arr[i].className.match(rgx);
+                if (match !== null) {
+                    return match[0];
+                }
+            }
+            return false;
+        },
         setClass: function(names, el) {
             var arr = (el)? [el] : this;
             for (var i=0, il=arr.length; i<il; i++) {

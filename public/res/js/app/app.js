@@ -1,7 +1,7 @@
 
 sys.app = {
 	el: {},
-	mode: false,
+	type: false,
 	init: function() {
 		// collection for fast access
 		var els = jr('*[data-el]');
@@ -27,9 +27,9 @@ sys.app = {
 			xFile = file.selectSingleNode('//file');
 
 		self.file = _sys.ledger.documentElement.appendChild(xFile);
-		self.mode = xFile.getAttribute('mode');
+		self.type = xFile.getAttribute('type');
 
-		if (self.mode === 'font') {
+		if (self.type === 'font') {
 
 		} else {
 			_sys.observer.trigger('file_loaded');
@@ -42,10 +42,10 @@ sys.app = {
 			node = self.file.selectSingleNode('//file//*[@name="'+ name +'"]');
 		return node ? node.getAttribute('value') : false;
 	},
-	switchMode: function(mode) {
+	switchMode: function(type) {
 		var _sys = sys;
 
-		this.mode = mode;
+		this.type = type;
 
 		_sys.observer.trigger('mode_change');
 	}

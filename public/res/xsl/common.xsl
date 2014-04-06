@@ -32,9 +32,10 @@
 <xsl:template name="assets">
 	<xsl:for-each select=".//assets/*">
 		<li>
+			<xsl:attribute name="data-asset_id"><xsl:value-of select="@id"/></xsl:attribute>
 			<figure>
 				<xsl:attribute name="style">background-image: url(<xsl:value-of select="@source"/>);</xsl:attribute>
-			&#160;</figure>
+				&#160;</figure>
 			<span><xsl:value-of select="@name"/></span>
 		</li>
 	</xsl:for-each>
@@ -45,9 +46,10 @@
 		<xsl:sort order="ascending" select="@index"/>
 		<li data-track="parent" data-cmd="timeline -s make_track_active">
 			<div data-dblclick="timeline -s dblclick_layer">
-				<xsl:attribute name="data-brush_id">track_<xsl:value-of select="@id"/></xsl:attribute>
+				<xsl:attribute name="data-track_id">track_<xsl:value-of select="@id"/></xsl:attribute>
+				<xsl:attribute name="data-asset_id"><xsl:value-of select="@asset_id"/></xsl:attribute>
 				<xsl:attribute name="class">
-					tl_layer <xsl:value-of select="@color"/>
+					tl_layer color_<xsl:value-of select="@color"/>
 					<xsl:if test="@hidden = 1"> is_hidden</xsl:if>
 				</xsl:attribute>
 				<figure data-cmd="timeline -s toggle_visible">
@@ -90,7 +92,7 @@
 			<div data-context="tl_track">
 				<xsl:attribute name="data-track_id">track_<xsl:value-of select="@id"/></xsl:attribute>
 				<xsl:attribute name="class">
-					anim_track <xsl:value-of select="@color"/>
+					anim_track color_<xsl:value-of select="@color"/>
 					<xsl:if test="@hidden = 1"> is_hidden</xsl:if>
 				</xsl:attribute>
 				<xsl:attribute name="style">
@@ -104,9 +106,9 @@
 				<xsl:for-each select="./brush">
 				<li>
 					<div data-context="tl_track">
-						<xsl:attribute name="data-track_id">brush_<xsl:value-of select="@id"/></xsl:attribute>
+						<xsl:attribute name="data-brush_id">brush_<xsl:value-of select="@id"/></xsl:attribute>
 						<xsl:attribute name="class">
-							anim_track <xsl:value-of select="@color"/>
+							anim_track color_<xsl:value-of select="@color"/>
 							<xsl:if test="@hidden = 1"> is_hidden</xsl:if>
 						</xsl:attribute>
 						<xsl:attribute name="style">

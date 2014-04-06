@@ -13,6 +13,9 @@ sys.fs = {
 	dispose: function() {
 		
 	},
+	createNode: function(name) {
+		return sys.fs.xml.createElement(name);
+	},
 	handleError: function(err) {
 		sys.alert(err);
 	},

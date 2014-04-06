@@ -16,7 +16,7 @@ sys.app.image = {
 		switch (cmd) {
 			// custom events
 			case 'load_assets':
-				if (file.getAttribute('mode') !== 'image') return;
+				if (file.getAttribute('type') !== 'image') return;
 				var imgs = file.selectNodes('.//image'),
 					il = imgs.length,
 					i = 0;

@@ -7,7 +7,7 @@ sys.app.assets = {
 
 		observer.on('file_loaded', this.doEvent);
 		observer.on('assets_size', this.doEvent);
-		//observer.on('mode_change', this.doEvent);
+		//observer.on('type_change', this.doEvent);
 		//observer.on('font_loaded', this.doEvent);
 		//observer.on('image_loaded', this.doEvent);
 	},
@@ -31,10 +31,10 @@ sys.app.assets = {
 				// TODO
 				break;
 			case 'file_loaded':
-				var modeClass = (_app.mode === 'font')? 'glyphs' : 'assets',
+				var modeClass = (_app.type === 'font')? 'glyphs' : 'assets',
 					box_title = _sys.language.getPhrase(modeClass),
 					content;
-				if (_app.mode === 'font') {
+				if (_app.type === 'font') {
 					content = _app.font.fillChars();
 				} else {
 					content = transform({
@@ -58,15 +58,15 @@ sys.app.assets = {
 //				self.active.trigger('click');
 //				break;
 //			case 'mode_change':
-//				var mode = _app.mode === 'font' ? 'glyphs' : 'assets',
-//					box_title = _sys.language.getPhrase( mode );
+//				var type = _app.type === 'font' ? 'glyphs' : 'assets',
+//					box_title = _sys.language.getPhrase( type );
 //				
 //				jr('.title', _el.box_assets)
 //					.html( box_title );
 //
 //				jr('.body', _el.box_assets)
 //					.removeClass('glyphs assets')
-//					.addClass(mode);
+//					.addClass(type);
 //				break;
 		}
 	},
