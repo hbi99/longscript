@@ -92,14 +92,15 @@
 	z-index: 3;
 	font-family: Monaco, 'Consolas', 'Courier New';
 	font-size: 12px;
-	line-height: 15px;
-	color: #999;
+	line-height: 17px;
+	color: #aaa;
 	box-shadow: inset 3px 3px 17px darken(@boxBgColor, 3%),
 				inset 1px 1px 1px darken(@boxBgColor, 3%);
 
 	.line-numbers {
 		float: left;
-		width: 40px;
+		width: 43px;
+		padding-right: 3px;
 		color: #444;
 
 		span {
@@ -114,12 +115,14 @@
 		font-size: inherit;
 		line-height: inherit;
 
-		.punctuation {color: #66f;}
-		.nt			 {color: #b5f;}
-		.na			 {color: #f90;}
-		.s			 {color: #88f;}
-		.jscode		 {color: #888;}
-		.jscomment	 {color: #3a3;}
+		.pnct   {color: #93b;}
+		.ipnct  {color: #66c;}
+		.nt     {color: #b5f;}
+		.nn     {color: #a4d;}
+		.na     {color: #e80;}
+		.s      {color: #88f;}
+		.jscode {color: #888;}
+		.jsc    {color: #3a3;}
 	}
 }
 
@@ -346,7 +349,7 @@
 
 					&.active,
 					&:hover {
-						color: darken(@optionHover, 15%);
+						color: darken(@optionHover, 19%);
 					}
 
 					&.big {
@@ -833,7 +836,8 @@
 			color: @optionHover;
 		}
 		&.active {
-			color: darken(@optionHover, 29%);
+			color: darken(@optionHover, 11%);
+			text-shadow: 0px 1px 3px #000;
 			cursor: default;
 			//background: #373737;
 		}

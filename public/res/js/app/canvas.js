@@ -127,18 +127,25 @@ sys.app.canvas = {
 				}
 				break;
 			case 'prepare_codeview':
-				var code = '<html>\n<head>\n<title>HB animation</title>\n</head>\n<body>\n\n<img src="test"/>\n\n</body>\n</html>',
+				var code = _sys.fs.load({path: 'res/xml/html-template.txt'}).text,
 					lines = code.replace(/</g, '&lt;').replace(/>/g, '&gt;').split('\n'),
 					s = '<div class="line-numbers">';
 
 				for (i=0; i<lines.length; i++) {
 					// attributes
-					lines[i] = lines[i].replace(/([\w-]+)="(.*?)"/g, '<span class="na">$1</span>="<span class="s">$2</span>"')
+					lines[i] = lines[i].replace(/([\w-]+)="(.*?)"/g, '<span class="na">$1</span><span class="ipnct">="</span><span class="s">$2</span><span class="ipnct">"</span>');
 					// html tags
-					lines[i] = lines[i].replace(/(\&lt;[\w\d]+\&gt;|\&lt;\/[\w\d]+\&gt;|\&lt;[\w\d]+\/\&gt;)/g, '<span class="nt">$1</span>')
-					lines[i] = lines[i].replace(/(\&lt;\w+ )(.*?)(\&gt;)/g, '<span class="nt">$1</span>$2<span class="nt">$3</span>')
+					lines[i] = lines[i].replace(/(\&lt;[\w\d]+\&gt;|\&lt;\/[\w\d]+\&gt;|\&lt;[\w\d]+\/\&gt;)/g, '<span class="nt">$1</span>');
+					lines[i] = lines[i].replace(/(\&lt;\w+ )(.*?)/g, '<span class="nt">$1</span>$2');
+					lines[i] = lines[i].replace(/(\&lt;!\w+ )(\w+)/g, '<span class="nn">$1</span><span class="nt">$2</span>');
 					// comments
-					lines[i] = lines[i].replace(/(\&lt;!--.*?--\&gt;)/g, '<span class="c">$1</span>')
+					lines[i] = lines[i].replace(/(\&lt;!--.*?--\&gt;)/g, '<span class="c">$1</span>');
+					lines[i] = lines[i].replace(/\&lt;\//g, '<span class="pnct">&lt;/</span>');
+					lines[i] = lines[i].replace(/\&lt;/g, '<span class="pnct">&lt;</span>');
+					lines[i] = lines[i].replace(/\&gt;/g, '<span class="pnct">&gt;</span>');
+					// script
+					lines[i] = lines[i].replace(/(\/\/.*)/g, '<span class="jsc">$1</span>');
+					lines[i] = lines[i].replace(/(\&lt;!--.*?--\&gt;)/g, '<span class="jsc">$1</span>');
 				}
 
 				for (i=0; i<31; i++) {

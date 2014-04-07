@@ -990,13 +990,14 @@ figure {
   z-index: 3;
   font-family: Monaco, 'Consolas', 'Courier New';
   font-size: 12px;
-  line-height: 15px;
-  color: #999;
+  line-height: 17px;
+  color: #aaa;
   box-shadow: inset 3px 3px 17px #222222, inset 1px 1px 1px #222222;
 }
 .code-view .line-numbers {
   float: left;
-  width: 40px;
+  width: 43px;
+  padding-right: 3px;
   color: #444;
 }
 .code-view .line-numbers span {
@@ -1010,14 +1011,20 @@ figure {
   font-size: inherit;
   line-height: inherit;
 }
-.code-view pre .punctuation {
-  color: #66f;
+.code-view pre .pnct {
+  color: #93b;
+}
+.code-view pre .ipnct {
+  color: #66c;
 }
 .code-view pre .nt {
   color: #b5f;
 }
+.code-view pre .nn {
+  color: #a4d;
+}
 .code-view pre .na {
-  color: #f90;
+  color: #e80;
 }
 .code-view pre .s {
   color: #88f;
@@ -1025,7 +1032,7 @@ figure {
 .code-view pre .jscode {
   color: #888;
 }
-.code-view pre .jscomment {
+.code-view pre .jsc {
   color: #3a3;
 }
 .area.top {
@@ -1214,7 +1221,7 @@ figure {
 }
 .area.assets .options li.left figure.active,
 .area.assets .options li.left figure:hover {
-  color: #d9d9d9;
+  color: #cfcfcf;
 }
 .area.assets .options li.left figure.big {
   position: absolute;
@@ -1654,7 +1661,8 @@ figure {
   color: #ffffff;
 }
 .options li.active {
-  color: #b5b5b5;
+  color: #e3e3e3;
+  text-shadow: 0px 1px 3px #000;
   cursor: default;
 }
 .options li.search {
