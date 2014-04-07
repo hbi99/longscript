@@ -307,7 +307,7 @@ sys.app.canvas = {
 
 				info.frameIndex = parseInt(_app.fileMeta('frameIndex'), 10) || 0;
 
-				self.doEvent('mode_'+ _app.fileMeta('mode'));
+				self.doEvent('mode_'+ (_app.fileMeta('mode') || 'design'));
 
 				// temp
 				//self.doEvent('tracks_to_xml');

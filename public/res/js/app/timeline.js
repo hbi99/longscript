@@ -26,6 +26,26 @@ sys.app.timeline = {
 			cmd  = (typeof(event) === 'string') ? event : event.type,
 			target;
 		switch (cmd) {
+			// native events
+			case 'scroll':
+				target = event.toElement;
+				_el.tl_body_cols.style.left = target.offsetLeft +'px';
+				_el.tl_body_rows.style.top = target.offsetTop +'px';
+
+				if (target.offsetTop === 0) {
+					_el.tl_body_cols.classList.remove('vscrolled');
+					_el.tl_body_cols_left.classList.remove('vscrolled');
+				} else {
+					_el.tl_body_cols.classList.add('vscrolled');
+					_el.tl_body_cols_left.classList.add('vscrolled');
+				}
+				if (target.offsetLeft === 0) {
+					_el.tl_body_rows_left.classList.remove('hscrolled');
+				} else {
+					_el.tl_body_rows_left.classList.add('hscrolled');
+				}
+				break;
+				
 			// custom events
 			case 'frame_index_change':
 				target = self.frameIndex;
@@ -179,25 +199,6 @@ sys.app.timeline = {
 				_canvas.info.palette = _app.timeline.doEvent('get_track_palette');
 				_canvas.updateBallCvs();
 				_canvas.draw();
-				break;
-			// native events
-			case 'scroll':
-				target = event.toElement;
-				_el.tl_body_cols.style.left = target.offsetLeft +'px';
-				_el.tl_body_rows.style.top = target.offsetTop +'px';
-
-				if (target.offsetTop === 0) {
-					_el.tl_body_cols.classList.remove('vscrolled');
-					_el.tl_body_cols_left.classList.remove('vscrolled');
-				} else {
-					_el.tl_body_cols.classList.add('vscrolled');
-					_el.tl_body_cols_left.classList.add('vscrolled');
-				}
-				if (target.offsetLeft === 0) {
-					_el.tl_body_rows_left.classList.remove('hscrolled');
-				} else {
-					_el.tl_body_rows_left.classList.add('hscrolled');
-				}
 				break;
 		}
 	},

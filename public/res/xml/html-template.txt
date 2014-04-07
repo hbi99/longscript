@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en">
 <head>
-<title>Longscript</title>
 <meta charset="utf-8" />
+<title>Longscript</title>
 </head>
 <body>
 
