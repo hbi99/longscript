@@ -25,7 +25,8 @@ sys.app.navigator = {
 	doEvent: function(event) {
 		var _sys = sys,
 			_app = _sys.app,
-			info = _app.canvas.info,
+			_canvas = _app.canvas,
+			info = _canvas.info,
 			self = _app.navigator,
 
 			asset = self.asset,
@@ -50,33 +51,40 @@ sys.app.navigator = {
 				}
 				if (mouseX > zoom.left && mouseX < zoom.left + zoom.width &&
 					mouseY > zoom.top && mouseY < zoom.top + zoom.height) {
-					cursor = 'move';
+					cursor = '-webkit-grab';
 				}
 			}
 		}
-
+		
 		switch(event.type) {
 			// native events
 			case 'selectstart': return false;
 			case 'mousedown':
 				if (event.button === 2) return;
-				if (cursor === 'move') {
+				if (cursor === '-webkit-grab') {
 					// ZOOM BOX MOVE
 					self.mouseState = {
 						type: 'move',
-						mouseX: mouseX,
-						mouseY: mouseY
+						mouseX: zoom.left - mouseX,
+						mouseY: zoom.top - mouseY
 					};
 				}
 				break;
 			case 'mousemove':
 				if (mouseState.type) {
-					zoom.left = mouseX - mouseState.mouseX + asset.left;
-					zoom.top = mouseY - mouseState.mouseY + asset.top;
+					zoom.left = mouseX + mouseState.mouseX;
+					zoom.top = mouseY + mouseState.mouseY;
+					zoom.width  = (_canvas.cvs.width / info.scaledWidth) * asset.width;
+					zoom.height = (_canvas.cvs.height / info.scaledHeight) * asset.height;
+
+					//zoom.width  = Math.min(asset.width + (asset.left - zoom.left), zWidth);
+					//zoom.height = Math.min(asset.height + (asset.top - zoom.top), zHeight);
+
+					cursor = '-webkit-grabbing';
 					
 					self.draw(true);
 				}
-				self.cvs.style.cursor = cursor || 'default';
+				self.cvs.style.cursor = cursor || '';
 				break;
 			case 'mouseup':
 				self.mouseState.type = false;
@@ -123,19 +131,22 @@ sys.app.navigator = {
 			cvs     = this.cvs,
 			ctx     = this.ctx,
 			asset   = this.asset,
-			zoom    = this.zoom;
+			zoom    = this.zoom,
+			draw    = {};
 
 		if (!asset.image) return;
 
 		if (!ignoreInfo) {
-			zoom.left   = parseInt((info.left < 0 ? -(info.left * this.scale) / info.scale : 0) + asset.left, 10);
-			zoom.top    = parseInt((info.top  < 0 ? -(info.top  * this.scale) / info.scale : 0) + asset.top, 10);
-			zoom.width  = asset.width - (( (info.left + info.scaledWidth - _canvas.cvs.width) / info.scaledWidth ) * asset.width) - zoom.left + asset.left;
-			zoom.height = asset.height - (( (info.top + info.scaledHeight - _canvas.cvs.height) / info.scaledHeight ) * asset.height) - zoom.top + asset.top;
+			zoom.left   = parseInt(((-info.left * this.scale) / info.scale) + asset.left, 10);
+			zoom.top    = parseInt(((-info.top  * this.scale) / info.scale) + asset.top, 10);
+			zoom.width  = (_canvas.cvs.width / info.scaledWidth) * asset.width;
+			zoom.height = (_canvas.cvs.height / info.scaledHeight) * asset.height;
 		}
-
-		zoom.width  = parseInt(Math.min(asset.width + (asset.left - zoom.left), zoom.width), 10);
-		zoom.height = parseInt(Math.min(asset.height + (asset.top - zoom.top), zoom.height), 10);
+		// constraints
+		draw.left   = Math.max(zoom.left, asset.left - 1);
+		draw.top    = Math.max(zoom.top, asset.top - 1);
+		draw.width  = (draw.left > zoom.left)? Math.min(zoom.width - (asset.left - zoom.left), asset.width) : Math.min(zoom.width, asset.left + asset.width - zoom.left + 1);
+		draw.height = (draw.top > zoom.top)? Math.min(zoom.height - (asset.top - zoom.top), asset.height) : Math.min(zoom.height, asset.top + asset.height - zoom.top + 1);
 
 		// clear canvas
 		ctx.clearRect(0, 0, cvs.width, cvs.height);
@@ -150,7 +161,7 @@ sys.app.navigator = {
 		// zoom rectangle
 		ctx.translate(0.5, 0.5);
 		ctx.strokeStyle = '#f90';
-		ctx.strokeRect(zoom.left, zoom.top, zoom.width, zoom.height);
+		ctx.strokeRect(draw.left, draw.top, draw.width, draw.height);
 		ctx.translate(-0.5, -0.5);
 	}
 };

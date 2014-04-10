@@ -298,15 +298,15 @@ sys.app.canvas = {
 				info.origoX = +_app.fileMeta('origoX') || 0;
 				info.origoY = +_app.fileMeta('origoY') || 0;
 				info.scale  = +_app.fileMeta('scale') || 1;
-				if (info.scale > 1) self.zoom(info.scale * 20, true);
-
+				if (info.scale > 1) self.zoom((info.scale-1) * 25, true);
+				// arrayify tracks
 				info.sequence = self.doEvent('tracks_from_xml');
-
+				// set palette and visible channels
 				info.palette = _app.timeline.doEvent('get_track_palette');
 				info.visible = _app.timeline.doEvent('get_track_visible');
-
+				// move timeline index
 				info.frameIndex = parseInt(_app.fileMeta('frameIndex'), 10) || 0;
-
+				// set application mode
 				self.doEvent('mode_'+ (_app.fileMeta('mode') || 'design'));
 
 				// temp
@@ -347,7 +347,7 @@ sys.app.canvas = {
 							ballRadius: ballR,
 							clickY: event.pageY
 						};
-						doc.body.classList.add('cursor_hide');
+						//doc.body.classList.add('cursor_hide');
 						return false;
 					}
 					// BALL MOVE
@@ -398,12 +398,13 @@ sys.app.canvas = {
 						};
 					}
 				}
-				doc.body.classList.add('cursor_hide');
+				//doc.body.classList.add('cursor_hide');
 				break;
 			case 'mousemove':
-				self.cvs.style.cursor = (isCircle)? 'crosshair' : '';
-
-				if (!mouseState.type) return;
+				if (!mouseState.type) {
+					self.cvs.style.cursor = (event.metaKey)? '-webkit-zoom-in' : ((isCircle)? '-webkit-grab' : '');
+					return;
+				}
 
 				switch (mouseState.type) {
 					case 'pan':
@@ -416,6 +417,8 @@ sys.app.canvas = {
 						info.origoY = Math.min(origoY, 1/info.scale);
 
 						self.updateBallCvs();
+
+						self.cvs.style.cursor = '-webkit-grabbing';
 						break;
 					case 'zoom':
 						var val = Math.min(Math.max(mouseState.org_scale + (mouseState.startY - mouseY), 0), 100);
@@ -425,10 +428,14 @@ sys.app.canvas = {
 						info.origoY = ((self.cvs.height - (self.cvs.height * info.scale)) * self.percY) + mouseState.origoY;
 						
 						self.updateBallCvs();
+						
+						self.cvs.style.cursor = '-webkit-zoom-in';
 						break;
 					case 'resize':
 						var newRadius = parseFloat(((mouseState.ballRadius + (mouseState.clickY - event.pageY)) / info.scale).toFixed(2));
 						frame[mouseState.ballIndex][2] = (newRadius < 2)? 2 : newRadius;
+
+						self.cvs.style.cursor = '-webkit-zoom-in';
 						break;
 					case 'move':
 						var bX = parseFloat(((mouseX + mouseState.ballX - info.origoX) / info.scale).toFixed(2)),
@@ -436,6 +443,8 @@ sys.app.canvas = {
 
 						frame[mouseState.ballIndex][0] = bX;
 						frame[mouseState.ballIndex][1] = bY;
+
+						self.cvs.style.cursor = '-webkit-grabbing';
 						break;
 				}
 				self.draw();
@@ -445,7 +454,8 @@ sys.app.canvas = {
 
 				self.zoomDetails =
 				self.mouseState.type = false;
-				doc.body.classList.remove('cursor_hide');
+				self.cvs.style.cursor = '';
+				//doc.body.classList.remove('cursor_hide');
 				break;
 		}
 	},
@@ -609,7 +619,7 @@ sys.app.canvas = {
 			origoX = 0,
 			origoY = 0;
 		// set info scale
-		self.info.scale = +parseFloat((val * 0.04) + 1).toFixed(2);
+		self.info.scale = +parseFloat((val / 25) + 1).toFixed(2);
 		// update ui-value
 		el.zoom_level.textContent = (self.info.scale * 100).toFixed();
 		
