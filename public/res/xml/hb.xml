@@ -3,9 +3,9 @@
 	<file type="image" width="296" height="323">
 		<meta name="name" value="HB animation" />
 		<!---->
-		<meta name="scale" value="1.56" />
-		<meta name="origoX" value="-176.7" />
-		<meta name="origoY" value="-81" />
+		<meta name="scale" value="5" />
+		<meta name="origoX" value="-1240.7" />
+		<meta name="origoY" value="-650" />
 		<meta name="frameIndex" value="3" />
 		<!--
 		<meta name="mode" value="code" />

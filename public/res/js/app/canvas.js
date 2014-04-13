@@ -26,6 +26,7 @@ sys.app.canvas = {
 		this.dim = getDim(this.cvs);
 
 		this.info = {
+			pi2: Math.PI*2,
 			mode: 'design',
 			scale: 1,
 			origoX: 0,
@@ -35,7 +36,7 @@ sys.app.canvas = {
 		};
 
 		jr(this.cvs).bind('mousedown selectstart mousemove', this.doEvent);
-		jr(document).bind('mouseup', this.doEvent);
+		jr(document).bind('mouseup keydown keyup', this.doEvent);
 
 		//this.zoomEvents('focus');
 	},
@@ -78,11 +79,11 @@ sys.app.canvas = {
 			sequence   = info.sequence;
 			frame      = sequence[info.frameIndex];
 
-			if (!mouseState.type) {
+			if (!mouseState.type || type === 'mouseup') {
 				for (i=0, il=frame.length; i<il; i++) {
 					ball = frame[i];
-					ballX = ((info.iX + ball[0]) * info.scale) + info.origoX - mouseX;
-					ballY = ((info.iY + ball[1]) * info.scale) + info.origoY - mouseY;
+					ballX = ((info.imageX + ball[0]) * info.scale) + info.origoX - mouseX;
+					ballY = ((info.imageY + ball[1]) * info.scale) + info.origoY - mouseY;
 					ballR = ball[2] * info.scale;
 					isCircle = Math.sqrt(Math.pow(ballX, 2) + Math.pow(ballY, 2)) <= ballR;
 					/* debug purpose 
@@ -91,7 +92,7 @@ sys.app.canvas = {
 					self.ctx.beginPath();
 					self.ctx.arc(   ballX + mouseX,
 									ballY + mouseY,
-									ballR, 0, self.pi2, false);
+									ballR, 0, info.pi2, false);
 					self.ctx.fill();
 					*/
 					if (isCircle) break;
@@ -292,8 +293,8 @@ sys.app.canvas = {
 				// set workarea width + height
 				info.width  = +_app.file.getAttribute('width');
 				info.height = +_app.file.getAttribute('height');
-				info.iX = (dim.w/2) - (info.width/2);
-				info.iY = (dim.h/2) - (info.height/2);
+				info.imageX = (dim.w/2) - (info.width/2);
+				info.imageY = (dim.h/2) - (info.height/2);
 				// remebered from when file is saved
 				info.origoX = +_app.fileMeta('origoX') || 0;
 				info.origoY = +_app.fileMeta('origoY') || 0;
@@ -335,6 +336,16 @@ sys.app.canvas = {
 				self.zoom( details.value );
 				break;
 			// native events
+			case 'keydown':
+				if (event.keyCode === 91) {
+					self.cvs.style.cursor = '-webkit-zoom-in';
+				}
+				break;
+			case 'keyup':
+				if (event.keyCode === 91) {
+					self.cvs.style.cursor = '';
+				}
+				break;
 			case 'selectstart': return false;
 			case 'mousedown':
 				if (event.button === 2) return;
@@ -354,8 +365,8 @@ sys.app.canvas = {
 					self.mouseState = {
 						type: 'move',
 						ballIndex: i,
-						ballX: ballX - (info.iX * info.scale),
-						ballY: ballY - (info.iY * info.scale)
+						ballX: ballX - (info.imageX * info.scale),
+						ballY: ballY - (info.imageY * info.scale)
 					};
 				} else {
 					if (event.metaKey || event.ctrlKey) {
@@ -373,8 +384,8 @@ sys.app.canvas = {
 							origoX = 0;
 							origoY = 0;
 						}
-						self.percX = percX;
-						self.percY = percY;
+						info.percX = percX;
+						info.percY = percY;
 
 						self.zoomEvents('focus');
 
@@ -408,13 +419,16 @@ sys.app.canvas = {
 
 				switch (mouseState.type) {
 					case 'pan':
-						origoX = mouseX - mouseState.clickX + mouseState.origoX;
-						origoY = mouseY - mouseState.clickY + mouseState.origoY;
+						info.origoX = mouseX - mouseState.clickX + mouseState.origoX;
+						info.origoY = mouseY - mouseState.clickY + mouseState.origoY;
 						//info.origoX = Math.max(Math.min(origoX, img_half_width - cvs_half_width), -img_half_width - cvs_half_width);
 						//info.origoY = Math.max(Math.min(origoY, img_half_height - cvs_half_height), -img_half_height - cvs_half_height);
 
-						info.origoX = Math.min(origoX, 1/info.scale);
-						info.origoY = Math.min(origoY, 1/info.scale);
+						info.origoX = Math.min(info.origoX, 1/info.scale);
+						//info.origoY = Math.min(origoY, 1/info.scale);
+
+						//info.origoX = Math.min( info.origoX, -info.scaledWidth/2 );
+						//console.log( 1/info.scale );
 
 						self.updateBallCvs();
 
@@ -424,18 +438,18 @@ sys.app.canvas = {
 						var val = Math.min(Math.max(mouseState.org_scale + (mouseState.startY - mouseY), 0), 100);
 						self.zoom(val, true);
 
-						info.origoX = ((self.cvs.width - (self.cvs.width * info.scale)) * self.percX) + mouseState.origoX;
-						info.origoY = ((self.cvs.height - (self.cvs.height * info.scale)) * self.percY) + mouseState.origoY;
+						info.origoX = ((self.cvs.width - (self.cvs.width * info.scale)) * info.percX) + mouseState.origoX;
+						info.origoY = ((self.cvs.height - (self.cvs.height * info.scale)) * info.percY) + mouseState.origoY;
 						
 						self.updateBallCvs();
 						
-						self.cvs.style.cursor = '-webkit-zoom-in';
+						//self.cvs.style.cursor = '-webkit-zoom-in';
 						break;
 					case 'resize':
 						var newRadius = parseFloat(((mouseState.ballRadius + (mouseState.clickY - event.pageY)) / info.scale).toFixed(2));
 						frame[mouseState.ballIndex][2] = (newRadius < 2)? 2 : newRadius;
 
-						self.cvs.style.cursor = '-webkit-zoom-in';
+						//self.cvs.style.cursor = '-webkit-zoom-in';
 						break;
 					case 'move':
 						var bX = parseFloat(((mouseX + mouseState.ballX - info.origoX) / info.scale).toFixed(2)),
@@ -454,13 +468,12 @@ sys.app.canvas = {
 
 				self.zoomDetails =
 				self.mouseState.type = false;
-				self.cvs.style.cursor = '';
+				self.cvs.style.cursor = isCircle ? '-webkit-grab' : '';
 				//doc.body.classList.remove('cursor_hide');
 				break;
 		}
 	},
-	pi2: Math.PI*2,
-	draw: function() {
+	draw: function(navTriggered) {
 		var _sys = sys,
 			_app = _sys.app,
 			file = _app.file,
@@ -470,7 +483,7 @@ sys.app.canvas = {
 			ctx  = self.ctx,
 			ballCvs = self.ballCvs,
 			ballCtx = self.ballCtx,
-			pi2  = self.pi2,
+			pi2  = info.pi2,
 			dim  = self.dim,
 
 			sequence = info.sequence,
@@ -520,13 +533,14 @@ sys.app.canvas = {
 
 					ball = frame[k];
 					ctx.beginPath();
-					ctx.arc((info.iX + ball[0]) * info.scale + info.origoX,
-							(info.iY + ball[1]) * info.scale + info.origoY,
+					ctx.arc((info.imageX + ball[0]) * info.scale + info.origoX,
+							(info.imageY + ball[1]) * info.scale + info.origoY,
 							ball[2] * info.scale,
 							0, pi2, false);
 					ctx.fill();
 				}
 			} else {
+				// balls
 				ctx.save();
 				ctx.globalCompositeOperation = 'source-over';
 				ctx.drawImage(ballCvs, 0, 0);
@@ -549,7 +563,9 @@ sys.app.canvas = {
 							info.scaledHeight+4);
 		}
 		// trigger observer
-		_sys.observer.trigger('zoom_pan');
+		if (!navTriggered) {
+			_sys.observer.trigger('zoom_pan');
+		}
 	},
 	updateBallCvs: function() {
 		var _sys = sys,
@@ -561,16 +577,12 @@ sys.app.canvas = {
 			ballCtx = self.ballCtx,
 			sequence = info.sequence,
 			frame = sequence[info.frameIndex],
-			pi2  = self.pi2,
+			pi2  = info.pi2,
 			ball;
 
-		if (_app.type !== 'image') {
-
-		}
-
 		// some calculations
-		info.left = (info.iX * info.scale) + info.origoX;
-		info.top = (info.iY * info.scale) + info.origoY;
+		info.left = (info.imageX * info.scale) + info.origoX;
+		info.top = (info.imageY * info.scale) + info.origoY;
 		info.scaledWidth = info.width * info.scale;
 		info.scaledHeight = info.height * info.scale;
 		// clear canvas
@@ -593,8 +605,8 @@ sys.app.canvas = {
 				
 				ball = prev_frame[j];
 				ballCtx.beginPath();
-				ballCtx.arc((info.iX + ball[0]) * info.scale + info.origoX,
-							(info.iY + ball[1]) * info.scale + info.origoY,
+				ballCtx.arc((info.imageX + ball[0]) * info.scale + info.origoX,
+							(info.imageY + ball[1]) * info.scale + info.origoY,
 							ball[2] * info.scale,
 							0, pi2, false);
 				ballCtx.fill();
