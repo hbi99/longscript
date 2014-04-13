@@ -85,7 +85,7 @@ sys.app.navigator = {
 					self.draw(true);
 
 					_canvas.info.left = ((asset.left - zoom.left - 2) / (asset.width - zoom.width)) * (info.scaledWidth - _canvas.cvs.width);
-					_canvas.info.top = ((asset.top - zoom.top) / (asset.height - zoom.height)) * (info.scaledWidth - _canvas.cvs.height);
+					_canvas.info.top = ((asset.top - zoom.top) / (asset.height - zoom.height)) * (info.scaledHeight - _canvas.cvs.height);
 
 					//_canvas.updateBallCvs();
 					_canvas.draw(true);

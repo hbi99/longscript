@@ -1,12 +1,19 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <data>
-	<file mode="image">
+	<file type="image" width="448" height="185">
+		<meta name="scale" value="5" />
+		<meta name="origoX" value="-1547" />
+		<meta name="origoY" value="-887" />
+		<meta name="frameIndex" value="2" />
+
+		<meta name="name" value="HB animation" />
 		<assets>
-			<image name="hello_white.png" source="res/img/hello_white.png"/>
+			<image id="1" name="hello_white-big.png" source="res/img/hello_white-big.png"/>
 		</assets>
-		<timeline length="30">
-			<layer>
-				<brush>[10,10,10]</brush>
+		<timeline length="5">
+			<layer id="1" asset_id="1" color="purple" start="0" length="5">
+				<brush id="1-1" name="Left brush" color="maroon" start="0" length="3" value="[[10,10,10],[10,20,10],[10,30,10]]"/>
+				<brush id="1-2" name="Right brush" color="orange" start="2" length="3" value="[[20,10,10],[20,20,10],[20,30,10]]"/>
 			</layer>
 		</timeline>
 	</file>
