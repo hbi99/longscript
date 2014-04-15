@@ -28,14 +28,18 @@ sys.app.navigator = {
 			_canvas = _app.canvas,
 			info = _canvas.info,
 			self = _app.navigator,
-
 			asset = self.asset,
 			dim   = self.dim,
 			zoom  = self.zoom,
+			margin = 10,
 			mouseState,
 			mouseX,
 			mouseY,
-			cursor;
+			cursor,
+			mX1,
+			mX2,
+			mY1,
+			mY2;
 
 		if (event.bubbles) {
 			event.preventDefault();
@@ -77,16 +81,31 @@ sys.app.navigator = {
 					zoom.width  = (_canvas.cvs.width / info.scaledWidth) * asset.width;
 					zoom.height = (_canvas.cvs.height / info.scaledHeight) * asset.height;
 
-					//zoom.width  = Math.min(asset.width + (asset.left - zoom.left), zWidth);
-					//zoom.height = Math.min(asset.height + (asset.top - zoom.top), zHeight);
+					mX1 = asset.left - margin;
+					mX2 = asset.left + asset.width - zoom.width + margin;
+					mY1 = asset.top - margin;
+					mY2 = asset.top + asset.height - zoom.height + margin;
 
+					if (zoom.width > asset.width) {
+						if (zoom.left > mX1) zoom.left = mX1;
+						if (zoom.left < mX2) zoom.left = mX2;
+					} else if (zoom.left < mX1) zoom.left = mX1;
+					else if (zoom.left > mX2) zoom.left = mX2;
+
+					if (zoom.height > asset.height) {
+						if (zoom.top > mY1) zoom.top = mY1;
+						if (zoom.top < mY2) zoom.top = mY2;
+					} else if (zoom.top < mY1) zoom.top = mY1;
+					else if (zoom.top > mY2) zoom.top = mY2;
+
+					// self canvas
 					cursor = '-webkit-grabbing';
-					
 					self.draw(true);
 
+					// for workarea
 					_canvas.info.left = ((asset.left - zoom.left - 2) / (asset.width - zoom.width)) * (info.scaledWidth - _canvas.cvs.width);
 					_canvas.info.top = ((asset.top - zoom.top) / (asset.height - zoom.height)) * (info.scaledHeight - _canvas.cvs.height);
-
+					
 					//_canvas.updateBallCvs();
 					_canvas.draw(true);
 				}
