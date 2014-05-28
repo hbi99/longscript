@@ -22,9 +22,8 @@ sys.shell = {
 			}
 			cmd = this.getAttribute((event.type === 'mousedown')? 'data-cmd' : 'data-dblclick');
 		}
-
 		//if (cmd) sys.shell.exec(cmd, false, event.target);
-		if (cmd) sys.shell.exec(cmd, false, this);
+		if (cmd) sys.shell.exec(cmd, false, this, event);
 		return false;
 	},
 	err: function(cmd, errnum) {
@@ -33,7 +32,7 @@ sys.shell = {
 			error: (typeof(errnum) === 'number')? this.errorStr[errnum] : errnum
 		};
 	},
-	exec: function(cmd, getFunc, el) {
+	exec: function(cmd, getFunc, el, event) {
 		var oCmd = cmd.split(' '),
 			xAlias,
 			xCmd,
@@ -81,6 +80,7 @@ sys.shell = {
 			if (!fFinal) return this.err(cmd, 103);
 		}
 		if (el) args.push(el);
+		if (event) args.push(event);
 		if (typeof(fFinal) !== 'function') return this.err(cmd, 101);
 		if (getFunc) return fFinal.bind(fThis);
 		ret = fFinal.apply(fThis, args);

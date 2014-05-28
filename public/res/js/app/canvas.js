@@ -163,6 +163,7 @@ sys.app.canvas = {
 				self.cvs.width     = _el.canvas_bg.offsetWidth;
 				self.ballCvs.height =
 				self.cvs.height     = _el.canvas_bg.offsetHeight;
+				self.updateBallCvs();
 				self.draw();
 				break;
 			case 'file_loaded':

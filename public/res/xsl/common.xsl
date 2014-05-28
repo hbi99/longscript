@@ -65,7 +65,10 @@
             <ul class="brushes">
 				<xsl:for-each select="./brush">
 				<li>
-					<xsl:attribute name="class"><xsl:if test="@hidden = 1">is_hidden</xsl:if></xsl:attribute>
+					<xsl:attribute name="class">
+						<xsl:if test="@hidden = 1">is_hidden</xsl:if>
+						<xsl:if test="@id = ../../@active">active</xsl:if>
+					</xsl:attribute>
 					<xsl:attribute name="data-brush_id">brush_<xsl:value-of select="@id"/></xsl:attribute>
 					<figure data-cmd="timeline -s toggle_visible">
 						<xsl:attribute name="class"><xsl:choose>

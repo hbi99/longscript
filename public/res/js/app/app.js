@@ -17,8 +17,8 @@ sys.app = {
 		sys.observer.trigger('app_init');
 
 		//this.load('res/xml/font.xml');
-		//this.load('res/xml/hb.xml');
-		this.load('res/xml/hello.xml');
+		this.load('res/xml/hb.xml');
+		//this.load('res/xml/hello.xml');
 	},
 	load: function(path) {
 		var _sys = sys,

@@ -181,9 +181,12 @@ sys.app.timeline = {
 				}
 				break;
 			case 'make_track_active':
-				var row = _jr(arguments[1]),
+				var ev  = arguments[2],
+					row = _jr(ev.target),
 					track_el = (row.attr('data-track') === 'parent')? row : row.parents('[data-track=parent]'),
 					row_id = track_el.attr('data-brush_id') || track_el.attr('data-track_id');
+
+				console.log( row.parents('li') );
 
 				_jr(_el.tl_body_rows).find('.active').removeClass('active');
 				_jr(_el.tl_content).find('.active').removeClass('active');
