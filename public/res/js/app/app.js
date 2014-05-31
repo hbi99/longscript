@@ -19,6 +19,16 @@ sys.app = {
 		//this.load('res/xml/font.xml');
 		this.load('res/xml/hb.xml');
 		//this.load('res/xml/hello.xml');
+		// temp
+		setTimeout(function() {
+			//sys.app.unload();
+		}, 500);
+	},
+	save: function() {
+
+	},
+	unload: function() {
+		sys.observer.trigger('file_unloaded');
 	},
 	load: function(path) {
 		var _sys = sys,

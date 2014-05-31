@@ -6,6 +6,7 @@ sys.app.assets = {
 			observer = _sys.observer;
 
 		observer.on('file_loaded', this.doEvent);
+		observer.on('file_unloaded', this.doEvent);
 		observer.on('assets_size', this.doEvent);
 		//observer.on('type_change', this.doEvent);
 		//observer.on('font_loaded', this.doEvent);
@@ -52,6 +53,11 @@ sys.app.assets = {
 					.addClass(modeClass);
 				
 				_sys.observer.trigger('load_assets');
+				break;
+			case 'file_unloaded':
+				_jr('.title', _el.box_assets).html('');
+				_jr(_el.assetsList).html('');
+				_sys.observer.trigger('unload_assets');
 				break;
 //			case 'font_loaded':
 //				_el.assetsList.style.fontFamily = _app.font.info.family;

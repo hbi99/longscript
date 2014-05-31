@@ -24,6 +24,11 @@
 @fontBold:			'bold';
 
 
+@import 'fonts.less';
+@import 'toolbar.less';
+@import 'scrollbar.less';
+@import 'menu.less';
+@import 'dialog.less';
 @import 'sys.less';
 
 .measuringSpan {
@@ -410,13 +415,26 @@
 					position: absolute;
 					overflow: hidden;
 
+					> ul {
+						min-height: 22px;
+						border-top: lighten(@boxContent, 5%) 1px solid;
+						border-bottom: darken(@boxContent, 7%) 1px solid;
+
+						li:first-child div {
+							border-top: 0px;
+						}
+						li:last-child {
+							border-bottom: 0px;
+						}
+					}
+
 					ul {
 						clear: both;
 						position: relative;
 
 						.tl_layer {
-							height: 15px;
-							padding: 2px 0px 3px 0px;
+							height: 17px;
+							padding: 2px 0px;
 							margin-right: 11px;
 							border-top: lighten(@boxContent, 5%) 1px solid;
 						}
@@ -537,12 +555,25 @@
 						min-width: 100%;
 						background-image: url(../img/bg_tl_body.png);
 						background-position: -16px 0px;
+						min-height: 21px;
+						border-bottom: darken(@boxContent, 7%) 1px solid;
+
+						> li {
+							padding-bottom: 2px;
+							min-height: 23px;
+
+							&:first-child {
+
+							}
+							&:last-child {
+								border-bottom: 0px;
+							}
+						}
 
 						ul {
-
 							&.brush_tracks {
-								margin-top: 5px;
-								margin-bottom: -3px;
+								margin-top: 0px;
+								margin-bottom: -4px;
 								height: 0px;
 								overflow: hidden;
 								-webkit-transition: 350ms height ease-in-out;
@@ -551,10 +582,6 @@
 									border-top: darken(@boxContent, 7%) 1px solid;
 									//border-top: red 1px solid;
 									border-bottom: 0px;
-
-									.anim_track {
-										opacity: 0.6;
-									}
 								}
 							}
 						}
@@ -584,7 +611,7 @@
 
 				&.tl_controls {
 					padding: 1px 3px;
-					height: 29px;
+					height: 31px;
 
 					.primary {
 						padding: 1px 0px;
@@ -676,38 +703,42 @@
 				}
 			}
 			.tl_body {
-				top: 32px;
+				top: 31px;
 				bottom: 1px;
 				left: 0px;
 				right: 1px;
 				border-radius: 0px;
 
 				.track_parent {
-					position: relative;
-					top: -3px;
-					height: 21px;
-					background: rgba(255,255,255,0.05);
-					width: 543px;
+					height: 16px;
+					background: rgba(255,255,255,0.11);
+					border: 1px solid rgba(255,255,255,0.21);
+					border-radius: 2px;
 				}
 
 				div.anim_track.is_hidden {
 					background-color: rgba(255,255,255,0.35);
-					opacity: 0.6;
+					//opacity: 0.6;
+				}
+
+				.active .anim_track,
+				.active.anim_track {
+					opacity: 1;
 				}
 				.anim_track {
 					position: relative;
 					top: 1px;
-					height: 13px;
+					height: 12px;
 					width: 14px;
-					border-radius: 2px;
+					border-radius: 3px;
 					box-shadow: 0px 1px 7px #444;
 					background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.25) 0%, transparent 15%, transparent 50%, rgba(0,0,0,0.25) 100%);
 					background-color: #54987b;
-					//opacity: 0.5;
+					opacity: 0.5;
 
 					&.color_purple { background-color: #bb7ebc; }
 					&.color_orange { background-color: #f90; }
-					&.color_maroon { background-color: #e73f3f; }
+					&.color_maroon { background-color: #e55; }
 					&.color_blue   { background-color: #8a88d0; }
 					&.color_silver { background-color: #b7b7b7; }
 					&.color_yellow { background-color: #beab29; }
@@ -716,17 +747,6 @@
 					&.color_teal   { background-color: #7ebcb5; }
 					&.color_green  { background-color: #7ebc75; }
 				}
-				/*
-				.teal    { margin-left: 0px; width: 462px; }
-				.purple  { margin-left: 0px; width: 242px; }
-				.orange  { margin-left: 0px; width: 334px; }
-				.maroon  { margin-left: 170px; width: 292px; }
-				.blue    { margin-left: 210px; width: 120px; }
-				.silver  { margin-left: 210px; width: 120px; }
-				.yellow  { margin-left: 60px; width: 160px; }
-				.brown   { margin-left: 260px; width: 340px; }
-				.khaki   { margin-left: 170px; width: 292px; }
-				*/
 			}
 			.frame_nrs {
 				height: 29px;
@@ -783,19 +803,19 @@
 				height: 160px;
 				width: 9999px;
 				margin-left: -1px;
-				background: rgba(0,0,0,0.05);
+				//background: rgba(0,0,0,0.05);
 				border-left: 1px solid darken(@boxContent, 11%);
-				box-shadow: inset 0px -21px 21px rgba(0,0,0,0.15);
+				//box-shadow: inset 0px -21px 21px rgba(0,0,0,0.15);
 			}
 			li {
 				position: relative;
 				border-bottom: darken(@boxContent, 7%) 1px solid;
-				padding: 3px 0px;
-				min-height: 15px;
+				padding: 3px 0px 0px;
+				min-height: 22px;
 				-webkit-transition: 150ms all ease-in-out;
 							
 				&.active {
-					background-color: rgba(220,220,220,0.05);
+					//background-color: rgba(220,220,220,0.05);
 				}
 			}
 		}

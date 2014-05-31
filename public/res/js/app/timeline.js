@@ -6,6 +6,7 @@ sys.app.timeline = {
 			observer = _sys.observer;
 
 		observer.on('file_loaded', this.doEvent);
+		observer.on('file_unloaded', this.doEvent);
 		observer.on('nob_speed', this.doEvent);
 		observer.on('assets_loaded', this.doEvent);
 		observer.on('frame_index_change', this.doEvent);
@@ -60,6 +61,9 @@ sys.app.timeline = {
 				//return;
 				var xTimeline = file.selectSingleNode('.//timeline');
 
+				// update timeline speed nob
+				self.doEvent('nob_speed', +_app.fileMeta('speed') || 50);
+
 				_jr(_el.frame_ends).css({'left': (xTimeline.getAttribute('length') * 16) +'px'});
 
 				// rendreing left
@@ -75,13 +79,21 @@ sys.app.timeline = {
 					}).xml );
 
 				// temp
-				self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
+				//self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
+				break;
+			case 'file_unloaded':
+				// reset timeline
+				_jr(_el.tl_body_rows).html('');
+				_jr(_el.tl_content).html('');
+				_jr(_el.frame_ends).css({'left': '9999px'});
+				self.doEvent('goto_frame', 0);
+				self.doEvent('nob_speed', 50);
 				break;
 			case 'toggle_visible':
 				var iconEl  = jr(arguments[1]),
 					isOn    = iconEl.hasClass('icon-eye_on'),
-					rowEl   = iconEl.parents('[data-brush_id]'),
-					rowId   = rowEl.attr('data-brush_id'),
+					rowEl   = iconEl.parents('[data-track_id]'),
+					rowId   = rowEl.attr('data-track_id'),
 					trackEl = _jr('div[data-track_id='+ rowId +']', _el.tl_content),
 					childCheck = true,
 					siblLen,
@@ -108,7 +120,7 @@ sys.app.timeline = {
 							.find('div > .icon-eye_on, div > .icon-eye_off')
 							.setClass( isAllOff ? 'icon-eye_off' : 'icon-eye_on' );
 
-					rowId = childCheck.parent().find('div.tl_layer').attr('data-brush_id');
+					rowId = childCheck.parent().find('div.tl_layer').attr('data-track_id');
 					trackEl = _jr('div[data-track_id='+ rowId +']', _el.tl_content);
 					trackEl[ isAllOff ? 'addClass' : 'removeClass' ]('is_hidden');
 				}
@@ -157,8 +169,15 @@ sys.app.timeline = {
 				_el.frame_nrs.innerHTML = target;
 				break;
 			case 'nob_speed':
-				var details = event.details;
-				details.srcElement.textContent = details.value || 0;
+				var details = event.details,
+					nobText = details ? details.srcElement : _el.speed_level,
+					nobVal = details ? details.value : arguments[1];
+				nobText.textContent = nobVal || 0;
+
+				if (!details) {
+					_el.nob_speed.setAttribute('data-value', nobVal);
+					_sys.nobs.draw(_el.nob_speed);
+				}
 				break;
 			case 'dblclick_layer':
 				target = _jr(arguments[1]).find('figure:nth(1)')[0];
@@ -166,42 +185,59 @@ sys.app.timeline = {
 			case 'toggle_layer':
 				var arrow   = jr(arguments[1]),
 					lRow    = arrow.parents('li'),
-					rowId   = arrow.parent().attr('data-brush_id'),
+					rowId   = arrow.parent().attr('data-track_id'),
 					tRow    = _jr('div[data-track_id="'+ rowId +'"]', _el.tl_content).parent().find('.brush_tracks'),
 					cHeight = lRow.find('.brushes').height();
 
 				if (arrow.hasClass('icon-arrow_down')) {
 					arrow.removeClass('icon-arrow_down').addClass('icon-arrow_up');
 					lRow.css({'height': (lRow.height() + cHeight) +'px'});
-					tRow.css({'height': (cHeight) +'px'});
+					tRow.css({'height': (cHeight + 3) +'px'});
 				} else{
 					arrow.removeClass('icon-arrow_up').addClass('icon-arrow_down');
 					lRow.css({'height': ''});
 					tRow.css({'height': ''});
 				}
 				break;
+			case 'get_track_row':
+				var row = {},
+					srcEl = arguments[1],
+					trackEl = _jr(srcEl),
+					trackId;
+
+				if (!srcEl.getAttribute('data-track_id')) {
+					trackEl = trackEl.parents('[data-track_id]');
+				}
+				trackId = trackEl.attr('data-track_id');
+				if (trackEl.parents('ul.body').length) {
+					// source element is on the right side
+					row.leftEl = _jr('[data-track_id='+ trackId +']', _el.tl_body_rows);
+					row.rightEl = trackEl;
+				} else {
+					// source element is on the left side
+					row.rightEl = _jr('[data-track_id='+ trackId +']', _el.tl_content);
+					row.leftEl = trackEl;
+				}
+				return row;
 			case 'make_track_active':
-				var ev  = arguments[2],
-					row = _jr(ev.target),
-					track_el = (row.attr('data-track') === 'parent')? row : row.parents('[data-track=parent]'),
-					row_id = track_el.attr('data-brush_id') || track_el.attr('data-track_id');
-
-				console.log( row.parents('li') );
-
-				_jr(_el.tl_body_rows).find('.active').removeClass('active');
-				_jr(_el.tl_content).find('.active').removeClass('active');
-
-				_jr('[data-brush_id='+ row_id +']', _el.tl_body_rows).addClass('active');
-				_jr('[data-track_id='+ row_id +']', _el.tl_content).addClass('active');
+				var ev = arguments[2],
+					trackRow = self.doEvent('get_track_row', ev.target);
+				
+				trackRow.rightEl.parents('.tl_body').find('.active').removeClass('active');
+				trackRow.leftEl.parents('.tl_body').find('.active').removeClass('active');
+				
+				trackRow.rightEl.addClass('active');
+				trackRow.leftEl.addClass('active');
 				break;
 			case 'change_track_color':
-				var new_color = arguments[1],
-					track_el = _sys.context.info.el;
-				_jr(track_el).setClass('anim_track '+ new_color);
+				var newColor = arguments[1],
+					trackRow = self.doEvent('get_track_row', _sys.context.info.el);
+				console.log( trackRow.rightEl.find('.anim_track').matchClass('color_') );
+				// _jr(track_el).setClass('anim_track '+ new_color);
 
-				_canvas.info.palette = _app.timeline.doEvent('get_track_palette');
-				_canvas.updateBallCvs();
-				_canvas.draw();
+				// _canvas.info.palette = _app.timeline.doEvent('get_track_palette');
+				// _canvas.updateBallCvs();
+				// _canvas.draw();
 				break;
 		}
 	},

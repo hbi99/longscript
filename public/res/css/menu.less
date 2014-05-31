@@ -127,15 +127,15 @@
 	}
 
 	.cntnr {
-		background-image: -webkit-linear-gradient(bottom, darken(@boxContent, 7%) 0%, @boxContent 100%);
+		background-image: -webkit-linear-gradient(bottom, darken(@boxContent, 3%) 0%, lighten(@boxContent, 5%) 100%);
 		border: @boxFace 1px solid;
 		text-align: center;
-		color: darken(@boxFocusHl, 17%);
-		text-shadow: 0px 1px 1px darken(@boxContent, 23%);
+		color: darken(@boxFocusHl, 19%);
+		text-shadow: 0px 1px 1px darken(@boxContent, 17%);
 	}
-	&.arrTL:after {left: 19px; background: @boxContent;}
-	&.arrBL:after {left: 19px; background: darken(@boxContent, 7%);}
-	&.arrBR:after {right: 29px; background: darken(@boxContent, 7%);}
+	&.arrTL:after {left: 19px; background: lighten(@boxContent, 5%);}
+	&.arrBL:after {left: 19px; background: darken(@boxContent, 3%);}
+	&.arrBR:after {right: 29px; background: darken(@boxContent, 3%);}
 
 	&.cvs_zoom {
 		width: 132px;
@@ -147,6 +147,6 @@
 		bottom: 74px;
 		left: 170px;
 
-		&.arrTL:after {left: 29px; background: @boxContent;}
+		&.arrTL:after {left: 29px; background: lighten(@boxContent, 5%);}
 	}
 }

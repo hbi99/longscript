@@ -69,7 +69,7 @@
 						<xsl:if test="@hidden = 1">is_hidden</xsl:if>
 						<xsl:if test="@id = ../../@active">active</xsl:if>
 					</xsl:attribute>
-					<xsl:attribute name="data-brush_id">brush_<xsl:value-of select="@id"/></xsl:attribute>
+					<xsl:attribute name="data-track_id">brush_<xsl:value-of select="@id"/></xsl:attribute>
 					<figure data-cmd="timeline -s toggle_visible">
 						<xsl:attribute name="class"><xsl:choose>
 							<xsl:when test="@hidden = 1">icon-eye_off</xsl:when>
@@ -77,7 +77,6 @@
 						</xsl:choose></xsl:attribute>
 						&#160;</figure>
 					<figure class="icon-trashcan right">&#160;</figure>
-					<figure class="icon-add right">&#160;</figure>
 					<span><xsl:value-of select="@name"/></span>
 				</li>
 				</xsl:for-each>
@@ -95,8 +94,7 @@
 			<div data-context="tl_track">
 				<xsl:attribute name="data-track_id">track_<xsl:value-of select="@id"/></xsl:attribute>
 				<xsl:attribute name="class">
-					anim_track color_<xsl:value-of select="@color"/>
-					<xsl:if test="@hidden = 1"> is_hidden</xsl:if>
+					track_parent <xsl:if test="@hidden = 1"> is_hidden</xsl:if>
 				</xsl:attribute>
 				<xsl:attribute name="style">
 					margin-left: <xsl:value-of select="@start * 16"/>px;
@@ -107,9 +105,9 @@
 
 			<ul class="brush_tracks">
 				<xsl:for-each select="./brush">
-				<li>
-					<div data-context="tl_track">
-						<xsl:attribute name="data-brush_id">brush_<xsl:value-of select="@id"/></xsl:attribute>
+				<li data-context="tl_track">
+					<xsl:attribute name="data-track_id">brush_<xsl:value-of select="@id"/></xsl:attribute>
+					<div>
 						<xsl:attribute name="class">
 							anim_track color_<xsl:value-of select="@color"/>
 							<xsl:if test="@hidden = 1"> is_hidden</xsl:if>

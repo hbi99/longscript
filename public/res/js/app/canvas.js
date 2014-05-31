@@ -8,6 +8,7 @@ sys.app.canvas = {
 
 		observer.on('app.resize', this.doEvent);
 		observer.on('file_loaded', this.doEvent);
+		observer.on('file_unloaded', this.doEvent);
 		observer.on('assets_loaded', this.doEvent);
 		observer.on('nob_zoom', this.doEvent);
 		observer.on('nob_opacity', this.doEvent);
@@ -69,7 +70,8 @@ sys.app.canvas = {
 			i, il,
 			j, jl,
 			k, kl;
-
+		// exit if no file loaded
+		if (!_app.file) return;
 		if (event.bubbles) {
 			event.preventDefault();
 
@@ -173,6 +175,12 @@ sys.app.canvas = {
 					_el.canvasTitle.innerHTML = _app.fileMeta('name');
 				}
 				break;
+			case 'file_unloaded':
+				// reset canvas
+				_el.canvasTitle.innerHTML = '';
+				self.info = {};
+				self.ctx.clearRect(0, 0, self.cvs.width, self.cvs.height);
+				break;
 			case 'tracks_from_xml':
 				var xLayer = _app.file.selectNodes('.//layer'),
 					rMaster = [],
@@ -267,8 +275,8 @@ sys.app.canvas = {
 						sxBrush = sxLayer.appendChild(_fs.createNode('brush'));
 						// misc data
 						lBrushEl = _jr(lBrush[j]);
-						brushId  = lBrush[j].getAttribute('data-brush_id');
-						rBrushEl = rLayer.parent().find('div[data-brush_id="'+ brushId +'"]');
+						brushId  = lBrush[j].getAttribute('data-track_id');
+						rBrushEl = rLayer.parent().find('div[data-track_id="'+ brushId +'"]');
 						lColor   = rBrushEl.likeClass('color_') || 'color_purple';
 						sbStart  = Math.round(rBrushEl.left() / 16);
 						sbLength = Math.round(rBrushEl.width() / 16);
@@ -288,7 +296,7 @@ sys.app.canvas = {
 						sxBrush.setAttribute('value', JSON.stringify(bArr));
 					}
 				}
-				console.log(xFile.xml.replace(/>/g, '>\n'));
+				//console.log(xFile.xml.replace(/>/g, '>\n'));
 				return xFile;
 			case 'assets_loaded':
 				// set workarea width + height

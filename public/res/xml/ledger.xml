@@ -7,6 +7,10 @@
 			<i switch="x" name="doEvent" arg="COMMAND" description="Executes commands."/>
 			<i switch="dev" name="toggle_dev" arg="NONE" description="Opens developer tools."/>
 		</i>
+		<i object="app" long="sys.app" type="[SYS]" description="Application.">
+			<i switch="l" name="load" arg="[path]" description="Open file"/>
+			<i switch="s" name="save" arg="NONE" description="Save file"/>
+		</i>
 		<i object="cvs" long="sys.app.canvas" type="[APP]" description="Cavas.">
 			<i switch="s" name="doEvent" arg="[command]" description="."/>
 			<i switch="zfb" name="zoomEvents" arg="[focus|blur]" description="."/>
@@ -14,15 +18,12 @@
 		<i object="assets" long="sys.app.assets" type="[APP]" description="Assets.">
 			<i switch="s" name="changeSize" arg="[-1|1]" description="."/>
 		</i>
-		<i object="timeline" long="sys.app.timeline" type="[APP]" description="Assets.">
+		<i object="timeline" long="sys.app.timeline" type="[APP]" description="Timeline.">
 			<i switch="s" name="doEvent" arg="[command]" description="."/>
 			<i switch="sp" name="speed_events" arg="[focus|blur]" description="."/>
 		</i>
 		<i object="font" long="sys.app.font" type="[APP]" description="Fonts.">
 			<i switch="l" name="load" arg="[name]" description="."/>
-		</i>
-		<i object="fs" long="sys.fs" type="[SYS]" description="Filesystem.">
-			<i switch="s" name="save" arg="NONE" description="Save file"/>
 		</i>
 		<i object="popup" long="sys.popup" type="[SYS]" description="Opens dialog windows.">
 			<i switch="o" name="open" arg="[name]" description="."/>
@@ -48,9 +49,13 @@
 			<i name="Preview" action="cvs -s mode_preview" radioId="viewMode" description="."/>
 			<i name="Code view" action="cvs -s mode_code" radioId="viewMode" description="."/>
 			<i type="divider"/>
-			<i name="Open file&#8230;" action="cvs -s open_file" description="."/>
-			<i name="Save" action="cvs -s save_file" description="."/>
-			<i type="divider"/>
+			<i name="Files&#8230;">
+				<i name="Open file&#8230;" action="cvs -s open_file" description="."/>
+				<i name="Save" action="cvs -s save_file" description="."/>
+				<i type="divider"/>
+				<i name="HB animation" action="app -l 'res/xml/hb.xml'" description="."/>
+				<i name="Hello" action="app -l 'res/xml/hello.xml'" description="."/>
+			</i>
 			<i name="Fonts&#8230;">
 				<i name="Over the Rainbow" action="font -l 'Over the Rainbow'" description="."/>
 				<i name="Condiment" action="font -l 'Condiment'" description="."/>

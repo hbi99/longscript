@@ -8,6 +8,7 @@ sys.app.navigator = {
 			observer = _sys.observer;
 
 		observer.on('assets_loaded', this.doEvent);
+		observer.on('unload_assets', this.doEvent);
 		observer.on('zoom_pan', this.doEvent);
 
 		this.cvs = _sys.el.zoomcvs;
@@ -149,6 +150,9 @@ sys.app.navigator = {
 				};
 				self.scale = self.asset.width / image.width;
 				self.draw();
+				break;
+			case 'unload_assets':
+				self.ctx.clearRect(0, 0, 999, 999);
 				break;
 		}
 	},
