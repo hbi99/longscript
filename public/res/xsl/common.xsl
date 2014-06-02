@@ -88,9 +88,9 @@
 <xsl:template name="timeline_right">
 	<xsl:for-each select=".//timeline/layer">
 		<xsl:sort order="ascending" select="@index"/>
-		<li data-track="parent" data-cmd="timeline -s make_track_active">
+		<li data-track="parent" data-cmd="timeline -s make_track_active" data-context="tl_track">
 
-			<div data-context="tl_track">
+			<div>
 				<xsl:attribute name="data-track_id">track_<xsl:value-of select="@id"/></xsl:attribute>
 				<xsl:attribute name="class">
 					track_parent <xsl:if test="@hidden = 1"> is_hidden</xsl:if>
