@@ -72,7 +72,7 @@ sys.app.canvas = {
 			k, kl;
 		// exit if no file loaded
 		if (!_app.file) return;
-		if (event.bubbles) {
+		if (event.bubbles && info.sequence) {
 			event.preventDefault();
 
 			mouseX     = event.pageX - dim.l;

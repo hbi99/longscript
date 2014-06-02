@@ -25,6 +25,7 @@ sys.app.timeline = {
 			file = _app.file,
 			self = _app.timeline,
 			cmd  = (typeof(event) === 'string') ? event : event.type,
+			row,
 			target;
 		switch (cmd) {
 			// native events
@@ -46,7 +47,6 @@ sys.app.timeline = {
 					_el.tl_body_rows_left.classList.add('hscrolled');
 				}
 				break;
-				
 			// custom events
 			case 'frame_index_change':
 				target = self.frameIndex;
@@ -79,7 +79,7 @@ sys.app.timeline = {
 					}).xml );
 
 				// temp
-				//self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
+				self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
 				break;
 			case 'file_unloaded':
 				// reset timeline
@@ -162,11 +162,14 @@ sys.app.timeline = {
 				_canvas.draw();
 				break;
 			case 'populate_frame_nrs':
-				target = '<div>&#160;</div>';
-				for (var i=1; i<50; i++) {
-					target += '<div>'+ i +'0</div>';
+				var len = 70,
+					str = '<div>&#160;</div>';
+				for (var i=1; i<len; i++) {
+					str += '<div>'+ i +'0</div>';
 				}
-				_el.frame_nrs.innerHTML = target;
+				_jr(_el.frame_nrs)
+					.html(str)
+					.css({'width': (len * 160) +'px'});
 				break;
 			case 'nob_speed':
 				var details = event.details,
@@ -191,12 +194,14 @@ sys.app.timeline = {
 
 				if (arrow.hasClass('icon-arrow_down')) {
 					arrow.removeClass('icon-arrow_down').addClass('icon-arrow_up');
-					lRow.css({'height': (lRow.height() + cHeight) +'px'});
-					tRow.css({'height': (cHeight + 3) +'px'});
+					lRow.css({'height': (lRow.height() + cHeight + 2) +'px'});
+					tRow.css({'height': (cHeight) +'px'}).addClass('expanded');
 				} else{
 					arrow.removeClass('icon-arrow_up').addClass('icon-arrow_down');
 					lRow.css({'height': ''});
-					tRow.css({'height': ''});
+					tRow.css({'height': ''}).wait(300, function() {
+						this.removeClass('expanded');
+					});
 				}
 				break;
 			case 'get_track_row':
@@ -205,10 +210,14 @@ sys.app.timeline = {
 					trackEl = _jr(srcEl),
 					trackId;
 
-				if (!srcEl.getAttribute('data-track_id')) {
+				if (trackEl.attr('data-track') === 'parent') {
+					trackEl = trackEl.find('div[data-track_id]:nth(0)');
+				}
+				if (trackEl.attr('data-track_id') === null) {
 					trackEl = trackEl.parents('[data-track_id]');
 				}
 				trackId = trackEl.attr('data-track_id');
+				row.hoverEl = trackEl;
 				if (trackEl.parents('ul.body').length) {
 					// source element is on the right side
 					row.leftEl = _jr('[data-track_id='+ trackId +']', _el.tl_body_rows);
@@ -220,24 +229,30 @@ sys.app.timeline = {
 				}
 				return row;
 			case 'make_track_active':
-				var ev = arguments[2],
-					trackRow = self.doEvent('get_track_row', ev.target);
+				var ev = arguments[2];
 				
-				trackRow.rightEl.parents('.tl_body').find('.active').removeClass('active');
-				trackRow.leftEl.parents('.tl_body').find('.active').removeClass('active');
+				row = self.doEvent('get_track_row', ev.target);
 				
-				trackRow.rightEl.addClass('active');
-				trackRow.leftEl.addClass('active');
+				row.rightEl.parents('.tl_body').find('.active').removeClass('active');
+				row.leftEl.parents('.tl_body').find('.active').removeClass('active');
+				
+				row.rightEl.addClass('active');
+				row.leftEl.addClass('active');
 				break;
 			case 'change_track_color':
 				var newColor = arguments[1],
-					trackRow = self.doEvent('get_track_row', _sys.context.info.el);
-				console.log( trackRow.rightEl.find('.anim_track').matchClass('color_') );
-				// _jr(track_el).setClass('anim_track '+ new_color);
+					oldColor,
+					animTrack;
 
-				// _canvas.info.palette = _app.timeline.doEvent('get_track_palette');
-				// _canvas.updateBallCvs();
-				// _canvas.draw();
+				row = self.doEvent('get_track_row', _sys.context.info.el);
+				animTrack = row.rightEl.find('.anim_track');
+				oldColor = animTrack.matchClass('color_');
+				// change track color
+				animTrack.removeClass(oldColor).addClass('color_'+ newColor);
+
+				_canvas.info.palette = _app.timeline.doEvent('get_track_palette');
+				_canvas.updateBallCvs();
+				_canvas.draw();
 				break;
 		}
 	},

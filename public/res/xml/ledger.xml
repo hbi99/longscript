@@ -72,20 +72,23 @@
 			<i name="About&#8230;" action="popup -a 'app_about'" description="."/>
 		</i>
 		<i for="tl_track">
-			<i name="Expand" action="" description="."/>
+			<i name="Add brush" action="" description="."/>
 			<i type="divider"/>
-			<i name="Track color&#8230;">
-				<i name="Purple" action="timeline -s change_track_color purple" />
-				<i name="Orange" action="timeline -s change_track_color orange" />
-				<i name="Maroon" action="timeline -s change_track_color maroon" />
-				<i name="Blue" action="timeline -s change_track_color blue" />
-				<i name="Silver" action="timeline -s change_track_color silver" />
-				<i name="Yellow" action="timeline -s change_track_color yellow" />
-				<i name="Brown" action="timeline -s change_track_color brown" />
-				<i name="Khaki" action="timeline -s change_track_color khaki" />
-				<i name="Teal" action="timeline -s change_track_color teal" />
-				<i name="Green" action="timeline -s change_track_color green" />
-			</i>
+			<i name="Toggle track" action="" description="."/>
+			<i name="Delete track" action="" description="."/>
+		</i>
+		<i for="tl_anim_track">
+			<i name="Purple" action="timeline -s change_track_color purple" />
+			<i name="Orange" action="timeline -s change_track_color orange" />
+			<i name="Maroon" action="timeline -s change_track_color maroon" />
+			<i name="Blue" action="timeline -s change_track_color blue" />
+			<i name="Yellow" action="timeline -s change_track_color yellow" />
+			<i name="Brown" action="timeline -s change_track_color brown" />
+			<i name="Khaki" action="timeline -s change_track_color khaki" />
+			<i name="Teal" action="timeline -s change_track_color teal" />
+			<i name="Green" action="timeline -s change_track_color green" />
+			<i type="divider"/>
+			<i name="Delete brush" action="" description="."/>
 		</i>
 	</context>
 	<hotkeys>
