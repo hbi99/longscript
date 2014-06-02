@@ -186,7 +186,14 @@ sys.app.timeline = {
 				target = _jr(arguments[1]).find('figure:nth(1)')[0];
 				return self.doEvent('toggle_layer', target);
 			case 'toggle_layer':
-				var arrow   = jr(arguments[1]),
+				if (arguments.length > 1) {
+					srcEl = arguments[1];
+				} else {
+					row = self.doEvent('get_track_row', _sys.context.info.el);
+					srcEl = row.leftEl.find('[data-cmd="timeline -s toggle_layer"]')[0];
+					//return console.log( row );
+				}
+				var arrow   = jr(srcEl),
 					lRow    = arrow.parents('li'),
 					rowId   = arrow.parent().attr('data-track_id'),
 					tRow    = _jr('div[data-track_id="'+ rowId +'"]', _el.tl_content).parent().find('.brush_tracks'),

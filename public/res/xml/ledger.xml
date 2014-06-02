@@ -74,7 +74,7 @@
 		<i for="tl_track">
 			<i name="Add brush" action="" description="."/>
 			<i type="divider"/>
-			<i name="Toggle track" action="" description="."/>
+			<i name="Toggle track" action="timeline -s toggle_layer" description="."/>
 			<i name="Delete track" action="" description="."/>
 		</i>
 		<i for="tl_anim_track">
