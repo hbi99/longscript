@@ -23,6 +23,8 @@ sys.app = {
 		setTimeout(function() {
 			//sys.app.unload();
 		}, 500);
+
+		//sys.popup.open('fopen');
 	},
 	save: function() {
 

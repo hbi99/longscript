@@ -574,12 +574,19 @@
 						> li {
 							min-height: 23px;
 
+							&:first-child {
+								.brush_tracks {
+									margin-bottom: 3px;
+								}
+							}
 							&:last-child {
 								border-bottom: 0px;
 								min-height: 22px;
 
-								.brush_tracks {
-									margin-bottom: 0px;
+								&:not(:first-child) {
+									.brush_tracks {
+										margin-bottom: 1px;
+									}
 								}
 							}
 

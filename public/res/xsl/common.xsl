@@ -93,7 +93,7 @@
 			<div>
 				<xsl:attribute name="data-track_id">track_<xsl:value-of select="@id"/></xsl:attribute>
 				<xsl:attribute name="class">
-					track_parent <xsl:if test="@hidden = 1"> is_hidden</xsl:if>
+					track_parent <xsl:if test="@hidden = 1">is_hidden</xsl:if>
 				</xsl:attribute>
 				<xsl:attribute name="style">
 					margin-left: <xsl:value-of select="@start * 16"/>px;
@@ -109,7 +109,7 @@
 					<div>
 						<xsl:attribute name="class">
 							anim_track color_<xsl:value-of select="@color"/>
-							<xsl:if test="@hidden = 1"> is_hidden</xsl:if>
+							<xsl:if test="@hidden = 1">is_hidden</xsl:if>
 						</xsl:attribute>
 						<xsl:attribute name="style">
 							margin-left: <xsl:value-of select="(@start + ../@start)*16"/>px;

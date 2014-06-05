@@ -60,7 +60,7 @@ sys.app.timeline = {
 			case 'file_loaded':
 				//return;
 				var xTimeline = file.selectSingleNode('.//timeline');
-
+return;
 				// update timeline speed nob
 				self.doEvent('nob_speed', +_app.fileMeta('speed') || 50);
 
@@ -260,6 +260,15 @@ sys.app.timeline = {
 				_canvas.info.palette = _app.timeline.doEvent('get_track_palette');
 				_canvas.updateBallCvs();
 				_canvas.draw();
+				break;
+			case 'anim_play':
+				break;
+			case 'go_start':
+				self.doEvent('goto_frame', 0);
+				break;
+			case 'go_end':
+				target = _canvas.info.sequence.length-1;
+				self.doEvent('goto_frame', target);
 				break;
 		}
 	},

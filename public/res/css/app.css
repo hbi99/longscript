@@ -672,24 +672,25 @@
   left: 5px;
   right: 5px;
   height: 17px;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 18px;
   color: #888888;
   text-shadow: 0px 1px 2px #2a2a2a;
   cursor: default;
   -webkit-user-select: none;
 }
-.popup .icon-remove {
+.popup .icon-cancel {
   position: absolute;
   top: 4px;
   right: 7px;
+  left: auto;
   z-index: 2;
-  font-size: 11px;
+  font-size: 23px;
   color: #888888;
   text-shadow: 0px 1px 3px #2a2a2a;
   cursor: default;
 }
-.popup .icon-remove.over {
+.popup .icon-cancel.over {
   color: #fff;
 }
 .popup .pop-content {
@@ -788,6 +789,14 @@
   opacity: .8;
   right: 1px;
   top: 22px;
+}
+.popup.fopen {
+  width: 640px;
+  height: 350px;
+  margin: -175px 0px 0px -320px;
+}
+.popup.fopen .pop-content {
+  text-align: left;
 }
 * {
   -webkit-box-sizing: border-box;
@@ -1409,12 +1418,15 @@ figure {
 .area.timeline .content_fixed.right ul.body > li {
   min-height: 23px;
 }
+.area.timeline .content_fixed.right ul.body > li:first-child .brush_tracks {
+  margin-bottom: 3px;
+}
 .area.timeline .content_fixed.right ul.body > li:last-child {
   border-bottom: 0px;
   min-height: 22px;
 }
-.area.timeline .content_fixed.right ul.body > li:last-child .brush_tracks {
-  margin-bottom: 0px;
+.area.timeline .content_fixed.right ul.body > li:last-child:not(:first-child) .brush_tracks {
+  margin-bottom: 1px;
 }
 .area.timeline .content_fixed.right ul.body > li .track_parent {
   position: relative;

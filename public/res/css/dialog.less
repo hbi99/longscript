@@ -56,19 +56,20 @@
 		left: 5px;
 		right: 5px;
 		height: 17px;
-		font-size: 11px;
+		font-size: 12px;
 		line-height: 18px;
 		color: @popTitleColor;
 		text-shadow: 0px 1px 2px @boxBgColor;
 		cursor: default;
 		-webkit-user-select: none;
 	}
-	.icon-remove {
+	.icon-cancel {
 		position: absolute;
 		top: 4px;
 		right: 7px;
+		left: auto;
 		z-index: 2;
-		font-size: 11px;
+		font-size: 23px;
 		color: @popTitleColor;
 		text-shadow: 0px 1px 3px @boxBgColor;
 		cursor: default;
@@ -182,6 +183,15 @@
 				right: 1px;
 				top: 22px;
 			}
+		}
+	}
+	&.fopen {
+		width: 640px;
+		height: 350px;
+		margin: -175px 0px 0px -320px;
+
+		.pop-content {
+			text-align: left;
 		}
 	}
 }
