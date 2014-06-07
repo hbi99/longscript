@@ -138,7 +138,7 @@
 	}
 	&.canvas {
 		top: 25px;
-		bottom: 176px;
+		bottom: 276px;
 		right: 283px;
 
 		canvas {
@@ -192,7 +192,7 @@
 	}
 	&.assets {
 		top: 228px;
-		bottom: 176px;
+		bottom: 276px;
 		right: 19px;
 		left: auto;
 		width: 261px;
@@ -375,280 +375,15 @@
 		}
 	}
 	&.timeline {
-		height: 154px;
+		height: 254px;
 		bottom: 19px;
 		right: 19px;
 		border-radius: 5px 5px 0px 5px;
-
-		li {
-			position: relative;
-			border-bottom: darken(@boxContent, 7%) 1px solid;
-			min-height: 22px;
-			-webkit-transition: 300ms height ease-in-out;
-		}
 
 		.content_fixed {
 			//background-image: url(../img/bg_tl_body.png);
 			color: darken(@boxFocusHl, 13%);
 			text-shadow: 0px 1px 2px darken(@boxContent, 19%);
-
-			&.left {
-				width: 221px;
-				border-radius: 3px 0px 0px 3px;
-				overflow: visible;
-				z-index: 3;
-
-				&:hover {
-					.tl_head.tl_controls {
-						.speed {
-							figure,
-							.speed_level {
-								opacity: 1;
-							}
-						}
-					}
-				}
-				&.hscrolled:after {
-					content: '';
-					position: absolute;
-					top: 0px;
-					bottom: 0px;
-					right: 0px;
-					width: 5px;
-					box-shadow: 2px 0px 5px rgba(0,0,0,0.25);
-				}
-				
-				.tl_body {
-					position: absolute;
-					overflow: hidden;
-
-					> ul {
-						min-height: 21px;
-						border-top: lighten(@boxContent, 5%) 1px solid;
-						border-bottom: darken(@boxContent, 7%) 1px solid;
-
-						> li {
-							clear: both;
-							height: 21px;
-							overflow: hidden;
-							border-bottom: darken(@boxContent, 7%) 1px solid;
-							//-webkit-transition: 350ms height ease-in-out;
-
-							&:first-child div {
-								border-top: 0px;
-							}
-							&:last-child {
-								border-bottom: 0px;
-
-								.tl_layer {
-									border-bottom: 0px;
-								}
-							}
-						}
-					}
-
-					ul {
-						clear: both;
-						position: relative;
-
-						.tl_layer {
-							height: 22px;
-							padding: 2px 0px;
-							margin-right: 11px;
-							border-top: lighten(@boxContent, 5%) 1px solid;
-							//border-bottom: #555 1px solid; // temp
-
-							span.layer_name {
-								position: relative;
-								top: 1px;
-							}
-						}
-
-						&.brushes {
-							margin-right: 11px;
-
-							li {
-								padding: 3px 0px;
-								height: 16px;
-								//border-top: #707070 1px solid; // temp
-								border: 0px;
-
-								&:hover figure:not(.icon-eye_on) {
-									opacity: 1;
-								}
-
-								span {
-									padding-left: 11px;
-
-									&:before {
-										content: '';
-										position: absolute;
-										top: 8px;
-										left: 25px;
-										width: 3px;
-										height: 3px;
-										border-radius: 2px;
-										background: darken(@boxFocusHl, 29%);
-										box-shadow: 0px 1px 2px darken(@boxContent, 19%);
-									}
-								}
-							}
-						}
-
-						.is_hidden span {
-							color: darken(@boxFocusHl, 23%);
-							text-shadow: 0px 1px 2px darken(@boxContent, 9%);
-						}
-
-						li {
-							padding: 0px;
-
-							div.active:not(.is_hidden) > span,
-							&.active:not(.is_hidden) > span {
-								color: darken(@optionHover, 7%);
-								text-shadow: 0px 1px 2px @boxBgColor;
-							}
-
-							span {
-								float: left;
-								margin-left: 24px;
-							}
-
-							figure {
-								position: relative;
-								top: -1px;
-								margin-right: 2px;
-								cursor: pointer;
-
-								&.icon-eye_off,
-								&.icon-eye_on {
-									position: absolute;
-									top: 2px;
-									left: 5px;
-									font-size: 22px;
-								}
-								&.icon-trashcan,
-								&.icon-add {
-									font-size: 21px;
-									color: lighten(@boxContent, 17%);
-									text-shadow: 0px 1px 2px darken(@boxContent, 19%);
-									opacity: 0;
-
-									&:hover {
-										color: lighten(@boxFocusHl, 29%);
-									}
-								}
-								&.icon-arrow_up,
-								&.icon-arrow_down {
-									border-top: @boxContent 1px solid;
-									border-left: darken(@boxContent, 7%) 1px solid;
-									text-shadow: 0px 1px 2px lighten(@boxContent, 11%);
-									position: absolute;
-									top: -1px;
-									bottom: 0px;
-									left: auto;
-									right: 0px;
-									font-size: 17px;
-									margin: 0px;
-									width: 12px;
-									height: auto;
-									padding: 3px 0px;
-								}
-							}
-						}
-					}
-				}
-			}
-			&.right {
-				left: 225px;
-				border-radius: 0px 3px 3px 0px;
-
-				ul {
-					&.body {
-						display: table;
-						min-width: 100%;
-						background-image: url(../img/bg_tl_body.png);
-						background-position: -16px 0px;
-						border-bottom: darken(@boxContent, 7%) 1px solid;
-
-						> li {
-							min-height: 23px;
-
-							&:first-child {
-								.brush_tracks {
-									margin-bottom: 3px;
-								}
-							}
-							&:last-child {
-								border-bottom: 0px;
-								min-height: 22px;
-
-								&:not(:first-child) {
-									.brush_tracks {
-										margin-bottom: 1px;
-									}
-								}
-							}
-
-							.track_parent {
-								position: relative;
-								top: 3px;
-								height: 16px;
-								background: rgba(255,255,255,0.11);
-								border: 1px solid rgba(255,255,255,0.21);
-								border-radius: 2px;
-							}
-						}
-					}
-					&.brush_tracks {
-						//display: none;
-						//background-color: rgba(255,0,0,0.1);
-						margin-top: 4px;
-						margin-bottom: 2px;
-						height: 0px;
-						overflow: hidden;
-						-webkit-transition: 300ms height ease-in-out;
-
-						&.expanded {
-							margin-top: 6px;
-							-webkit-transition: inherit;
-						}
-
-						li {
-							border-top: darken(@boxContent, 7%) 1px solid;
-							border-bottom: 0px;
-							height: 23px;
-						}
-
-						.active .anim_track,
-						.active.anim_track {
-							opacity: 1;
-						}
-						.anim_track {
-							position: relative;
-							top: 5px;
-							height: 12px;
-							width: 14px;
-							border-radius: 2px;
-							box-shadow: 0px 1px 7px #444;
-							background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.25) 0%, transparent 15%, transparent 50%, rgba(0,0,0,0.25) 100%);
-							background-color: #54987b;
-							opacity: 0.65;
-							//-webkit-transition: 150ms opacity ease-in-out;
-
-							&.color_purple { background-color: #bb7ebc; }
-							&.color_orange { background-color: #f90; }
-							&.color_maroon { background-color: #e55; }
-							&.color_blue   { background-color: #88f; }
-							&.color_yellow { background-color: #beab29; }
-							&.color_brown  { background-color: #be7735; }
-							&.color_khaki  { background-color: #b39a6b; }
-							&.color_teal   { background-color: #7ebcb5; }
-							&.color_green  { background-color: #7ebc75; }
-						}
-					}
-				}
-			}
 
 			figure {
 				color: #333;
@@ -765,23 +500,6 @@
 				right: 1px;
 				border-radius: 0px;
 			}
-			.frame_nrs {
-				height: 29px;
-				background-image: url(../img/bg_tl_head.png);
-				background-repeat: repeat-x;
-				background-position: -16px 14px;
-				color: darken(@boxFocusHl, 19%);
-
-				div {
-					float: left;
-					width: 160px;
-					text-align: left;
-
-					&:first-child {
-						width: 144px;
-					}
-				}
-			}
 			.tl_nob_track {
 				position: absolute;
 				top: 14px;
@@ -806,7 +524,7 @@
 						top: 10px;
 						left: 8px;
 						width: 1px;
-						height: 160px;
+						height: 260px;
 						background: #f90;
 						box-shadow: 0px 0px 1px #333;
 						z-index: -1;
@@ -823,6 +541,197 @@
 				//background: rgba(0,0,0,0.05);
 				border-left: 1px solid darken(@boxContent, 11%);
 				//box-shadow: inset 0px -21px 21px rgba(0,0,0,0.15);
+			}
+
+			&.left {
+				width: 221px;
+				border-radius: 3px 0px 0px 3px;
+				overflow: visible;
+				z-index: 3;
+				
+				.tl_body {
+					position: absolute;
+					overflow: hidden;
+				}
+				ul {
+
+					li {
+						position: relative;
+						border-bottom: darken(@boxContent, 7%) 1px solid;
+						-webkit-transition: 300ms height ease-in-out;
+						height: 23px;
+						overflow: hidden;
+
+						&.expanded {
+							border-bottom: 0px;
+						}
+
+						ul {
+							li {
+								border-bottom: 0px;
+
+								&:last-child {
+									height: 22px;
+								}
+								&:before {
+									content: '';
+									position: absolute;
+									top: 0px;
+									bottom: 0px;
+									right: 0px;
+									width: 11px;
+									background: @boxContent;
+									border-left: darken(@boxContent, 7%) 1px solid;
+								}
+
+								span {
+									padding-left: 11px;
+
+									&:before {
+										content: '';
+										position: absolute;
+										top: 8px;
+										left: 25px;
+										width: 3px;
+										height: 3px;
+										border-radius: 2px;
+										background: darken(@boxFocusHl, 29%);
+										box-shadow: 0px 1px 2px darken(@boxContent, 19%);
+									}
+								}
+							}
+						}
+
+						span {
+							float: left;
+							margin-left: 24px;
+							padding: 4px 0px 0px 0px;
+							//background-color: rgba(0,0,0,0.1);
+						}
+						figure {
+							position: relative;
+							top: -1px;
+							margin-right: 2px;
+							cursor: pointer;
+
+							&.icon-eye_off,
+							&.icon-eye_on {
+								position: absolute;
+								top: 2px;
+								left: 5px;
+								font-size: 22px;
+							}
+							&.icon-trashcan,
+							&.icon-add {
+								font-size: 21px;
+								color: lighten(@boxContent, 17%);
+								text-shadow: 0px 1px 2px darken(@boxContent, 19%);
+								opacity: 0;
+
+								&:hover {
+									color: lighten(@boxFocusHl, 29%);
+								}
+							}
+							&.icon-arrow_up,
+							&.icon-arrow_down {
+								border-top: @boxContent 1px solid;
+								border-left: darken(@boxContent, 7%) 1px solid;
+								text-shadow: 0px 1px 2px lighten(@boxContent, 11%);
+								position: absolute;
+								top: 0px;
+								bottom: 0px;
+								left: auto;
+								right: 0px;
+								font-size: 17px;
+								margin: 0px;
+								width: 12px;
+								height: auto;
+								padding: 3px 0px;
+							}
+						}
+					}
+				}
+			}
+
+			&.right {
+				left: 225px;
+				border-radius: 0px 3px 3px 0px;
+
+				.frame_nrs {
+					height: 29px;
+					background-image: url(../img/bg_tl_head.png);
+					background-repeat: repeat-x;
+					background-position: -16px 14px;
+					color: darken(@boxFocusHl, 19%);
+
+					div {
+						float: left;
+						width: 160px;
+						text-align: left;
+
+						&:first-child {
+							width: 144px;
+						}
+					}
+				}
+				ul {
+
+					li {
+						position: relative;
+						border-bottom: darken(@boxContent, 7%) 1px solid;
+						//-webkit-transition: 300ms height ease-in-out;
+						height: 23px;
+						overflow: hidden;
+
+						&:last-child {
+							border-bottom: 0px;
+							height: 22px;
+						}
+					}
+					&.body {
+						display: table;
+						min-width: 100%;
+						background-image: url(../img/bg_tl_body.png);
+						background-position: -16px 0px;
+						border-bottom: darken(@boxContent, 7%) 1px solid;
+					}
+					&.brush_tracks {
+						//background-color: rgba(255,0,0,0.1);
+						//height: 0px;
+						//overflow: hidden;
+						-webkit-transition: 300ms height ease-in-out;
+					}
+					.track_parent {
+						position: relative;
+						top: 3px;
+						height: 16px;
+						background: rgba(255,255,255,0.11);
+						border: 1px solid rgba(255,255,255,0.21);
+						border-radius: 2px;
+					}
+					.anim_track {
+						position: relative;
+						top: 5px;
+						height: 12px;
+						width: 14px;
+						border-radius: 2px;
+						box-shadow: 0px 1px 7px #444;
+						background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.25) 0%, transparent 15%, transparent 50%, rgba(0,0,0,0.25) 100%);
+						background-color: #54987b;
+						opacity: 0.65;
+						//-webkit-transition: 150ms opacity ease-in-out;
+
+						&.color_purple { background-color: #bb7ebc; }
+						&.color_orange { background-color: #f90; }
+						&.color_maroon { background-color: #e55; }
+						&.color_blue   { background-color: #88f; }
+						&.color_yellow { background-color: #beab29; }
+						&.color_brown  { background-color: #be7735; }
+						&.color_khaki  { background-color: #b39a6b; }
+						&.color_teal   { background-color: #7ebcb5; }
+						&.color_green  { background-color: #7ebc75; }
+					}
+				}
 			}
 		}
 		.scroll_bg {

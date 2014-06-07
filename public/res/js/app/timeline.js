@@ -58,9 +58,9 @@ sys.app.timeline = {
 				}
 				break;
 			case 'file_loaded':
-				//return;
+				return;
 				var xTimeline = file.selectSingleNode('.//timeline');
-return;
+
 				// update timeline speed nob
 				self.doEvent('nob_speed', +_app.fileMeta('speed') || 50);
 
