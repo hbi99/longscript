@@ -194,22 +194,33 @@ sys.app.timeline = {
 					//return console.log( row );
 				}
 				var arrow   = jr(srcEl),
-					lRow    = arrow.parents('li'),
+					lRow    = arrow.parents('li').next('li').nth(0),
 					rowId   = arrow.parent().attr('data-track_id'),
-					tRow    = _jr('div[data-track_id="'+ rowId +'"]', _el.tl_content).parent().find('.brush_tracks'),
+					tRow    = _jr('li[data-track_id="'+ rowId +'"]', _el.tl_content).next('li').nth(0),
 					cHeight = lRow.find('.brushes').height();
 
 				if (arrow.hasClass('icon-arrow_down')) {
-					arrow.removeClass('icon-arrow_down').addClass('icon-arrow_up');
-					lRow.css({'height': (lRow.height() + cHeight + 2) +'px'});
-					tRow.css({'height': (cHeight) +'px'}).addClass('expanded');
+					arrow.removeClass('icon-arrow_down')
+						.addClass('icon-arrow_up')
+						.parent().addClass('expanded');
+					lRow.css({'border': '', 'height': (lRow.height() + cHeight + 1) +'px'});
+					tRow.css({'border': '', 'height': (cHeight + 1) +'px'});
 				} else{
-					arrow.removeClass('icon-arrow_up').addClass('icon-arrow_down');
-					lRow.css({'height': ''});
-					tRow.css({'height': ''}).wait(300, function() {
-						this.removeClass('expanded');
+					arrow.removeClass('icon-arrow_up')
+						.addClass('icon-arrow_down');
+					lRow.css({'height': '0'}).wait(300, function() {
+						this.css({'border': '0'});
+						arrow.parent().removeClass('expanded');
+					});
+					tRow.css({'height': '0'}).wait(300, function() {
+						this.css({'border': '0'});
 					});
 				}
+				// if (!tRow.next('li').length && tRow.height() > 0) {
+				// 	tRow.parent().removeClass('last-expanded');
+				// } else {
+				// 	tRow.parent().addClass('last-expanded');
+				// }
 				break;
 			case 'get_track_row':
 				var row = {},

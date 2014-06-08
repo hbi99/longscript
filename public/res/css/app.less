@@ -679,13 +679,17 @@
 					li {
 						position: relative;
 						border-bottom: darken(@boxContent, 7%) 1px solid;
-						//-webkit-transition: 300ms height ease-in-out;
+						-webkit-transition: 300ms height ease-in-out;
 						height: 23px;
 						overflow: hidden;
 
 						&:last-child {
-							border-bottom: 0px;
-							height: 22px;
+							//border-bottom: 0px;
+							//height: 22px;
+						}
+						ul li:last-child {
+							height: 23px;
+							border-bottom: darken(@boxContent, 7%) 1px solid;
 						}
 					}
 					&.body {
@@ -693,7 +697,7 @@
 						min-width: 100%;
 						background-image: url(../img/bg_tl_body.png);
 						background-position: -16px 0px;
-						border-bottom: darken(@boxContent, 7%) 1px solid;
+						//border-bottom: darken(@boxContent, 7%) 1px solid;
 					}
 					&.brush_tracks {
 						//background-color: rgba(255,0,0,0.1);

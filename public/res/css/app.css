@@ -1517,19 +1517,19 @@ figure {
 .area.timeline .content_fixed.right ul li {
   position: relative;
   border-bottom: #515151 1px solid;
+  -webkit-transition: 300ms height ease-in-out;
   height: 23px;
   overflow: hidden;
 }
-.area.timeline .content_fixed.right ul li:last-child {
-  border-bottom: 0px;
-  height: 22px;
+.area.timeline .content_fixed.right ul li ul li:last-child {
+  height: 23px;
+  border-bottom: #515151 1px solid;
 }
 .area.timeline .content_fixed.right ul.body {
   display: table;
   min-width: 100%;
   background-image: url(../img/bg_tl_body.png);
   background-position: -16px 0px;
-  border-bottom: #515151 1px solid;
 }
 .area.timeline .content_fixed.right ul.brush_tracks {
   -webkit-transition: 300ms height ease-in-out;
