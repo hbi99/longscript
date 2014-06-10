@@ -308,7 +308,11 @@ sys.app.canvas = {
 				info.origoX = +_app.fileMeta('origoX') || 0;
 				info.origoY = +_app.fileMeta('origoY') || 0;
 				info.scale  = +_app.fileMeta('scale') || 1;
-				if (info.scale > 1) self.zoom((info.scale-1) * 25, true);
+				info.opacity = +_app.fileMeta('opacity') || 1;
+				// adjust opacity value / nob
+				self.opacity((info.opacity-1) * 25, true);
+				// adjust scale value / nob
+				self.zoom((info.scale-1) * 25, true);
 				// arrayify tracks
 				info.sequence = self.doEvent('tracks_from_xml');
 				// set palette and visible channels
@@ -623,9 +627,14 @@ sys.app.canvas = {
 		}
 		ballCtx.restore();
 	},
-	opacity: function(val) {
-		var el = sys.el;
+	opacity: function(val, update_nob) {
+		var _sys = sys,
+			el = _sys.el;
 		el.nob_opacity.valEl.textContent = val;
+		if (update_nob) {
+			el.nob_opacity.setAttribute('data-value', val);
+			_sys.nobs.draw(el.nob_opacity);
+		}
 		el.canvas_bg.style.opacity = 1 - (val/100);
 	},
 	zoom: function(val, update_nob) {

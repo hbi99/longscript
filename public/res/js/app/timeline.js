@@ -26,7 +26,8 @@ sys.app.timeline = {
 			self = _app.timeline,
 			cmd  = (typeof(event) === 'string') ? event : event.type,
 			row,
-			target;
+			target,
+			track;
 		switch (cmd) {
 			// native events
 			case 'scroll':
@@ -92,11 +93,47 @@ sys.app.timeline = {
 				break;
 			case 'delete_track':
 				target = arguments[1];
-				console.log( target );
+				if (!target) {
+					// command executed from contextmenu
+					row = self.doEvent('get_track_row', _sys.context.info.el);
+					target = row.leftEl.find('.icon-eye_on, .icon-eye_off')[0];
+				}
+				fn = function() {
+					var row = self.doEvent('get_track_row', target);
+					
+					if (row.leftEl.attr('data-context') === 'tl_track') {
+						
+					} else {
+						track = row.leftEl.parent('.brushes').parent();
+						track.css({'height': (track.height() - 23) +'px'});
+						track = row.rightEl.parent('.brush_tracks').parent();
+						track.css({'height': (track.height() - 23) +'px'});
+					}
+
+					row.leftEl.css({'height': '0px'})
+						.wait(300, function() {
+							this.remove();
+						});
+					row.rightEl.css({'height': '0px'})
+						.wait(300, function() {
+							this.remove();
+						});
+				};
+				// temp
+				return fn();
+				// confirm track deletion
+				sys.confirm({
+					'text': 'Are you sure that you want to delete this track?',
+					'buttons': {
+						'Cancel': function() {},
+						'OK': fn
+					}
+				});
 				break;
 			case 'toggle_visible':
 				target = arguments[1];
 				if (!target) {
+					// command executed from contextmenu
 					row = self.doEvent('get_track_row', _sys.context.info.el);
 					target = row.leftEl.find('.icon-eye_on, .icon-eye_off')[0];
 				}

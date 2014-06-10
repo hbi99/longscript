@@ -6,8 +6,15 @@ sys.popup = {
 	},
 	dispose: function() {},
 	alert: function(msg) {
-		var message = sys.language.getPhrase.apply(null, arguments) || msg;
-		sys.popup.multi({text: message});
+		var message = sys.language.getPhrase.apply(null, arguments) || msg,
+			obj = {
+				type: 'alert',
+				text: message,
+				buttons: {
+					'OK': function() {}
+				}
+			};
+		sys.popup.multi(obj);
 	},
 	confirm: function(obj) {
 		obj.type = 'confirm';
@@ -19,17 +26,16 @@ sys.popup = {
 			dlgType = obj.type || 'alert',
 			btn,
 			btnCount = 1;
-
-		if (!obj.context) {
-			obj.context = this;
-		}
-
 		_jr(els.multi_title).html(obj.title || sys.language.getPhrase('app_says'));
 		_jr(els.multi_text).html(obj.text);
 
+		// hide buttons
+		_jr('.button-row .button', els.multi).addClass('hideMe');
 		for (btn in obj.buttons) {
 			if (btnCount > 2) break;
-			_jr('.btn-0'+ btnCount, els.multi).html(btn);
+			_jr('.btn-0'+ btnCount, els.multi)
+				.html(btn)
+				.removeClass('hideMe');
 			btnCount++;
 		}
 
@@ -72,7 +78,7 @@ sys.popup = {
 		var obj = this.activeObject,
 			text = btnEl.innerHTML;
 		if (obj && typeof(obj.buttons[text]) === 'function') {
-			obj.buttons[text].apply(obj.context);
+			obj.buttons[text].apply(obj);
 		}
 		this.close();
 	}
