@@ -103,6 +103,16 @@ sys.app.canvas = {
 		}
 		switch(type) {
 			// custom events
+			case 'remove_track':
+				if (!arguments[1]) return;
+				var track = arguments[1]-1;
+				sequence = info.sequence;
+				for (i=0, il=sequence.length; i<il; i++) {
+					sequence[i].splice(track, 1);
+				}
+				self.updateBallCvs();
+				self.draw();
+				break;
 			case 'mode_design':
 			case 'mode_preview':
 				self.info.mode = type.split('_')[1];

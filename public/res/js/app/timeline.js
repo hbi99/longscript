@@ -102,7 +102,14 @@ sys.app.timeline = {
 					var row = self.doEvent('get_track_row', target);
 					
 					if (row.leftEl.attr('data-context') === 'tl_track') {
-						
+						row.leftEl.next('li').nth(0).css({'height': '0px'})
+							.wait(300, function() {
+								this.remove();
+							});
+						row.rightEl.next('li').nth(0).css({'height': '0px'})
+							.wait(300, function() {
+								this.remove();
+							});
 					} else {
 						track = row.leftEl.parent('.brushes').parent();
 						track.css({'height': (track.height() - 23) +'px'});
@@ -118,6 +125,8 @@ sys.app.timeline = {
 						.wait(300, function() {
 							this.remove();
 						});
+
+					//_canvas.doEvent('remove_track', 0);
 				};
 				// temp
 				return fn();
