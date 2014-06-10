@@ -74,21 +74,25 @@
 		<i for="tl_track">
 			<i name="Add brush" action="" description="."/>
 			<i type="divider"/>
-			<i name="Toggle track" action="timeline -s toggle_layer" description="."/>
-			<i name="Delete track" action="" description="."/>
+			<i name="Show / Hide" action="timeline -s toggle_visible" description="."/>
+			<i name="Expand / Collapse" action="timeline -s toggle_layer" description="."/>
+			<i name="Delete track" action="timeline -s delete_track" description="."/>
 		</i>
 		<i for="tl_anim_track">
-			<i name="Purple" action="timeline -s change_track_color purple" />
-			<i name="Orange" action="timeline -s change_track_color orange" />
-			<i name="Maroon" action="timeline -s change_track_color maroon" />
-			<i name="Blue" action="timeline -s change_track_color blue" />
-			<i name="Yellow" action="timeline -s change_track_color yellow" />
-			<i name="Brown" action="timeline -s change_track_color brown" />
-			<i name="Khaki" action="timeline -s change_track_color khaki" />
-			<i name="Teal" action="timeline -s change_track_color teal" />
-			<i name="Green" action="timeline -s change_track_color green" />
+			<i name="Color&#8230;">
+				<i name="Purple" action="timeline -s change_track_color purple" />
+				<i name="Orange" action="timeline -s change_track_color orange" />
+				<i name="Maroon" action="timeline -s change_track_color maroon" />
+				<i name="Blue" action="timeline -s change_track_color blue" />
+				<i name="Yellow" action="timeline -s change_track_color yellow" />
+				<i name="Brown" action="timeline -s change_track_color brown" />
+				<i name="Khaki" action="timeline -s change_track_color khaki" />
+				<i name="Teal" action="timeline -s change_track_color teal" />
+				<i name="Green" action="timeline -s change_track_color green" />
+			</i>
 			<i type="divider"/>
-			<i name="Delete brush" action="" description="."/>
+			<i name="Show / Hide" action="timeline -s toggle_visible" description="."/>
+			<i name="Delete brush" action="timeline -s delete_track" description="."/>
 		</i>
 	</context>
 	<hotkeys>

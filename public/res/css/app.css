@@ -663,7 +663,7 @@
   opacity: 1;
   -webkit-transform: scale(1);
 }
-.popup.alert .button-row .btn-cancel {
+.popup.alert .button-row .btn-01 {
   display: none;
 }
 .popup .panel-title {
@@ -732,8 +732,8 @@
   color: #ababab;
   cursor: pointer;
   display: inline-block;
-  font: bold 12px/10px sans-serif;
-  margin: 0px 5px 0px 5px;
+  font: 12px/10px sans-serif;
+  margin: 0px 7px;
   padding: 6px 11px 0px 11px;
   min-width: 73px;
   height: 23px;
@@ -1395,7 +1395,7 @@ figure {
   position: absolute;
   top: 14px;
   left: 9999px;
-  height: 160px;
+  height: 260px;
   width: 9999px;
   margin-left: -1px;
   border-left: 1px solid #474747;
@@ -1406,9 +1406,21 @@ figure {
   overflow: visible;
   z-index: 3;
 }
+.area.timeline .content_fixed.left.hscrolled:after {
+  content: '';
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  right: 0px;
+  width: 5px;
+  box-shadow: 2px 0px 5px rgba(0, 0, 0, 0.25);
+}
 .area.timeline .content_fixed.left .tl_body {
   position: absolute;
   overflow: hidden;
+}
+.area.timeline .content_fixed.left ul {
+  position: relative;
 }
 .area.timeline .content_fixed.left ul li {
   position: relative;
@@ -1419,6 +1431,18 @@ figure {
 }
 .area.timeline .content_fixed.left ul li.expanded {
   border-bottom: 0px;
+}
+.area.timeline .content_fixed.left ul li.is_hidden span {
+  color: #919191;
+  text-shadow: 0px 1px 2px #4c4c4c;
+}
+.area.timeline .content_fixed.left ul li:hover {
+  color: #ededed;
+  text-shadow: 0px 1px 2px #2a2a2a;
+}
+.area.timeline .content_fixed.left ul li:hover > figure.icon-trashcan,
+.area.timeline .content_fixed.left ul li:hover > figure.icon-add {
+  opacity: 1;
 }
 .area.timeline .content_fixed.left ul li ul li {
   border-bottom: 0px;
@@ -1470,10 +1494,14 @@ figure {
 }
 .area.timeline .content_fixed.left ul li figure.icon-trashcan,
 .area.timeline .content_fixed.left ul li figure.icon-add {
+  top: 2px;
+  left: -13px;
   font-size: 21px;
   color: #8e8e8e;
   text-shadow: 0px 1px 2px #333333;
   opacity: 0;
+  width: 13px;
+  overflow: hidden;
 }
 .area.timeline .content_fixed.left ul li figure.icon-trashcan:hover,
 .area.timeline .content_fixed.left ul li figure.icon-add:hover {
@@ -1520,6 +1548,12 @@ figure {
   -webkit-transition: 300ms height ease-in-out;
   height: 23px;
   overflow: hidden;
+}
+.area.timeline .content_fixed.right ul li.is_hidden .track_parent {
+  opacity: 0.5;
+}
+.area.timeline .content_fixed.right ul li.is_hidden .anim_track {
+  opacity: 0.3;
 }
 .area.timeline .content_fixed.right ul li ul li:last-child {
   height: 23px;

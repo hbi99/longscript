@@ -44,48 +44,84 @@
 <xsl:template name="timeline_left">
 	<xsl:for-each select=".//timeline/layer">
 		<xsl:sort order="ascending" select="@index"/>
-		<li data-track="parent" data-cmd="timeline -s make_track_active">
-			<div data-dblclick="timeline -s dblclick_layer" data-context="tl_track">
-				<xsl:attribute name="data-track_id">track_<xsl:value-of select="@id"/></xsl:attribute>
-				<xsl:attribute name="data-asset_id"><xsl:value-of select="@asset_id"/></xsl:attribute>
-				<xsl:attribute name="class">
-					tl_layer <xsl:if test="@hidden = 1"> is_hidden</xsl:if>
-				</xsl:attribute>
-				<figure data-cmd="timeline -s toggle_visible">
-					<xsl:attribute name="class"><xsl:choose>
-						<xsl:when test="@hidden = 1">icon-eye_off</xsl:when>
-						<xsl:otherwise>icon-eye_on</xsl:otherwise>
-					</xsl:choose></xsl:attribute>
-					&#160;</figure>
-				<figure class="icon-arrow_down" data-cmd="timeline -s toggle_layer">&#160;</figure>
-				<span class="layer_name"><xsl:value-of select="//file/assets/*[@id=current()/@asset_id]/@name"/></span>
-			</div>
+		<li data-context="tl_track">
+			<xsl:attribute name="data-track_id">track_<xsl:value-of select="@id"/></xsl:attribute>
+			<xsl:if test="@hidden = 1"><xsl:attribute name="class">is_hidden</xsl:attribute></xsl:if>
+			<figure data-cmd="timeline -s toggle_visible">
+				<xsl:attribute name="class"><xsl:choose>
+					<xsl:when test="@hidden = 1">icon-eye_off</xsl:when>
+					<xsl:otherwise>icon-eye_on</xsl:otherwise>
+				</xsl:choose></xsl:attribute>
+				&#160;</figure>
+			<figure class="icon-trashcan right" data-cmd="timeline -s delete_track">&#160;</figure>
+			<figure class="icon-add right" data-cmd="timeline -s add_track">&#160;</figure>
+			<figure class="icon-arrow_down" data-cmd="timeline -s toggle_layer">&#160;</figure>
+			<span class="layer_name"><xsl:value-of select="//file/assets/*[@id=current()/@asset_id]/@name"/></span>
+		</li>
 
-            <ul class="brushes">
-				<xsl:for-each select="./brush">
+		<li style="height: 0px; border: 0px;">
+			<ul class="brushes">
+			<xsl:for-each select="./brush">
 				<li data-context="tl_anim_track">
-					<xsl:attribute name="class">
-						<xsl:if test="@hidden = 1">is_hidden</xsl:if>
-						<xsl:if test="@id = ../../@active">active</xsl:if>
-					</xsl:attribute>
-					<xsl:attribute name="data-track_id">brush_<xsl:value-of select="@id"/></xsl:attribute>
+					<xsl:attribute name="data-track_id">track_<xsl:value-of select="@id"/></xsl:attribute>
+					<xsl:if test="@hidden = 1 or ../@hidden = 1"><xsl:attribute name="class">is_hidden</xsl:attribute></xsl:if>
 					<figure data-cmd="timeline -s toggle_visible">
 						<xsl:attribute name="class"><xsl:choose>
-							<xsl:when test="@hidden = 1">icon-eye_off</xsl:when>
+							<xsl:when test="@hidden = 1 or ../@hidden = 1">icon-eye_off</xsl:when>
 							<xsl:otherwise>icon-eye_on</xsl:otherwise>
 						</xsl:choose></xsl:attribute>
 						&#160;</figure>
-					<figure class="icon-trashcan right">&#160;</figure>
+					<figure class="icon-trashcan right" data-cmd="timeline -s delete_track">&#160;</figure>
 					<span><xsl:value-of select="@name"/></span>
 				</li>
-				</xsl:for-each>
+			</xsl:for-each>
 			</ul>
-
 		</li>
 	</xsl:for-each>
 </xsl:template>
 
 <xsl:template name="timeline_right">
+	<xsl:for-each select=".//timeline/layer">
+		<xsl:sort order="ascending" select="@index"/>
+
+		<li data-cmd="timeline -s make_track_active" data-context="tl_track">
+			<xsl:attribute name="data-track_id">track_<xsl:value-of select="@id"/></xsl:attribute>
+			<xsl:if test="@hidden = 1"><xsl:attribute name="class">is_hidden</xsl:attribute></xsl:if>
+			<div>
+				<xsl:attribute name="class">track_parent</xsl:attribute>
+				<xsl:attribute name="style">
+					margin-left: <xsl:value-of select="@start * 16"/>px;
+					width: <xsl:value-of select="(@length * 16)-1"/>px;
+				</xsl:attribute>
+				&#160;
+			</div>
+		</li>
+		
+		<li style="height: 0px; border: 0px;">
+			<ul class="brush_tracks">
+			<xsl:for-each select="./brush">
+				<li data-context="tl_anim_track">
+					<xsl:attribute name="data-track_id">track_<xsl:value-of select="@id"/></xsl:attribute>
+					<xsl:if test="@hidden = 1 or ../@hidden = 1"><xsl:attribute name="class">is_hidden</xsl:attribute></xsl:if>
+					<div>
+						<xsl:attribute name="class">
+							anim_track color_<xsl:value-of select="@color"/>
+						</xsl:attribute>
+						<xsl:attribute name="style">
+							margin-left: <xsl:value-of select="(@start + ../@start)*16"/>px;
+							width: <xsl:value-of select="(@length * 16)-1"/>px;
+						</xsl:attribute>
+						&#160;
+					</div>
+				</li>
+			</xsl:for-each>
+			</ul>
+		</li>
+
+	</xsl:for-each>
+</xsl:template>
+<!--
+<xsl:template name="timeline_right2">
 	<xsl:for-each select=".//timeline/layer">
 		<xsl:sort order="ascending" select="@index"/>
 		<li data-track="parent" data-cmd="timeline -s make_track_active" data-context="tl_track">
@@ -124,6 +160,6 @@
 		</li>
 	</xsl:for-each>
 </xsl:template>
-
+-->
 </xsl:stylesheet>
 

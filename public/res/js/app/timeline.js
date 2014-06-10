@@ -58,7 +58,6 @@ sys.app.timeline = {
 				}
 				break;
 			case 'file_loaded':
-				return;
 				var xTimeline = file.selectSingleNode('.//timeline');
 
 				// update timeline speed nob
@@ -89,8 +88,65 @@ sys.app.timeline = {
 				self.doEvent('goto_frame', 0);
 				self.doEvent('nob_speed', 50);
 				break;
+			case 'add_track':
+				break;
+			case 'delete_track':
+				target = arguments[1];
+				console.log( target );
+				break;
 			case 'toggle_visible':
-				var iconEl  = jr(arguments[1]),
+				target = arguments[1];
+				if (!target) {
+					row = self.doEvent('get_track_row', _sys.context.info.el);
+					target = row.leftEl.find('.icon-eye_on, .icon-eye_off')[0];
+				}
+				var iconEl = _jr(target),
+					isOn = iconEl.hasClass('icon-eye_on'),
+					childCheck = true,
+					siblings,
+					isAllOff;
+
+				row = self.doEvent('get_track_row', target);
+
+				if (isOn) {
+					row.rightEl.addClass('is_hidden');
+					row.leftEl.addClass('is_hidden');
+					iconEl.removeClass('icon-eye_on').addClass('icon-eye_off');
+					isAllOff = true;
+				} else {
+					row.rightEl.removeClass('is_hidden');
+					row.leftEl.removeClass('is_hidden');
+					iconEl.removeClass('icon-eye_off').addClass('icon-eye_on');
+					isAllOff = false;
+				}
+
+				if (row.leftEl.attr('data-context') === 'tl_track') {
+					siblings = row.leftEl.next('li').nth(0).find('li')
+						[isOn ? 'addClass' : 'removeClass']('is_hidden');
+
+					siblings.find('.icon-eye_on, .icon-eye_off')
+							.setClass( isOn ? 'icon-eye_off' : 'icon-eye_on' );
+
+					row.rightEl.next('li').nth(0).find('li').addClass('is_hidden')
+						[isOn ? 'addClass' : 'removeClass']('is_hidden');
+				} else {
+					siblings = row.leftEl.parent().find('li');
+					isAllOff = siblings.length === siblings.find('.icon-eye_off').length;
+					row.rightEl.parents('.brush_tracks').parent().prev('li').nth(0)
+						[isAllOff ? 'addClass' : 'removeClass']('is_hidden');
+					childCheck = row.leftEl.parents('.brushes').parent().prev('li').nth(0);
+					childCheck[isAllOff ? 'addClass' : 'removeClass']('is_hidden');
+					childCheck.nth(0).find('.icon-eye_on, .icon-eye_off')
+						.setClass( isAllOff ? 'icon-eye_off' : 'icon-eye_on' );
+				}
+
+				_canvas.info.visible = self.doEvent('get_track_visible');
+				//console.log( _canvas.info.visible );
+				_canvas.updateBallCvs();
+				_canvas.draw();
+				break;
+			case 'toggle_visible-OLD':
+				var iconEl  = _jr(arguments[1]),
 					isOn    = iconEl.hasClass('icon-eye_on'),
 					rowEl   = iconEl.parents('[data-track_id]'),
 					rowId   = rowEl.attr('data-track_id'),
@@ -129,12 +185,12 @@ sys.app.timeline = {
 				_canvas.draw();
 				break;
 			case 'get_track_visible':
-				var rows = _jr('li', _el.tl_body_rows),
+				var rows = _jr('li[data-track_id]', _el.tl_body_rows),
 					jl = rows.length,
 					j = 0,
 					rVisible = [];
 				for (; j<jl; j++) {
-					if (rows[j].getAttribute('data-track') === 'parent') continue;
+					if (rows[j].getAttribute('data-context') === 'tl_track') continue;
 					rVisible.push( _jr(rows[j]).hasClass('is_hidden') ? 0 : 1 );
 				}
 				return rVisible;
@@ -216,11 +272,6 @@ sys.app.timeline = {
 						this.css({'border': '0'});
 					});
 				}
-				// if (!tRow.next('li').length && tRow.height() > 0) {
-				// 	tRow.parent().removeClass('last-expanded');
-				// } else {
-				// 	tRow.parent().addClass('last-expanded');
-				// }
 				break;
 			case 'get_track_row':
 				var row = {},

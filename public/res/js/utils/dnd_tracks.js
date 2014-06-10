@@ -28,7 +28,7 @@ sys.tracks = {
 					self.drag.parents('.panel').addClass('active');
 					
 					if (tParent.hasClass('tl_nob_track')) {
-						self.dragMax = tParent.parent().find('.frame_ends').left()-15
+						self.dragMax = tParent.parent().find('.frame_ends').left()-15;
 					}
 
 					jr(document)

@@ -25,6 +25,17 @@ sys.app = {
 		}, 500);
 
 		//sys.popup.open('fopen');
+		sys.confirm({
+			'text': 'Are you sure that you want to delete this track?',
+			'buttons': {
+				'Cancel': function() {
+					console.log('cancel');
+				},
+				'OK': function() {
+					console.log('ok');
+				}
+			}
+		});
 	},
 	save: function() {
 
