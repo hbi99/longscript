@@ -6,9 +6,10 @@ sys.app.timeline = {
 			observer = _sys.observer;
 
 		observer.on('file_loaded', this.doEvent);
+		observer.on('normalize_xml', this.doEvent);
 		observer.on('file_unloaded', this.doEvent);
 		observer.on('nob_speed', this.doEvent);
-		observer.on('assets_loaded', this.doEvent);
+		//observer.on('assets_loaded', this.doEvent);
 		observer.on('frame_index_change', this.doEvent);
 
 		this.doEvent('populate_frame_nrs');
@@ -19,6 +20,7 @@ sys.app.timeline = {
 	doEvent: function(event) {
 		var _sys = sys,
 			_app = _sys.app,
+			_fs  = _sys.fs,
 			_el  = _sys.el,
 			_jr  = jr,
 			_canvas = _app.canvas,
@@ -27,7 +29,9 @@ sys.app.timeline = {
 			cmd  = (typeof(event) === 'string') ? event : event.type,
 			row,
 			target,
-			track;
+			track,
+			i, il,
+			j, jl;
 		switch (cmd) {
 			// native events
 			case 'scroll':
@@ -56,6 +60,50 @@ sys.app.timeline = {
 					_canvas.info.frameIndex = self.frameIndex;
 					_canvas.updateBallCvs();
 					_canvas.draw();
+				}
+				break;
+			case 'normalize_xml':
+				var xBrush = file.selectNodes('//timeline//brush'),
+					arr,
+					bS, bE, xB,
+					bStart = false;
+				i = 0;
+				il = xBrush.length;
+				for (; i<il; i++) {
+					arr = JSON.parse( xBrush[i].getAttribute('value') );
+					for (j=0, jl=arr.length; j<jl; j++) {
+						if (arr[j] === 0) continue;
+						bS = j;
+						break;
+					}
+					for (j=arr.length; j>0; j--) {
+						if (arr[j-1] === 0) continue;
+						bE = j;
+						if (bS > 0) bE--;
+						break;
+					}
+					// brush parent
+					xBrush[i].parentNode.setAttribute('start', bS);
+					xBrush[i].parentNode.setAttribute('length', bE);
+					// brush tracks
+					for (j=0, jl=arr.length; j<jl; j++) {
+						if (bStart !== false) {
+							if (arr[j] && j !== jl-1) continue;
+							xB = xBrush[i].appendChild(_fs.createNode('i'));
+							xB.setAttribute('start', bStart-bS);
+							xB.setAttribute('length', j-bStart);
+							if (j === jl-1) xB.setAttribute('length', j-bStart+1);
+							bStart = false;
+						}
+						if (!bStart && arr[j]) {
+							bStart = j;
+						}
+					}
+					if (bStart) {
+						xB = xBrush[i].appendChild(_fs.createNode('i'));
+						xB.setAttribute('start', bStart-bS);
+						xB.setAttribute('length', 1);
+					}
 				}
 				break;
 			case 'file_loaded':

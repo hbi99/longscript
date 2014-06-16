@@ -103,16 +103,20 @@
 				<li data-context="tl_anim_track">
 					<xsl:attribute name="data-track_id">track_<xsl:value-of select="@id"/></xsl:attribute>
 					<xsl:if test="@hidden = 1 or ../@hidden = 1"><xsl:attribute name="class">is_hidden</xsl:attribute></xsl:if>
+					
+					<xsl:for-each select="./i">
 					<div>
 						<xsl:attribute name="class">
-							anim_track color_<xsl:value-of select="@color"/>
+							anim_track color_<xsl:value-of select="../@color"/>
 						</xsl:attribute>
 						<xsl:attribute name="style">
-							margin-left: <xsl:value-of select="(@start + ../@start)*16"/>px;
+							left: <xsl:value-of select="(@start + ../../@start)*16"/>px;
 							width: <xsl:value-of select="(@length * 16)-1"/>px;
 						</xsl:attribute>
 						&#160;
 					</div>
+					</xsl:for-each>
+
 				</li>
 			</xsl:for-each>
 			</ul>

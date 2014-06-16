@@ -1581,7 +1581,7 @@ figure {
   border-radius: 2px;
 }
 .area.timeline .content_fixed.right ul .anim_track {
-  position: relative;
+  position: absolute;
   top: 5px;
   height: 12px;
   width: 14px;

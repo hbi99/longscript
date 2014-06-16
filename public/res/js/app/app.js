@@ -25,7 +25,7 @@ sys.app = {
 		}, 500);
 
 		//sys.popup.open('fopen');
-		
+
 	},
 	save: function() {
 
@@ -35,8 +35,9 @@ sys.app = {
 	},
 	load: function(path) {
 		var _sys = sys,
+			_fs  = _sys.fs,
 			self = _sys.app,
-			file = _sys.fs.load({path: path}).dom,
+			file = _fs.load({path: path}).dom,
 			xFile = file.selectSingleNode('//file');
 
 		self.file = _sys.ledger.documentElement.appendChild(xFile);
@@ -45,6 +46,7 @@ sys.app = {
 		if (self.type === 'font') {
 
 		} else {
+			_sys.observer.trigger('normalize_xml');
 			_sys.observer.trigger('file_loaded');
 			//self.image.load();
 		}

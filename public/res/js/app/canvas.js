@@ -69,7 +69,8 @@ sys.app.canvas = {
 			ballR,
 			i, il,
 			j, jl,
-			k, kl;
+			k, kl,
+			l, ll;
 		// exit if no file loaded
 		if (!_app.file) return;
 		if (event.bubbles && info.sequence) {
@@ -195,6 +196,7 @@ sys.app.canvas = {
 				var xLayer = _app.file.selectNodes('.//layer'),
 					rMaster = [],
 					xBrush,
+					xB,
 					bStart,
 					bLength,
 					arr,
@@ -206,16 +208,15 @@ sys.app.canvas = {
 				for (i=0, il=xLayer.length; i<il; i++) {
 					xBrush = xLayer[i].selectNodes('./brush');
 					for (j=0, jl=xBrush.length; j<jl; j++) {
-						arr = JSON.parse(xBrush[j].getAttribute('value'));
-						bStart = +xBrush[j].getAttribute('start');
-						bLength = +xBrush[j].getAttribute('length');
 
-						for (k=0; k<kl; k++) {
-							fVal = (k>=bStart && k<bStart+bLength) ? arr[k-bStart] : false;
-							rMaster[k].push(fVal);
+						arr = JSON.parse(xBrush[j].getAttribute('value'));
+						for (l=0, ll=arr.length; l<ll; l++) {
+							//rMaster[l].push( arr[l] );
 						}
+
 					}
 				}
+				//console.log( rMaster.length );
 				//console.log( JSON.stringify(rMaster) );
 				return rMaster;
 			case 'save_file':
@@ -601,7 +602,10 @@ sys.app.canvas = {
 			sequence = info.sequence,
 			frame = sequence[info.frameIndex],
 			pi2  = info.pi2,
-			ball;
+			ball,
+			prev_frame,
+			i, il,
+			j, jl;
 
 		// some calculations
 		info.left = (info.imageX * info.scale) + info.origoX;
@@ -619,9 +623,9 @@ sys.app.canvas = {
 					info.scaledHeight);
 		ballCtx.clip();
 		// draw balls
-		for (var i=0, il=info.frameIndex; i<il; i++) {
-			var prev_frame = sequence[i];
-			for (var j=0, jl=prev_frame.length; j<jl; j++) {
+		for (i=0, il=info.frameIndex; i<il; i++) {
+			prev_frame = sequence[i];
+			for (j=0, jl=prev_frame.length; j<jl; j++) {
 				
 				if (info.visible[j] !== 1 || !info.visible[j]) continue;
 				ballCtx.fillStyle = info.palette[j].color;
