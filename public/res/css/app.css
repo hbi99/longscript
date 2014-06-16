@@ -1429,7 +1429,7 @@ figure {
 .area.timeline .content_fixed.left ul li {
   position: relative;
   border-bottom: #515151 1px solid;
-  -webkit-transition: 300ms height ease-in-out;
+  -webkit-transition: 400ms height ease-in-out;
   height: 23px;
   overflow: hidden;
 }
@@ -1549,7 +1549,7 @@ figure {
 .area.timeline .content_fixed.right ul li {
   position: relative;
   border-bottom: #515151 1px solid;
-  -webkit-transition: 300ms height ease-in-out;
+  -webkit-transition: 400ms height ease-in-out;
   height: 23px;
   overflow: hidden;
 }
@@ -1568,9 +1568,6 @@ figure {
   min-width: 100%;
   background-image: url(../img/bg_tl_body.png);
   background-position: -16px 0px;
-}
-.area.timeline .content_fixed.right ul.brush_tracks {
-  -webkit-transition: 300ms height ease-in-out;
 }
 .area.timeline .content_fixed.right ul .track_parent {
   position: relative;

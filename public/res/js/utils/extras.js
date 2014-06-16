@@ -247,6 +247,13 @@ if (!Array.prototype.hasOwnProperty('difference')) {
 		return this.filter(function(i) {return (a.indexOf(i) === -1);});
 	};
 }
+if(!Array.prototype.hasOwnProperty('sortInt')) {
+	Array.prototype.sortInt = function() {
+		this.sort(function(a,b) {
+			return a - b;
+		});
+	};
+}
 if(!Array.hasOwnProperty('isArray')) {
 	Array.isArray = function(arg) {
 		return Object.prototype.toString.call(arg) === '[object Array]';

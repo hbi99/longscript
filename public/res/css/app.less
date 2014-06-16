@@ -23,6 +23,7 @@
 @fontFamily:		'regular';
 @fontBold:			'bold';
 
+@trackExpand:		400ms;
 
 @import 'fonts.less';
 @import 'toolbar.less';
@@ -578,7 +579,7 @@
 					li {
 						position: relative;
 						border-bottom: darken(@boxContent, 7%) 1px solid;
-						-webkit-transition: 300ms height ease-in-out;
+						-webkit-transition: @trackExpand height ease-in-out;
 						height: 23px;
 						overflow: hidden;
 
@@ -716,7 +717,7 @@
 					li {
 						position: relative;
 						border-bottom: darken(@boxContent, 7%) 1px solid;
-						-webkit-transition: 300ms height ease-in-out;
+						-webkit-transition: @trackExpand height ease-in-out;
 						height: 23px;
 						overflow: hidden;
 
@@ -748,7 +749,7 @@
 						//background-color: rgba(255,0,0,0.1);
 						//height: 0px;
 						//overflow: hidden;
-						-webkit-transition: 300ms height ease-in-out;
+						//-webkit-transition: 300ms height ease-in-out;
 					}
 					.track_parent {
 						position: relative;

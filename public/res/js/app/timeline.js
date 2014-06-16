@@ -31,7 +31,8 @@ sys.app.timeline = {
 			target,
 			track,
 			i, il,
-			j, jl;
+			j, jl,
+			k, kl;
 		switch (cmd) {
 			// native events
 			case 'scroll':
@@ -63,46 +64,56 @@ sys.app.timeline = {
 				}
 				break;
 			case 'normalize_xml':
-				var xBrush = file.selectNodes('//timeline//brush'),
-					arr,
-					bS, bE, xB,
-					bStart = false;
+				var xLayer = file.selectNodes('//timeline/layer'),
+					xBrush,
+					xAnim,
+					lStart,
+					lEnd,
+					bStart = false,
+					bEnd = false,
+					arr;
 				i = 0;
-				il = xBrush.length;
+				il = xLayer.length;
+
 				for (; i<il; i++) {
-					arr = JSON.parse( xBrush[i].getAttribute('value') );
-					for (j=0, jl=arr.length; j<jl; j++) {
-						if (arr[j] === 0) continue;
-						bS = j;
-						break;
-					}
-					for (j=arr.length; j>0; j--) {
-						if (arr[j-1] === 0) continue;
-						bE = j;
-						if (bS > 0) bE--;
-						break;
-					}
-					// brush parent
-					xBrush[i].parentNode.setAttribute('start', bS);
-					xBrush[i].parentNode.setAttribute('length', bE);
-					// brush tracks
-					for (j=0, jl=arr.length; j<jl; j++) {
-						if (bStart !== false) {
-							if (arr[j] && j !== jl-1) continue;
-							xB = xBrush[i].appendChild(_fs.createNode('i'));
-							xB.setAttribute('start', bStart-bS);
-							xB.setAttribute('length', j-bStart);
-							if (j === jl-1) xB.setAttribute('length', j-bStart+1);
-							bStart = false;
+					xBrush = xLayer[i].selectNodes('./brush');
+					lStart = [];
+					lEnd = [];
+					for (j=0, jl=xBrush.length; j<jl; j++) {
+						arr = JSON.parse( xBrush[j].getAttribute('value') );
+						for (k=0, kl = arr.length; k<kl; k++) {
+							if (arr[k] !== 0) {
+								lStart.push(k);
+								break;
+							}
 						}
-						if (!bStart && arr[j]) {
-							bStart = j;
+						for (k=0; k<kl; k++) {
+							if (arr[kl-k-1] !== 0) {
+								lEnd.push(kl-k);
+								break;
+							}
 						}
+						lStart.sortInt();
+						lEnd.sortInt();
+						// brush parent
+						xBrush[j].parentNode.setAttribute('start', lStart[0]);
+						xBrush[j].parentNode.setAttribute('length', lEnd[lEnd.length-1]-lStart[0]);
 					}
-					if (bStart) {
-						xB = xBrush[i].appendChild(_fs.createNode('i'));
-						xB.setAttribute('start', bStart-bS);
-						xB.setAttribute('length', 1);
+					// prepare animation tracks
+					for (j=0, jl=xBrush.length; j<jl; j++) {
+						arr = JSON.parse( xBrush[j].getAttribute('value') );
+						for (k=0, kl=arr.length; k<kl; k++) {
+							if (arr[k]) {
+								bStart = k;
+								while(arr[k] !== 0) {
+									if (k>kl-1) break;
+									k++;
+								}
+								xAnim = xBrush[j].appendChild(_fs.createNode('i'));
+								xAnim.setAttribute('start', bStart-lStart[0]);
+								xAnim.setAttribute('length', k-bStart);
+							}
+						}
 					}
 				}
 				break;
@@ -358,11 +369,11 @@ sys.app.timeline = {
 				} else{
 					arrow.removeClass('icon-arrow_up')
 						.addClass('icon-arrow_down');
-					lRow.css({'height': '0'}).wait(300, function() {
+					lRow.css({'height': '0'}).wait(400, function() {
 						this.css({'border': '0'});
 						arrow.parent().removeClass('expanded');
 					});
-					tRow.css({'height': '0'}).wait(300, function() {
+					tRow.css({'height': '0'}).wait(400, function() {
 						this.css({'border': '0'});
 					});
 				}
