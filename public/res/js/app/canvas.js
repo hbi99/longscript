@@ -211,12 +211,11 @@ sys.app.canvas = {
 
 						arr = JSON.parse(xBrush[j].getAttribute('value'));
 						for (l=0, ll=arr.length; l<ll; l++) {
-							//rMaster[l].push( arr[l] );
+							rMaster[l].push( arr[l] );
 						}
 
 					}
 				}
-				//console.log( rMaster.length );
 				//console.log( JSON.stringify(rMaster) );
 				return rMaster;
 			case 'save_file':

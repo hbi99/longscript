@@ -1256,6 +1256,16 @@ figure {
   right: 19px;
   border-radius: 5px 5px 0px 5px;
 }
+.area.timeline .frame_select {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 0px;
+  height: 0px;
+  background: rgba(51, 255, 255, 0.63);
+  opacity: .5;
+  z-index: 1;
+}
 .area.timeline .content_fixed {
   color: #ababab;
   text-shadow: 0px 1px 2px #333333;
@@ -1587,6 +1597,7 @@ figure {
   background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.25) 0%, transparent 15%, transparent 50%, rgba(0, 0, 0, 0.25) 100%);
   background-color: #54987b;
   opacity: 0.65;
+  z-index: 2;
 }
 .area.timeline .content_fixed.right ul .anim_track.color_purple {
   background-color: #bb7ebc;

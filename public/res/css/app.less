@@ -23,6 +23,8 @@
 @fontFamily:		'regular';
 @fontBold:			'bold';
 
+@frameSelect:		#3ff;
+
 @trackExpand:		400ms;
 
 @import 'fonts.less';
@@ -380,6 +382,18 @@
 		bottom: 19px;
 		right: 19px;
 		border-radius: 5px 5px 0px 5px;
+
+		.frame_select {
+			position: absolute;
+			top: 0px;
+			left: 0px;
+			width: 0px;
+			height: 0px;
+			//border: @frameSelect 1px solid;
+			background: fadeout(@frameSelect, 37%);
+			opacity: .5;
+			z-index: 1;
+		}
 
 		.content_fixed {
 			//background-image: url(../img/bg_tl_body.png);
@@ -769,6 +783,7 @@
 						background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.25) 0%, transparent 15%, transparent 50%, rgba(0,0,0,0.25) 100%);
 						background-color: #54987b;
 						opacity: 0.65;
+						z-index: 2;
 						//-webkit-transition: 150ms opacity ease-in-out;
 
 						&.color_purple { background-color: #bb7ebc; }

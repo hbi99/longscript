@@ -15,6 +15,8 @@ sys.app.timeline = {
 		this.doEvent('populate_frame_nrs');
 		//this.speed_events('focus');
 
+		jr(el.tl_content.parentNode).bind('mousedown', this.doEvent);
+
 		jr('.right .body', el.box_timeline).bind('scroll', this.doEvent);
 	},
 	doEvent: function(event) {
@@ -27,7 +29,10 @@ sys.app.timeline = {
 			file = _app.file,
 			self = _app.timeline,
 			cmd  = (typeof(event) === 'string') ? event : event.type,
+			mouseState = self.mouseState,
+			dim,
 			row,
+			srcEl,
 			target,
 			track,
 			i, il,
@@ -35,6 +40,83 @@ sys.app.timeline = {
 			k, kl;
 		switch (cmd) {
 			// native events
+			case 'mousedown':
+				srcEl = event.target;
+				target = _jr(srcEl);
+				dim = getDim(_el.tl_content.parentNode);
+
+				if (target.hasClass('track_parent')) {
+					// track parent
+					self.mouseState = {
+						type: 'ptrack'
+					};
+				} else if (target.hasClass('anim_track')) {
+					// anim track
+					self.mouseState = {
+						type: 'track'
+					};
+				} else if (srcEl.nodeName.toLowerCase() === 'li') {
+					// track row
+					self.mouseState = {
+						type: 'row',
+						clickX: event.clientX,
+						clickY: event.clientY,
+						startX: event.clientX - dim.l,
+						startY: event.clientY - dim.t
+					};
+				} else {
+					// body
+					self.mouseState = {
+						type: 'body'
+					};
+				}
+				if (self.mouseState.type) {
+					self.mouseState.dim = dim;
+					self.mouseState.selEl = _jr(_el.frame_select);
+					_jr(document).bind('mousemove mouseup', self.doEvent);
+				}
+				break;
+			case 'mousemove':
+				if (!mouseState) return;
+				switch (mouseState.type) {
+					case 'ptrack':
+						break;
+					case 'track':
+						break;
+					case 'row':
+						var frHeight = 23,
+							frWidth = 16,
+							top = parseInt(mouseState.startY / frHeight, 10),
+							left = parseInt(mouseState.startX / frWidth, 10),
+
+							wDiff = event.clientX - mouseState.clickX,
+							wMod = wDiff % frWidth,
+							width = parseInt((wDiff - wMod) / frWidth, 10) + 1,
+
+							hDiff = event.clientY - mouseState.clickY,
+							hMod = hDiff % frHeight > 0,
+							height = parseInt(hDiff / frHeight, 10) + (hMod ? 1 : 0);
+
+						if (width < 1) {
+							width = Math.abs(width)+1;
+							left -= width-1;
+						}
+
+						mouseState.selEl.css({
+							'top': (top * frHeight) +'px',
+							'left': (left * frWidth) +'px',
+							'width': ((width * frWidth) - 1) +'px',
+							'height': ((height * frHeight - 1)) +'px'
+						});
+						break;
+					case 'body':
+						break;
+				}
+				break;
+			case 'mouseup':
+				self.mouseState = false;
+				_jr(document).unbind('mousemove mouseup', self.doEvent);
+				break;
 			case 'scroll':
 				target = event.toElement;
 				_el.tl_body_cols.style.left = target.offsetLeft +'px';
@@ -67,6 +149,7 @@ sys.app.timeline = {
 				var xLayer = file.selectNodes('//timeline/layer'),
 					xBrush,
 					xAnim,
+					len = [],
 					lStart,
 					lEnd,
 					bStart = false,
@@ -95,9 +178,10 @@ sys.app.timeline = {
 						}
 						lStart.sortInt();
 						lEnd.sortInt();
+						len.push(lEnd[lEnd.length-1]-lStart[0]);
 						// brush parent
 						xBrush[j].parentNode.setAttribute('start', lStart[0]);
-						xBrush[j].parentNode.setAttribute('length', lEnd[lEnd.length-1]-lStart[0]);
+						xBrush[j].parentNode.setAttribute('length', len[len.length-1]);
 					}
 					// prepare animation tracks
 					for (j=0, jl=xBrush.length; j<jl; j++) {
@@ -116,6 +200,9 @@ sys.app.timeline = {
 						}
 					}
 				}
+				// TODO: set timeline length
+				len.sortInt();
+				xLayer[0].parentNode.setAttribute('length', len[len.length-1]);
 				break;
 			case 'file_loaded':
 				var xTimeline = file.selectSingleNode('.//timeline');
