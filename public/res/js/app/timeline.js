@@ -54,6 +54,10 @@ sys.app.timeline = {
 		switch (cmd) {
 			// native events
 			case 'mousedown':
+				var prevEl,
+					nextEl,
+					prevX,
+					nextX;
 				srcEl  = event.target;
 				target = _jr(srcEl);
 				dim    = getDim(_el.tl_content.parentNode);
@@ -61,18 +65,30 @@ sys.app.timeline = {
 
 				if (target.hasClass('track_parent')) {
 					// track parent
+					nextX = _canvas.info.sequence.length - parseInt(target.width() / frWidth, 10) - 1;
 					self.mouseState = {
-						type: 'ptrack'
+						type: 'ptrack',
+						target: target,
+						targetX: target.left(),
+						clickX: event.clientX,
+						offsetX: parseInt(target.left() / frWidth, 10),
+						maxX: nextX,
+						minX: 0
 					};
 				} else if (target.hasClass('anim_track')) {
 					// anim track
+					prevEl = target.prev();
+					nextEl = target.next();
+					prevX = prevEl.length ? parseInt((prevEl.left() + prevEl.width()) / frWidth, 10) + 1 : 0;
+					nextX = nextEl.length ? parseInt((nextEl.left() - target.width()) / frWidth, 10)
+								: _canvas.info.sequence.length - parseInt(target.width() / frWidth, 10) - 1;
 					self.mouseState = {
 						type: 'track',
 						target: target,
-						targetX: parseInt(target.css('left'), 10),
+						targetX: target.left(),
 						clickX: event.clientX,
-						maxX: 9,
-						minX: 0
+						maxX: nextX,
+						minX: prevX
 					};
 				} else if (target.hasClass('frame_select') || srcEl.nodeName.toLowerCase() === 'li') {
 					// track row
@@ -83,8 +99,8 @@ sys.app.timeline = {
 						startX: event.clientX - dim.l,
 						startY: event.clientY - dim.t
 					};
-					top    = parseInt(self.mouseState.startY / frHeight, 10);
-					left   = parseInt(self.mouseState.startX / frWidth, 10);
+					top  = parseInt(self.mouseState.startY / frHeight, 10);
+					left = parseInt(self.mouseState.startX / frWidth, 10);
 				} else {
 					// body
 					self.mouseState = {
@@ -107,6 +123,11 @@ sys.app.timeline = {
 				if (!mouseState) return;
 				switch (mouseState.type) {
 					case 'ptrack':
+						left = parseInt((mouseState.targetX + event.clientX - mouseState.clickX) / frWidth, 10);
+						left = Math.max(Math.min(left, mouseState.maxX), mouseState.minX) - mouseState.offsetX;
+						mouseState.target.css({
+							'left'  : (left * frWidth) +'px',
+						});
 						break;
 					case 'track':
 						left = parseInt((mouseState.targetX + event.clientX - mouseState.clickX) / frWidth, 10);
@@ -258,7 +279,7 @@ sys.app.timeline = {
 					}).xml );
 
 				// temp
-				self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
+				self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(1)')[0]);
 				break;
 			case 'file_unloaded':
 				// reset timeline
