@@ -30,6 +30,19 @@ sys.app.timeline = {
 			self = _app.timeline,
 			cmd  = (typeof(event) === 'string') ? event : event.type,
 			mouseState = self.mouseState,
+
+			frHeight = 23,
+			frWidth = 16,
+			top = -99,
+			left = -99,
+			width,
+			height,
+			wDiff,
+			wMod,
+			hDiff,
+			hMod,
+			selEl,
+
 			dim,
 			row,
 			srcEl,
@@ -41,9 +54,10 @@ sys.app.timeline = {
 		switch (cmd) {
 			// native events
 			case 'mousedown':
-				srcEl = event.target;
+				srcEl  = event.target;
 				target = _jr(srcEl);
-				dim = getDim(_el.tl_content.parentNode);
+				dim    = getDim(_el.tl_content.parentNode);
+				selEl  = _jr(_el.frame_select);
 
 				if (target.hasClass('track_parent')) {
 					// track parent
@@ -53,9 +67,14 @@ sys.app.timeline = {
 				} else if (target.hasClass('anim_track')) {
 					// anim track
 					self.mouseState = {
-						type: 'track'
+						type: 'track',
+						target: target,
+						targetX: parseInt(target.css('left'), 10),
+						clickX: event.clientX,
+						maxX: 9,
+						minX: 0
 					};
-				} else if (srcEl.nodeName.toLowerCase() === 'li') {
+				} else if (target.hasClass('frame_select') || srcEl.nodeName.toLowerCase() === 'li') {
 					// track row
 					self.mouseState = {
 						type: 'row',
@@ -64,15 +83,23 @@ sys.app.timeline = {
 						startX: event.clientX - dim.l,
 						startY: event.clientY - dim.t
 					};
+					top    = parseInt(self.mouseState.startY / frHeight, 10);
+					left   = parseInt(self.mouseState.startX / frWidth, 10);
 				} else {
 					// body
 					self.mouseState = {
 						type: 'body'
 					};
 				}
+				selEl.css({
+					'top'   : (top * frHeight) +'px',
+					'left'  : (left * frWidth) +'px',
+					'width' : (frWidth - 1) +'px',
+					'height': (frHeight - 1) +'px'
+				});
 				if (self.mouseState.type) {
 					self.mouseState.dim = dim;
-					self.mouseState.selEl = _jr(_el.frame_select);
+					self.mouseState.selEl = selEl;
 					_jr(document).bind('mousemove mouseup', self.doEvent);
 				}
 				break;
@@ -82,31 +109,37 @@ sys.app.timeline = {
 					case 'ptrack':
 						break;
 					case 'track':
+						left = parseInt((mouseState.targetX + event.clientX - mouseState.clickX) / frWidth, 10);
+						left = Math.max(Math.min(left, mouseState.maxX), mouseState.minX);
+						mouseState.target.css({
+							'left'  : (left * frWidth) +'px',
+						});
 						break;
 					case 'row':
-						var frHeight = 23,
-							frWidth = 16,
-							top = parseInt(mouseState.startY / frHeight, 10),
-							left = parseInt(mouseState.startX / frWidth, 10),
-
-							wDiff = event.clientX - mouseState.clickX,
-							wMod = wDiff % frWidth,
-							width = parseInt((wDiff - wMod) / frWidth, 10) + 1,
-
-							hDiff = event.clientY - mouseState.clickY,
-							hMod = hDiff % frHeight > 0,
-							height = parseInt(hDiff / frHeight, 10) + (hMod ? 1 : 0);
+						top    = parseInt(mouseState.startY / frHeight, 10);
+						left   = parseInt(mouseState.startX / frWidth, 10);
+						wDiff  = event.clientX - mouseState.clickX;
+						hDiff  = event.clientY - mouseState.clickY;
+						wMod   = wDiff % frWidth;
+						hMod   = hDiff % frHeight > 0;
+						width  = parseInt((wDiff - wMod) / frWidth, 10) + 1;
+						height = parseInt(hDiff / frHeight, 10) + (hMod ? 1 : 0);
+						
+						height = Math.min(height, 3);
 
 						if (width < 1) {
-							width = Math.abs(width)+1;
-							left -= width-1;
+							left -= Math.abs(width)+1;
+							width = Math.abs(width)+2;
 						}
-
+						if (height < 1) {
+							height = Math.abs(height)+1;
+							top   -= height-1;
+						}
 						mouseState.selEl.css({
-							'top': (top * frHeight) +'px',
-							'left': (left * frWidth) +'px',
-							'width': ((width * frWidth) - 1) +'px',
-							'height': ((height * frHeight - 1)) +'px'
+							'top'   : (top * frHeight) +'px',
+							'left'  : (left * frWidth) +'px',
+							'width' : ((width * frWidth) - 1) +'px',
+							'height': ((height * frHeight) - 1) +'px'
 						});
 						break;
 					case 'body':

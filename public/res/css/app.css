@@ -1262,8 +1262,8 @@ figure {
   left: 0px;
   width: 0px;
   height: 0px;
-  background: rgba(51, 255, 255, 0.63);
-  opacity: .5;
+  background-color: rgba(51, 255, 255, 0.27);
+  background-image: url(../img/bg_tl_selector.png);
   z-index: 1;
 }
 .area.timeline .content_fixed {
@@ -1450,7 +1450,7 @@ figure {
   color: #919191;
   text-shadow: 0px 1px 2px #4c4c4c;
 }
-.area.timeline .content_fixed.left ul li:hover {
+.area.timeline .content_fixed.left ul li:hover > span {
   color: #ededed;
   text-shadow: 0px 1px 2px #2a2a2a;
 }
@@ -1581,11 +1581,12 @@ figure {
 }
 .area.timeline .content_fixed.right ul .track_parent {
   position: relative;
-  top: 3px;
-  height: 16px;
-  background: rgba(255, 255, 255, 0.11);
+  top: 4px;
+  height: 14px;
+  background: rgba(255, 255, 255, 0.31);
   border: 1px solid rgba(255, 255, 255, 0.21);
   border-radius: 2px;
+  z-index: 2;
 }
 .area.timeline .content_fixed.right ul .anim_track {
   position: absolute;
