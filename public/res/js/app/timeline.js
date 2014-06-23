@@ -57,7 +57,8 @@ sys.app.timeline = {
 				var prevEl,
 					nextEl,
 					prevX,
-					nextX;
+					nextX,
+					trackR;
 				srcEl  = event.target;
 				target = _jr(srcEl);
 				dim    = getDim(_el.tl_content.parentNode);
@@ -65,15 +66,24 @@ sys.app.timeline = {
 
 				if (target.hasClass('track_parent')) {
 					// track parent
+					nextEl = target.parent().next().find('.anim_track');
+					trackR = [];
+					for (i=0, il=nextEl.length; i<il; i++) {
+						prevEl = _jr(nextEl[i]);
+						trackR.push({
+							el      : prevEl,
+							offsetX : parseInt((prevEl.left() - target.left()) / frWidth, 10)
+						});
+					}
 					nextX = _canvas.info.sequence.length - parseInt(target.width() / frWidth, 10) - 1;
 					self.mouseState = {
-						type: 'ptrack',
-						target: target,
-						targetX: target.left(),
-						clickX: event.clientX,
-						offsetX: parseInt(target.left() / frWidth, 10),
-						maxX: nextX,
-						minX: 0
+						type    : 'ptrack',
+						target  : target,
+						targetX : target.left(),
+						clickX  : event.clientX,
+						maxX    : nextX,
+						minX    : 0,
+						trackR  : trackR
 					};
 				} else if (target.hasClass('anim_track')) {
 					// anim track
@@ -83,21 +93,21 @@ sys.app.timeline = {
 					nextX = nextEl.length ? parseInt((nextEl.left() - target.width()) / frWidth, 10)
 								: _canvas.info.sequence.length - parseInt(target.width() / frWidth, 10) - 1;
 					self.mouseState = {
-						type: 'track',
-						target: target,
-						targetX: target.left(),
-						clickX: event.clientX,
-						maxX: nextX,
-						minX: prevX
+						type    : 'track',
+						target  : target,
+						targetX : target.left(),
+						clickX  : event.clientX,
+						maxX    : nextX,
+						minX    : prevX
 					};
 				} else if (target.hasClass('frame_select') || srcEl.nodeName.toLowerCase() === 'li') {
 					// track row
 					self.mouseState = {
-						type: 'row',
-						clickX: event.clientX,
-						clickY: event.clientY,
-						startX: event.clientX - dim.l,
-						startY: event.clientY - dim.t
+						type   : 'row',
+						clickX : event.clientX,
+						clickY : event.clientY,
+						startX : event.clientX - dim.l,
+						startY : event.clientY - dim.t
 					};
 					top  = parseInt(self.mouseState.startY / frHeight, 10);
 					left = parseInt(self.mouseState.startX / frWidth, 10);
@@ -124,10 +134,15 @@ sys.app.timeline = {
 				switch (mouseState.type) {
 					case 'ptrack':
 						left = parseInt((mouseState.targetX + event.clientX - mouseState.clickX) / frWidth, 10);
-						left = Math.max(Math.min(left, mouseState.maxX), mouseState.minX) - mouseState.offsetX;
+						left = Math.max(Math.min(left, mouseState.maxX), mouseState.minX);
 						mouseState.target.css({
-							'left'  : (left * frWidth) +'px',
+							'left'  : (left * frWidth) +'px'
 						});
+						for (i=0, il=mouseState.trackR.length; i<il; i++) {
+							mouseState.trackR[i].el.css({
+								'left'  : ((mouseState.trackR[i].offsetX + left) * frWidth) +'px'
+							});
+						}
 						break;
 					case 'track':
 						left = parseInt((mouseState.targetX + event.clientX - mouseState.clickX) / frWidth, 10);

@@ -90,7 +90,7 @@
 			<div>
 				<xsl:attribute name="class">track_parent</xsl:attribute>
 				<xsl:attribute name="style">
-					margin-left: <xsl:value-of select="@start * 16"/>px;
+					left: <xsl:value-of select="@start * 16"/>px;
 					width: <xsl:value-of select="(@length * 16)-1"/>px;
 				</xsl:attribute>
 				&#160;
