@@ -58,7 +58,9 @@ sys.app.timeline = {
 					nextEl,
 					prevX,
 					nextX,
-					trackR;
+					trackR,
+					trackMin,
+					trackMax;
 				srcEl  = event.target;
 				target = _jr(srcEl);
 				dim    = getDim(_el.tl_content.parentNode);
@@ -66,8 +68,8 @@ sys.app.timeline = {
 
 				if (target.hasClass('track_parent')) {
 					// track parent
-					nextEl = target.parent().next().find('.anim_track');
 					trackR = [];
+					nextEl = target.parent().next().nth(0).find('.anim_track');
 					for (i=0, il=nextEl.length; i<il; i++) {
 						prevEl = _jr(nextEl[i]);
 						trackR.push({
@@ -87,18 +89,42 @@ sys.app.timeline = {
 					};
 				} else if (target.hasClass('anim_track')) {
 					// anim track
+					trackR = [];
+					trackMin = [];
+					trackMax = [];
 					prevEl = target.prev();
 					nextEl = target.next();
-					prevX = prevEl.length ? parseInt((prevEl.left() + prevEl.width()) / frWidth, 10) + 1 : 0;
-					nextX = nextEl.length ? parseInt((nextEl.left() - target.width()) / frWidth, 10)
+					prevX  = prevEl.length ? parseInt((prevEl.left() + prevEl.width()) / frWidth, 10) + 1 : 0;
+					nextX  = nextEl.length ? parseInt((nextEl.left() - target.width()) / frWidth, 10)
 								: _canvas.info.sequence.length - parseInt(target.width() / frWidth, 10) - 1;
+
+					trackR = target.parents('ul').parent().prev('li').nth(0).find('.track_parent');
+					//trackMin.push(parseInt(trackR.left() / frWidth, 10));
+					//trackMax.push(parseInt(trackR.width() / frWidth, 10));
+
+					nextEl = target.parents('ul').find('.anim_track');
+					for (i=0, il=nextEl.length; i<il; i++) {
+						if (nextEl[i] === srcEl) continue;
+						prevEl = _jr(nextEl[i]);
+						left = parseInt(prevEl.left() / frWidth, 10);
+						width = parseInt(prevEl.width() / frWidth, 10);
+						trackMin.push(left);
+						trackMax.push(left + width);
+					}
+					//console.log( 'min', trackMin );
+					//console.log( 'max', trackMax );
+
 					self.mouseState = {
-						type    : 'track',
-						target  : target,
-						targetX : target.left(),
-						clickX  : event.clientX,
-						maxX    : nextX,
-						minX    : prevX
+						type     : 'track',
+						target   : target,
+						targetX  : target.left(),
+						targetW  : parseInt(target.width() / frWidth, 10),
+						clickX   : event.clientX,
+						maxX     : nextX,
+						minX     : prevX,
+						trackR   : trackR,
+						trackMin : trackMin,
+						trackMax : trackMax
 					};
 				} else if (target.hasClass('frame_select') || srcEl.nodeName.toLowerCase() === 'li') {
 					// track row
@@ -133,23 +159,41 @@ sys.app.timeline = {
 				if (!mouseState) return;
 				switch (mouseState.type) {
 					case 'ptrack':
+						trackR = mouseState.trackR;
 						left = parseInt((mouseState.targetX + event.clientX - mouseState.clickX) / frWidth, 10);
 						left = Math.max(Math.min(left, mouseState.maxX), mouseState.minX);
 						mouseState.target.css({
 							'left'  : (left * frWidth) +'px'
 						});
-						for (i=0, il=mouseState.trackR.length; i<il; i++) {
-							mouseState.trackR[i].el.css({
-								'left'  : ((mouseState.trackR[i].offsetX + left) * frWidth) +'px'
+						for (i=0, il=trackR.length; i<il; i++) {
+							trackR[i].el.css({
+								'left'  : ((trackR[i].offsetX + left) * frWidth) +'px'
 							});
 						}
 						break;
 					case 'track':
+						trackR = mouseState.trackR;
 						left = parseInt((mouseState.targetX + event.clientX - mouseState.clickX) / frWidth, 10);
 						left = Math.max(Math.min(left, mouseState.maxX), mouseState.minX);
 						mouseState.target.css({
-							'left'  : (left * frWidth) +'px',
+							'left'  : (left * frWidth) +'px'
 						});
+
+						trackMin = mouseState.trackMin.concat([]);
+						trackMin.push(left);
+						trackMin.sortInt();
+
+						trackMax = mouseState.trackMax.concat([]);
+						trackMax.push(left + mouseState.targetW);
+						trackMax.sortInt();
+
+						left = trackMin[0];
+						width = trackMax.pop() - left + 1;
+						trackR.css({
+						 	'left'  : (left * frWidth) +'px',
+						 	'width' : ((width * frWidth)-1) +'px',
+						});
+						//console.log( left + width );
 						break;
 					case 'row':
 						top    = parseInt(mouseState.startY / frHeight, 10);
