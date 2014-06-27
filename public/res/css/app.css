@@ -1556,6 +1556,15 @@ figure {
 .area.timeline .content_fixed.right .frame_nrs div:first-child {
   width: 144px;
 }
+.area.timeline .content_fixed.right .body {
+  position: relative;
+}
+.area.timeline .content_fixed.right .body > ul {
+  display: table;
+  min-width: 100%;
+  background-image: url(../img/bg_tl_body.png);
+  background-position: -16px 0px;
+}
 .area.timeline .content_fixed.right ul li {
   position: relative;
   border-bottom: #515151 1px solid;
@@ -1572,12 +1581,6 @@ figure {
 .area.timeline .content_fixed.right ul li ul li:last-child {
   height: 23px;
   border-bottom: #515151 1px solid;
-}
-.area.timeline .content_fixed.right ul.body {
-  display: table;
-  min-width: 100%;
-  background-image: url(../img/bg_tl_body.png);
-  background-position: -16px 0px;
 }
 .area.timeline .content_fixed.right ul .track_parent {
   position: relative;

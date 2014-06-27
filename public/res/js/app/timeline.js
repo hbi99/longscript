@@ -137,11 +137,6 @@ sys.app.timeline = {
 					};
 					top  = parseInt(self.mouseState.startY / frHeight, 10);
 					left = parseInt(self.mouseState.startX / frWidth, 10);
-				} else {
-					// body
-					self.mouseState = {
-						type: 'body'
-					};
 				}
 				selEl.css({
 					'top'   : (top * frHeight) +'px',
@@ -221,8 +216,6 @@ sys.app.timeline = {
 							'width' : ((width * frWidth) - 1) +'px',
 							'height': ((height * frHeight) - 1) +'px'
 						});
-						break;
-					case 'body':
 						break;
 				}
 				break;
