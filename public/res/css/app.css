@@ -615,12 +615,10 @@
 }
 .inline-menu.cvs_zoom {
   width: 132px;
-  bottom: 227px;
   right: 295px;
 }
 .inline-menu.anim_speed {
   width: 68px;
-  bottom: 96px;
   left: 170px;
 }
 .inline-menu.anim_speed.arrTL:after {
@@ -1638,6 +1636,18 @@ figure {
   left: 225px;
   right: 1px;
 }
+.area .resize {
+  position: absolute;
+  background: rgba(0, 255, 200, 0.25);
+  opacity: 0;
+}
+.area .resize.vertical {
+  top: -4px;
+  left: 0px;
+  right: -21px;
+  height: 5px;
+  cursor: ns-resize;
+}
 .options {
   position: absolute;
   bottom: 2px;
@@ -1699,6 +1709,7 @@ figure {
 /*
  * TOGGLERS
  */
+.show_hotzones .area .resize,
 .show_hotzones .area.assets .options li.left:before,
 .show_hotzones .timeline .content_fixed .tl_head.tl_controls .speed:before {
   opacity: 1;

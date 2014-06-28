@@ -684,17 +684,28 @@ sys.app.canvas = {
 		}
 	},
 	zoomEvents: function(type) {
-		var el  = sys.el;
+		var _sys = sys,
+			_jr  = jr,
+			el   = _sys.el,
+			dim,
+			bottom;
+		
 		switch (type) {
 			case 'focus':
-				jr(el.cvs_zoom)
-					.css({'display': 'block'})
+				dim    = getDim(_sys.app.el.zoom_level);
+				bottom = _sys.appwin.height - dim.t - dim.h + 3;
+
+				_jr(el.cvs_zoom)
+					.css({
+						'display': 'block',
+						'bottom' : bottom +'px'
+					})
 					.wait(1, function() {
 						this.addClass('active');
 					});
 				break;
 			case 'blur':
-				jr(el.cvs_zoom)
+				_jr(el.cvs_zoom)
 					.removeClass('active')
 					.wait(320, function() {
 						this.css({'display': 'none'});

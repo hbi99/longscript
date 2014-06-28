@@ -42,17 +42,25 @@ sys.scrollbar = {
 					vTrack  = panel.find('.scroll_bg.vertical'),
 					hTrack  = panel.find('.scroll_bg.horizontal'),
 					vHandle = vTrack.length ? vTrack.find('.scroll_bar') : false,
-					hHandle = hTrack.length ? hTrack.find('.scroll_bar') : false;
+					hHandle = hTrack.length ? hTrack.find('.scroll_bar') : false,
+					top,
+					left,
+					height,
+					width;
 
 				if (vHandle) {
-					vCss.height = ((this.parentNode.offsetHeight / this.offsetHeight) * (vTrack[0].offsetHeight)) +'px';
-					vCss.top = (((this.offsetTop / (this.parentNode.offsetHeight - this.offsetHeight - 12)) * (vTrack[0].offsetHeight - vHandle[0].offsetHeight)) + 6) +'px';
+					height = parseInt((this.parentNode.offsetHeight / this.offsetHeight) * (vTrack[0].offsetHeight), 10);
+					top    = parseInt(((this.offsetTop / (this.parentNode.offsetHeight - this.offsetHeight - 12)) * (vTrack[0].offsetHeight - vHandle[0].offsetHeight)) + 6, 10);
+					vCss.height = height +'px';
+					vCss.top = top +'px';
 					vCss.display = this.parentNode.offsetHeight >= this.offsetHeight ? 'none' : 'block';
 					vHandle.css(vCss);
 				}
 				if (hHandle) {
-					hCss.width = ((this.parentNode.offsetWidth / this.offsetWidth) * (hTrack[0].offsetWidth)) +'px';
-					hCss.left = (((this.offsetLeft / (this.parentNode.offsetWidth - this.offsetWidth - 12)) * (hTrack[0].offsetWidth - hHandle[0].offsetWidth)) + 6) +'px';
+					width = ((this.parentNode.offsetWidth / this.offsetWidth) * (hTrack[0].offsetWidth));
+					left = (((this.offsetLeft / (this.parentNode.offsetWidth - this.offsetWidth - 12)) * (hTrack[0].offsetWidth - hHandle[0].offsetWidth)) + 6);
+					hCss.width = width +'px';
+					hCss.left = left +'px';
 					hCss.display = this.parentNode.offsetWidth >= this.offsetWidth ? 'none' : 'block';
 					hHandle.css(hCss);
 				}
@@ -70,7 +78,6 @@ sys.scrollbar = {
 					valX    = (bEl.length) ? bEl[0].offsetLeft - deltaX : 0,
 					valYMax = (valY) ? this.offsetHeight - bEl[0].scrollHeight : 0,
 					valXMax = (valX) ? this.offsetWidth - bEl[0].scrollWidth : 0;
-				
 				cCss = {
 					top: Math.min(Math.max(valY, valYMax), 0),
 					left: Math.min(Math.max(valX, valXMax), 0)

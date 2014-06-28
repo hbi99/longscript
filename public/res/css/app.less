@@ -819,6 +819,19 @@
 			}
 		}
 	}
+	.resize {
+		position: absolute;
+		background: @hotzone;
+		opacity: 0;
+
+		&.vertical {
+			top: -4px;
+			left: 0px;
+			right: -21px;
+			height: 5px;
+			cursor: ns-resize;
+		}
+	}
 }
 
 .options {
@@ -891,6 +904,7 @@
  * TOGGLERS
  */
 .show_hotzones	{
+	.area .resize,
 	.area.assets .options li.left:before,
 	.timeline .content_fixed .tl_head.tl_controls .speed:before {
 		opacity: 1;

@@ -2,6 +2,7 @@
 sys.app.timeline = {
 	init: function() {
 		var _sys = sys,
+			_jr = jr,
 			el = _sys.el,
 			observer = _sys.observer;
 
@@ -15,20 +16,22 @@ sys.app.timeline = {
 		this.doEvent('populate_frame_nrs');
 		//this.speed_events('focus');
 
-		jr(el.tl_content.parentNode).bind('mousedown', this.doEvent);
+		_jr(el.tl_content.parentNode).bind('mousedown', this.doEvent);
 
-		jr('.right .body', el.box_timeline).bind('scroll', this.doEvent);
+		_jr('.resize', el.box_timeline).bind('mousedown', this.doEvent);
+		_jr('.right .body', el.box_timeline).bind('scroll', this.doEvent);
 	},
 	doEvent: function(event) {
-		var _sys = sys,
-			_app = _sys.app,
-			_fs  = _sys.fs,
-			_el  = _sys.el,
-			_jr  = jr,
-			_canvas = _app.canvas,
-			file = _app.file,
-			self = _app.timeline,
-			cmd  = (typeof(event) === 'string') ? event : event.type,
+		var _sys     = sys,
+			_app     = _sys.app,
+			_fs      = _sys.fs,
+			_el      = _sys.el,
+			_jr      = jr,
+			_canvas  = _app.canvas,
+			observer = _sys.observer,
+			file     = _app.file,
+			self     = _app.timeline,
+			cmd      = (typeof(event) === 'string') ? event : event.type,
 			mouseState = self.mouseState,
 
 			frHeight = 23,
@@ -66,7 +69,21 @@ sys.app.timeline = {
 				dim    = getDim(_el.tl_content.parentNode);
 				selEl  = _jr(_el.frame_select);
 
-				if (target.hasClass('track_parent')) {
+				if (target.hasClass('resize')) {
+					// timeline resize
+					self.mouseState = {
+						type   : 'resize',
+						clickY : event.clientY,
+						startH : target.parent().height(),
+						minH   : 131,
+						maxH   : 301,
+						srcEl  : {
+							timeline : target.parent(),
+							canvas   : target.parent().prev('.canvas'),
+							assets   : target.parent().prev('.assets')
+						}
+					};
+				} else if (target.hasClass('track_parent')) {
 					// track parent
 					trackR = [];
 					nextEl = target.parent().next().nth(0).find('.anim_track');
@@ -137,13 +154,17 @@ sys.app.timeline = {
 					};
 					top  = parseInt(self.mouseState.startY / frHeight, 10);
 					left = parseInt(self.mouseState.startX / frWidth, 10);
+					// TODO: constraint frame select to available rows
+					
 				}
-				selEl.css({
-					'top'   : (top * frHeight) +'px',
-					'left'  : (left * frWidth) +'px',
-					'width' : (frWidth - 1) +'px',
-					'height': (frHeight - 1) +'px'
-				});
+				if (self.mouseState.type !== 'resize') {
+					selEl.css({
+						'top'   : (top * frHeight) +'px',
+						'left'  : (left * frWidth) +'px',
+						'width' : (frWidth - 1) +'px',
+						'height': (frHeight - 1) +'px'
+					});
+				}
 				if (self.mouseState.type) {
 					self.mouseState.dim = dim;
 					self.mouseState.selEl = selEl;
@@ -153,6 +174,17 @@ sys.app.timeline = {
 			case 'mousemove':
 				if (!mouseState) return;
 				switch (mouseState.type) {
+					case 'resize':
+						srcEl  = mouseState.srcEl,
+						height = mouseState.startH + (mouseState.clickY - event.clientY);
+						height = Math.max(Math.min(height, mouseState.maxH), mouseState.minH);
+
+						srcEl.timeline.css({'height': height +'px'});
+						srcEl.canvas.css({'bottom': (height + 22) +'px'});
+						srcEl.assets.css({'bottom': (height + 22) +'px'});
+						// trigger app resize for app-wide UI update
+						observer.trigger('app.resize');
+						break;
 					case 'ptrack':
 						trackR = mouseState.trackR;
 						left = parseInt((mouseState.targetX + event.clientX - mouseState.clickX) / frWidth, 10);
@@ -331,7 +363,7 @@ sys.app.timeline = {
 					}).xml );
 
 				// temp
-				self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(1)')[0]);
+				self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
 				break;
 			case 'file_unloaded':
 				// reset timeline
@@ -381,7 +413,7 @@ sys.app.timeline = {
 					//_canvas.doEvent('remove_track', 0);
 				};
 				// temp
-				return fn();
+				//return fn();
 				// confirm track deletion
 				sys.confirm({
 					'text': 'Are you sure that you want to delete this track?',
@@ -440,45 +472,6 @@ sys.app.timeline = {
 
 				_canvas.info.visible = self.doEvent('get_track_visible');
 				//console.log( _canvas.info.visible );
-				_canvas.updateBallCvs();
-				_canvas.draw();
-				break;
-			case 'toggle_visible-OLD':
-				var iconEl  = _jr(arguments[1]),
-					isOn    = iconEl.hasClass('icon-eye_on'),
-					rowEl   = iconEl.parents('[data-track_id]'),
-					rowId   = rowEl.attr('data-track_id'),
-					trackEl = _jr('div[data-track_id='+ rowId +']', _el.tl_content),
-					childCheck = true,
-					siblLen,
-					isAllOff;
-				if (rowEl.parent().attr('data-track') === 'parent') {
-					iconEl = rowEl.parent().find('.icon-eye_on, .icon-eye_off');
-					trackEl = _jr('div[data-track_id='+ rowId +']', _el.tl_content).parent().find('.anim_track');
-					childCheck = false;
-				}
-				if (isOn) {
-					trackEl.addClass('is_hidden');
-					iconEl.parent().addClass('is_hidden');
-					iconEl.removeClass('icon-eye_on').addClass('icon-eye_off');
-				} else {
-					trackEl.removeClass('is_hidden');
-					iconEl.parent().removeClass('is_hidden');
-					iconEl.removeClass('icon-eye_off').addClass('icon-eye_on');
-				}
-				if (childCheck) {
-					childCheck = rowEl.parent();
-					siblLen = childCheck.find('li').length;
-					isAllOff = siblLen === childCheck.find('.icon-eye_off').length;
-					childCheck.parent()
-							.find('div > .icon-eye_on, div > .icon-eye_off')
-							.setClass( isAllOff ? 'icon-eye_off' : 'icon-eye_on' );
-
-					rowId = childCheck.parent().find('div.tl_layer').attr('data-track_id');
-					trackEl = _jr('div[data-track_id='+ rowId +']', _el.tl_content);
-					trackEl[ isAllOff ? 'addClass' : 'removeClass' ]('is_hidden');
-				}
-				_canvas.info.visible = self.doEvent('get_track_visible');
 				_canvas.updateBallCvs();
 				_canvas.draw();
 				break;
@@ -558,7 +551,10 @@ sys.app.timeline = {
 						.addClass('icon-arrow_up')
 						.parent().addClass('expanded');
 					lRow.css({'border': '', 'height': (lRow.height() + cHeight + 1) +'px'});
-					tRow.css({'border': '', 'height': (cHeight + 1) +'px'});
+					tRow.css({'border': '', 'height': (cHeight + 1) +'px'})
+						.wait(400, function() {
+							this.parents('.body').trigger('calculate');
+						});
 				} else{
 					arrow.removeClass('icon-arrow_up')
 						.addClass('icon-arrow_down');
@@ -568,6 +564,11 @@ sys.app.timeline = {
 					});
 					tRow.css({'height': '0'}).wait(400, function() {
 						this.css({'border': '0'});
+
+						top = _el.tl_body_rows.parentNode.offsetHeight - _el.tl_body_rows.offsetHeight - 5;
+						if (top > 0) return;
+						jr(_el.tl_body_rows).css({'top': top +'px'});
+						this.parents('.body').css({'top': top +'px'});
 					});
 				}
 				break;
@@ -633,20 +634,30 @@ sys.app.timeline = {
 		}
 	},
 	speed_events: function(type) {
-		var _el  = sys.el,
-			_jr  = jr;
+		var _sys = sys,
+			_jr  = jr,
+			el   = _sys.el,
+			dim,
+			bottom;
+
 		switch (type) {
 			case 'focus':
-				_jr(_el.speed_level.parentNode).addClass('focused');
-				_jr(_el.anim_speed)
-					.css({'display': 'block'})
+				dim    = getDim(_sys.app.el.speed_level);
+				bottom = _sys.appwin.height - dim.t - dim.h - 96;
+
+				_jr(el.speed_level.parentNode).addClass('focused');
+				_jr(el.anim_speed)
+					.css({
+						'display': 'block',
+						'bottom' : bottom +'px'
+					})
 					.wait(1, function() {
 						this.addClass('active');
 					});
 				break;
 			case 'blur':
-				_jr(_el.speed_level.parentNode).removeClass('focused');
-				_jr(_el.anim_speed)
+				_jr(el.speed_level.parentNode).removeClass('focused');
+				_jr(el.anim_speed)
 					.removeClass('active')
 					.wait(320, function() {
 						this.css({'display': 'none'});
