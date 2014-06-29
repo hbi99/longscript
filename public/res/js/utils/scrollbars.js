@@ -19,7 +19,8 @@ sys.scrollbar = {
 
 	},
 	doEvent: function(event) {
-		var _scroll = sys.scrollbar,
+		var _sys    = sys,
+			_scroll = _sys.scrollbar,
 			srcEl   = event.target,
 			sEl     = jr(srcEl),
 			cCss    = {},
@@ -43,6 +44,7 @@ sys.scrollbar = {
 					hTrack  = panel.find('.scroll_bg.horizontal'),
 					vHandle = vTrack.length ? vTrack.find('.scroll_bar') : false,
 					hHandle = hTrack.length ? hTrack.find('.scroll_bar') : false,
+					that,
 					top,
 					left,
 					height,
@@ -57,11 +59,13 @@ sys.scrollbar = {
 					vHandle.css(vCss);
 				}
 				if (hHandle) {
-					width = ((this.parentNode.offsetWidth / this.offsetWidth) * (hTrack[0].offsetWidth));
-					left = (((this.offsetLeft / (this.parentNode.offsetWidth - this.offsetWidth - 12)) * (hTrack[0].offsetWidth - hHandle[0].offsetWidth)) + 6);
+					that = _sys.app.el.tl_content;
+					if (!that) return;
+					width = ((that.parentNode.offsetWidth / that.offsetWidth) * (hTrack[0].offsetWidth));
+					left = (((that.offsetLeft / (that.parentNode.offsetWidth - that.offsetWidth - 12)) * (hTrack[0].offsetWidth - hHandle[0].offsetWidth)) + 6);
 					hCss.width = width +'px';
 					hCss.left = left +'px';
-					hCss.display = this.parentNode.offsetWidth >= this.offsetWidth ? 'none' : 'block';
+					hCss.display = that.parentNode.offsetWidth >= that.offsetWidth ? 'none' : 'block';
 					hHandle.css(hCss);
 				}
 				break;
@@ -76,8 +80,9 @@ sys.scrollbar = {
 					deltaX  = ((event.wheelDeltaX / 40) * 10) * -1,
 					valY    = (bEl.length) ? bEl[0].offsetTop - deltaY : 0,
 					valX    = (bEl.length) ? bEl[0].offsetLeft - deltaX : 0,
-					valYMax = (valY) ? this.offsetHeight - bEl[0].scrollHeight : 0,
-					valXMax = (valX) ? this.offsetWidth - bEl[0].scrollWidth : 0;
+					valYMax = (valY) ? this.offsetHeight - bEl[0].scrollHeight - 19 : 0,
+					valXMax = (valX) ? this.offsetWidth - bEl[0].scrollWidth - 23 : 0;
+				if (bEl.length && this.offsetWidth === bEl[0].scrollWidth) valXMax = 0;
 				cCss = {
 					top: Math.min(Math.max(valY, valYMax), 0),
 					left: Math.min(Math.max(valX, valXMax), 0)
@@ -101,9 +106,14 @@ sys.scrollbar = {
 					isVertical =
 					_scroll.isVertical = trkEl.hasClass('vertical');
 					content.el   = trkEl.parent('.panel').find('.content .body');
-					content.bh   = content.el[0][ isVertical ? 'offsetHeight' : 'offsetWidth' ];
-					content.hMax = content.el.parent()[0][ isVertical ? 'offsetHeight' : 'offsetWidth' ] - content.bh;
-
+					if (isVertical) {
+						content.bh   = content.el[0].offsetHeight;
+						content.hMax = content.el.parent()[0].offsetHeight - content.bh;
+					} else {
+						content.bh   = content.el[0].offsetWidth;
+						content.hMax = content.el.parent()[0].offsetWidth - content.bh;
+					}
+					
 					_scroll.content = content;
 					_scroll.drag    = sEl;
 					_scroll.prop    = isVertical ? 'top' : 'left';

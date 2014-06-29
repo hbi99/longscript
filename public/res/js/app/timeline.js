@@ -273,6 +273,10 @@ sys.app.timeline = {
 					_el.tl_body_rows_left.classList.add('hscrolled');
 				}
 				break;
+			// keyboard events
+			case 'delete_selected_frames':
+				console.log( arguments );
+				break;
 			// custom events
 			case 'frame_index_change':
 				target = self.frameIndex;
@@ -363,7 +367,7 @@ sys.app.timeline = {
 					}).xml );
 
 				// temp
-				self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(0)')[0]);
+				self.doEvent('toggle_layer', jr('.icon-arrow_down:nth(1)')[0]);
 				break;
 			case 'file_unloaded':
 				// reset timeline
@@ -516,7 +520,8 @@ sys.app.timeline = {
 				}
 				_jr(_el.frame_nrs)
 					.html(str)
-					.css({'width': (len * 160) +'px'});
+					.css({'width': (len * 160) +'px'})
+					.parent('.vscrolled').css({'width': (len * 160) +'px'});
 				break;
 			case 'nob_speed':
 				var details = event.details,

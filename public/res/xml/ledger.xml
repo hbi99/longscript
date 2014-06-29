@@ -98,6 +98,7 @@
 	<hotkeys>
 		<i keys="meta+q" pc_keys="ctrl+q" action="sys -q" description="Quits app"/>
 		<i keys="meta+r" pc_keys="ctrl+r" action="sys -r" description="Reloads app"/>
+		<i keys="del" action="timeline -s delete_selected_frames" description="Deletes selected frames on timeline"/>
 	</hotkeys>
 	<language>
 		<i id="app_says" str="Longscript says&#8230;"/>
