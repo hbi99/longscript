@@ -21,6 +21,14 @@ sys.app.timeline = {
 		_jr('.resize', el.box_timeline).bind('mousedown', this.doEvent);
 		_jr('.right .body', el.box_timeline).bind('scroll', this.doEvent);
 	},
+	selection: {
+		get: function() {
+			console.log( this.rows );
+		},
+		clear: function() {
+			console.log( this );
+		}
+	},
 	doEvent: function(event) {
 		var _sys     = sys,
 			_app     = _sys.app,
@@ -32,7 +40,8 @@ sys.app.timeline = {
 			file     = _app.file,
 			self     = _app.timeline,
 			cmd      = (typeof(event) === 'string') ? event : event.type,
-			mouseState = self.mouseState,
+			selection = self.selection,
+			mouseState = selection.mouseState,
 
 			frHeight = 23,
 			frWidth = 16,
@@ -71,7 +80,7 @@ sys.app.timeline = {
 
 				if (target.hasClass('resize')) {
 					// timeline resize
-					self.mouseState = {
+					selection.mouseState = {
 						type   : 'resize',
 						clickY : event.clientY,
 						startH : target.parent().height(),
@@ -95,7 +104,7 @@ sys.app.timeline = {
 						});
 					}
 					nextX = _canvas.info.sequence.length - parseInt(target.width() / frWidth, 10) - 1;
-					self.mouseState = {
+					selection.mouseState = {
 						type    : 'ptrack',
 						target  : target,
 						targetX : target.left(),
@@ -116,8 +125,6 @@ sys.app.timeline = {
 								: _canvas.info.sequence.length - parseInt(target.width() / frWidth, 10) - 1;
 
 					trackR = target.parents('ul').parent().prev('li').nth(0).find('.track_parent');
-					//trackMin.push(parseInt(trackR.left() / frWidth, 10));
-					//trackMax.push(parseInt(trackR.width() / frWidth, 10));
 
 					nextEl = target.parents('ul').find('.anim_track');
 					for (i=0, il=nextEl.length; i<il; i++) {
@@ -131,7 +138,7 @@ sys.app.timeline = {
 					//console.log( 'min', trackMin );
 					//console.log( 'max', trackMax );
 
-					self.mouseState = {
+					selection.mouseState = {
 						type     : 'track',
 						target   : target,
 						targetX  : target.left(),
@@ -145,19 +152,19 @@ sys.app.timeline = {
 					};
 				} else if (target.hasClass('frame_select') || srcEl.nodeName.toLowerCase() === 'li') {
 					// track row
-					self.mouseState = {
+					selection.mouseState = {
 						type   : 'row',
 						clickX : event.clientX,
 						clickY : event.clientY,
 						startX : event.clientX - dim.l,
 						startY : event.clientY - dim.t
 					};
-					top  = parseInt(self.mouseState.startY / frHeight, 10);
-					left = parseInt(self.mouseState.startX / frWidth, 10);
+					top  = parseInt(selection.mouseState.startY / frHeight, 10);
+					left = parseInt(selection.mouseState.startX / frWidth, 10);
 					// TODO: constraint frame select to available rows
-					
+
 				}
-				if (self.mouseState.type !== 'resize') {
+				if (selection.mouseState.type !== 'resize') {
 					selEl.css({
 						'top'   : (top * frHeight) +'px',
 						'left'  : (left * frWidth) +'px',
@@ -165,14 +172,13 @@ sys.app.timeline = {
 						'height': (frHeight - 1) +'px'
 					});
 				}
-				if (self.mouseState.type) {
-					self.mouseState.dim = dim;
-					self.mouseState.selEl = selEl;
+				if (selection.mouseState.type) {
+					selection.mouseState.dim = dim;
+					selection.mouseState.selEl = selEl;
 					_jr(document).bind('mousemove mouseup', self.doEvent);
 				}
 				break;
 			case 'mousemove':
-				if (!mouseState) return;
 				switch (mouseState.type) {
 					case 'resize':
 						srcEl  = mouseState.srcEl,
@@ -242,6 +248,12 @@ sys.app.timeline = {
 							height = Math.abs(height)+1;
 							top   -= height-1;
 						}
+						selection.rows = {
+							top: top,
+							left: left,
+							width: width,
+							height: height
+						};
 						mouseState.selEl.css({
 							'top'   : (top * frHeight) +'px',
 							'left'  : (left * frWidth) +'px',
@@ -252,7 +264,7 @@ sys.app.timeline = {
 				}
 				break;
 			case 'mouseup':
-				self.mouseState = false;
+				selection.mouseState.type = false;
 				_jr(document).unbind('mousemove mouseup', self.doEvent);
 				break;
 			case 'scroll':
@@ -275,7 +287,8 @@ sys.app.timeline = {
 				break;
 			// keyboard events
 			case 'delete_selected_frames':
-				console.log( arguments );
+				var f = self.selection.get();
+				console.log( f );
 				break;
 			// custom events
 			case 'frame_index_change':
@@ -550,6 +563,8 @@ sys.app.timeline = {
 					rowId   = arrow.parent().attr('data-track_id'),
 					tRow    = _jr('li[data-track_id="'+ rowId +'"]', _el.tl_content).next('li').nth(0),
 					cHeight = lRow.find('.brushes').height();
+
+				self.selection.clear();
 
 				if (arrow.hasClass('icon-arrow_down')) {
 					arrow.removeClass('icon-arrow_down')

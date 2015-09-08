@@ -5,7 +5,7 @@
 			<i switch="r" name="reload" arg="NONE" description="Reloads application."/>
 			<i switch="q" name="quit" arg="NONE" description="Quits application."/>
 			<i switch="x" name="doEvent" arg="COMMAND" description="Executes commands."/>
-			<i switch="dev" name="toggle_dev" arg="NONE" description="Opens developer tools."/>
+			<i switch="dev" name="toggleDev" arg="NONE" description="Opens developer tools."/>
 		</i>
 		<i object="app" long="sys.app" type="[SYS]" description="Application.">
 			<i switch="l" name="load" arg="[path]" description="Open file"/>

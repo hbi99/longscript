@@ -41,8 +41,10 @@ sys.shell = {
 			fFinal,
 			args = '',
 			ret,
-			isOpen;
-		for (var i=1, il=oCmd.length; i<il; i++) {
+			isOpen,
+			i = 1,
+			il = oCmd.length;
+		for (; i<il; i++) {
 			if (isOpen) args += oCmd[i];
 			if (oCmd[i].indexOf("'") > -1) {
 				args += ' '+ oCmd[i];

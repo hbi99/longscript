@@ -30,6 +30,7 @@ require('module')._cache = {};
 			}
 
 			this.app.init();
+			//this.toggle_dev();
 
 			jr(window).bind('resize', this.doEvent);
 		},
@@ -70,7 +71,7 @@ require('module')._cache = {};
 		reload: function() {
 			document.location.reload();
 		},
-		toggle_dev: function() {
+		toggleDev: function() {
 			this.appwin.showDevTools();
 		},
 		extend: function(safe, deposit) {
